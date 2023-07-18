@@ -1,0 +1,51 @@
+<%- include('header.ejs') %>
+  <body>
+    <%- include('navigation.ejs') %>
+    <div class="container">
+      <section><h2>Todos los Usuarios</h2></section>
+      
+      <ol>
+        <% for (let i = 0; i < data.length; i++) { %>
+          <li>Nombre: <strong><%= data[i].name %></strong> - Email: <strong><%= data[i].email %> </strong> - <strong><%= data[i].rol %></strong></li>
+        <% } %>
+      </ol>
+      
+      <section>
+        <h2>Registrar Usuario</h2>
+        <form action="/api/v1/users/register" method="post">
+          <div class="form-group">
+            <label for="emailId">Email del usuario</label>
+            <input type="text" class="form-control" name="email"  id="emailId" aria-describedby="emailHelp" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <label for="nameId">Name</label>
+            <input type="text" class="form-control" name="name" id="nameId" placeholder="Nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="passwordId">Password</label>
+            <input type="text" class="form-control" name="password" id="passwordId" placeholder="Contraseña" required>
+            
+          </div>
+          <div class="form-group">
+            <label for="rolesId">Rol</label>
+            <select name="rol" id="rolesId" class="form-control form-control-sm">
+              <option>admin</option>
+              <option>user</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sizeId">Image</label>
+            <input type="file" class="form-control" name="image" id="sizeId" placeholder="Size">
+          </div>
+          <br>
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          
+        </form>
+
+        
+      </section>
+    </div>
+  </body>
+</html>

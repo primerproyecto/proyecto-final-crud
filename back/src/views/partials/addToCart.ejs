@@ -1,0 +1,45 @@
+<%- include('header.ejs') %>
+  <body>
+    <%- include('navigation.ejs') %>
+    <div class="container">
+      <section><h2>Carritos</h2></section>
+      
+      <ol>
+        <% for (let i = 0; i < data.length; i++) { %>
+          <li> Id de carrito: <strong><%= data[i].id %> </strong>- Id del usuaio: <strong><%= data[i].userId %>  </strong>
+            <ol>
+             <% for( let index = 0; index < data[i].products.length; index++ ) { %>
+              <li>Id de producto: <strong><%= data[i].products[index].productId %></strong> - <strong>Cantidad: <%= data[i].products[index].cantidad %> </strong></li>
+             <% } %>
+            </ol>
+          </li>
+        <% } %>
+      </ol>
+      
+      <section>
+      <h2>Agregar producto al carrito</h2>
+      <section>
+
+          <form action="api/v1/cart/agregar" method="post">
+            <div class="form-group">
+              <label for="userId">UserId al que adjudicar el carrito</label>
+              <input type="text" class="form-control" name="userId" id="userId" placeholder="Product Id">
+            </div>
+            <div class="form-group">
+              <label for="carritoId">CarritoId</label>
+              <input type="text" class="form-control" name="carritoId"  id="carritoId" aria-describedby="emailHelp" placeholder="Numero de carritoId">
+            </div>
+            <div class="form-group">
+              <label for="productId">Password</label>
+              <input type="text" class="form-control" name="productId" id="productId" placeholder="Product Id">
+            </div>
+            <br>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            
+          </form>
+      </section>
+    </div>
+  </body>
+</html>

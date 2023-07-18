@@ -1,0 +1,22 @@
+<%- include('header.ejs') %>
+  <body>
+    <%- include('navigation.ejs') %>
+    <div class="container">
+      <h1>CRUD TIENDA</h1>
+      <p>
+       Agregar un producto al catálogo de productos.
+      </p>
+      <% for (let i = 0; i < data.length; i++) { %>
+        <button onclick="window.history.back();">Volver atrás</button>
+        <div class="card">
+          <img class="img-fluid card-img-top" src="<%= data[i].image %>" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title"><%= data[i].title %></h5>
+            <p class="card-text"><%= data[i].Descripcion %></p>
+              <a href="mostrarProducto/<%- data[i].title %>" class="btn btn-primary"><%= data[i].price %></a>
+            </div>
+          </div>
+          <% } %>
+    </div>
+  </body>
+</html>

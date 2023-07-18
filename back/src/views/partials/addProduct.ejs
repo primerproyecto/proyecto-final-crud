@@ -1,0 +1,72 @@
+<%- include('header.ejs') %>
+  <body>
+    <%- include('navigation.ejs') %>
+    <div class="container">
+      <h1>CRUD TIENDA</h1>
+      <p>
+       Agregar un producto al catálogo de productos.
+      </p>
+      <section><h2>Todos los productos</h2></section>
+      
+      <div class="container">
+        <div class="row">
+          <% for (let i = 0; i < data.length; i++) { %>
+            <div class="card col-sm">
+              <a href="mostrarProducto/<%- data[i].title %>" ><img class="img-fluid card-img-top" src="<%= data[i].image %>" alt="Card image cap"></a>
+              <div class="card-body">
+                <h5 class="card-title"><%= data[i].title %> - <%= data[i].price %></h5>
+                <p class="card-text"><%= data[i].Descripcion %></p>
+                  <a href="mostrarProducto/<%- data[i].title %>" class="btn btn-primary"><%= data[i].price %></a>
+                </div>
+              </div>
+              <% } %>
+            </div>
+        </div>
+      
+      
+      
+      <section>
+        <h2>Agregar producto</h2>
+
+          <form action="/api/v1/products/new" method="post">
+            <div class="form-group">
+              <label for="tituloId">Titulo del producto</label>
+              <input type="text" class="form-control" name="title"  id="tituloId" aria-describedby="emailHelp" placeholder="Título del producto" required>
+            </div>
+            <div class="form-group">
+              <label for="descripcionId">Descripcion del producto</label>
+              <input type="text" class="form-control" name="desc" id="descripcionId" placeholder="Descripcion" required>
+            </div>
+            <div class="form-group">
+              <label for="categories">Categories</label>
+              <select name="categories" id="categories" class="form-control form-control-sm">
+                <option>Electrónico</option>
+                <option>Complementos</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="sizeId">Size</label>
+              <input type="text" class="form-control" name="size" id="sizeId" placeholder="Size">
+            </div>
+            <div class="form-group">
+              <label for="color">Color</label>
+              <input type="text" class="form-control" name="color" id="color" placeholder="Color">
+            </div>
+            <div class="form-group">
+              <label for="priceId">Price</label>
+              <input type="text" class="form-control" name="price" id="priceId" placeholder="Price" required>
+            </div>
+            <div class="form-group">
+              <label for="imageId">Image</label>
+              <input type="file" class="form-control" name="image" id="imageId" placeholder="Image">
+            </div>
+            <br>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            
+          </form>
+      </section>
+    </div>
+  </body>
+</html>

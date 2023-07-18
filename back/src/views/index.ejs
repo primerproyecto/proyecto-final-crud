@@ -1,0 +1,146 @@
+<%- include('partials/header.ejs') %>
+  <body>
+    <%- include('partials/navigation.ejs') %>
+    <div class="container">
+      <h1>CRUD TIENDA</h1>
+      <p>
+        Ejercicio de app con express y tres modelos de mongoose utilizando
+        express, cloudinary
+      </p>
+
+      <section>
+        <h2>Modelos</h2>
+        <p>Esta aplicación consta de 3 modelos de mongoose</p>
+        <h3>User</h3>
+        <code>
+          { name: { type: String, required: true, unique: true }, email: { type:
+          String, required: true, validate: [validator.isEmail, 'Email not
+          valid'], unique: true, }, password: { type: String, required: true,
+          validate: [validator.isStrongPassword], minlength: [8, 'Min 8
+          characters'], }, rol: { type: String, enum: ['admin', 'user'],
+          required: true }, image: { type: String }, confirmationCode: { type:
+          Number, required: true }, check: { type: Boolean, default: false },
+          carrito: [ { type: Schema.Types.ObjectId, ref: 'Cart', }, ], },
+        </code>
+        <h3>Carrito</h3>
+        <code>
+          const CartSchema = new Schema( { userId: { type:
+          mongoose.Schema.Types.ObjectId, required: true, ref: 'User', },
+          products: [ { productId: { type: mongoose.Schema.Types.ObjectId, ref:
+          'Product', }, cantidad: { type: Number, default: 1, }, }, ], }, {
+          timestamps: false, } );
+        </code>
+        <h3>Producto</h3>
+        <code>
+          { title: { type: String, required: true, unique: true }, desc: { type:
+          String, required: true }, image: { type: String }, categories: { type:
+          String, enum: ['Electrónico', 'Complementos'] }, size: { type: String
+          }, color: { type: String }, price: { type: Number, required: true },
+          },
+        </code>
+      </section>
+      <section>
+        <h2>Routes</h2>
+        <p>Las rutas de la aplicación son las siguientes:</p>
+        <h3>Rutas de carrito</h3>
+        <ul>
+          <li>
+            Mostrar todos los carritos: <strong>PUBLICA</strong>
+            <p>GET. Para facilitar el desarroyo de esta api.</p>
+          </li>
+          <li>
+            Mostrar el carrito de un usuario pasando el id:
+            <strong>PRIVADA</strong>
+            <p>
+              GET. Se necesitará pasar por req.params el id del usuario cuyo
+              carro queramos solicitar.
+            </p>
+          </li>
+          <li>
+            Borrar el carrito de un usuario pasando el id:
+            <strong>PRIVADA</strong>
+            <p>
+              DELETE. Pasándole el id el carrito podremos eliminar completamente
+              todo el carriot
+            </p>
+          </li>
+          <li>
+            Agregar un producto al carrito de un usuario pasando el id:
+            <strong>PRIVADA</strong>
+            <p>
+              POST. Para agregar un producto del catálogo a un determinado
+              carrito, habrá que pasarle el id del carrito y el id del producto.
+              Si añadimos más de una vez un producto, se aumentará en uno la
+              cantidad.
+            </p>
+          </li>
+          <li>
+            Eliminar un producto al carrito de un usuario pasando el id:
+            <strong>PRIVADA</strong>
+            <p>
+              PATCH. Para eliminar un producto del catálogo a un determinado
+              carrito, habrá que pasarle el id del carrito y el id del producto.
+              Si la cantidad de este producto es menor que cero lo borramos y
+              sino aumentamos en uno la cantidad.
+            </p>
+          </li>
+        </ul>
+        <h3>Rutas del usuario</h3>
+        <ul>
+          <li>Registrar a un usuario: <strong>PUBLICA</strong></li>
+          <li>
+            Mostrar a todos los usuarios:
+            <strong>PRIVADA</strong>
+          </li>
+          <li>
+            Hacer login en la aplicación
+            <strong>PUBLICA</strong>
+          </li>
+        </ul>
+        <h3>Rutas de producto</h3>
+        <ul>
+          <li>
+            Recibir todos los productos: <strong>PUBLICA</strong>
+            <p>
+              GET. Nos devolverá un array en formato json con todos los
+              productos del catálogo. Si se le pasa una query opcional
+              'categoria' con la categoría por la que deseamos flitrar.
+            </p>
+          </li>
+          <li>
+            <a href="/agregarProducto">Agregar un producto al catálogo de productos:</a>
+            <strong>PRIVADA</strong>.
+            <p>
+              POST Por medio del req.body le pasaremos una serie de propiedades
+              que formarán parte del modelo Product.
+            </p>
+          </li>
+          <li>
+            Eliminar un producto del catálogo pasándole el id
+            <strong>PRIVADA</strong>.
+            <p>
+              DELETE. Se deberá pasar por los params el id del producto que se
+              quiera eliminar del catálogo de productos.
+            </p>
+          </li>
+          <li>
+            Ver un único producto del catálogo pasándole el id
+            <strong>PRIVADA</strong>.
+            <p>
+              GET. El servidor devolverá un objeto en formato json con toda al
+              información del producto.
+            </p>
+          </li>
+          <li>
+            Etitar un único producto del catálogo pasándole el id
+            <strong>PRIVADA</strong>
+            <p>
+              PUT. Por medio del req.body le pasaremos todos los campos con los
+              cambios que queramos efectuar en dicho producto.
+            </p>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
