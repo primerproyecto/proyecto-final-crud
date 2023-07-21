@@ -1,20 +1,26 @@
 import { useForm } from "react-hook-form";
-/* import "./Register.css"; */
 
 import { useEffect, useState } from "react";
-import { postOneProduct } from "../services/API_user/product.service";
-import { useProductAddError } from "../hooks";
-import { Link, Navigate } from "react-router-dom";
+import {
+  editarProducto,
+  updateProducto,
+} from "../services/API_user/product.service";
+import { useProductEditarErrors } from "../hooks";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useProducts } from "../context/productsContext";
 import { ProductGallery, Spinner } from "../components";
 
-export const AgregarProducto = () => {
+useProductEditarErrors;
+
+export const EditarProducto = () => {
+  const { id } = useParams();
   const { allUser, setAllUser, bridgeData } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
-  const [okAddProduct, setOkAddProduct] = useState(false);
+  const [okEditProduct, setOkEditProduct] = useState(false);
+  const [product, setProduct] = useState({});
   const { products, loading } = useProducts();
 
   //! ------------------------------------------------------------------------------
@@ -23,37 +29,55 @@ export const AgregarProducto = () => {
 
   const formSubmit = async (formData) => {
     const inputFile = document.getElementById("file-upload").files;
-    console.log("que es inputfile", inputFile);
 
     if (inputFile.length !== 0) {
       // cuando me han hayan puesto una imagen por el input
 
       const custonFormData = {
         ...formData,
-        image: inputFile[0],
+        price: parseInt(formData.price),
+        categories: formData.categories,
+        image: formData.image[0],
       };
+      console.log("que es customformdata", custonFormData);
 
       setSend(true);
-      setRes(await postOneProduct(custonFormData));
+      setRes(await updateProducto(product._id, custonFormData));
       setSend(false);
 
       //! me llamo al servicio
     } else {
       const custonFormData = {
         ...formData,
+        price: parseInt(formData.price),
+        categories: "Complementos",
       };
 
       setSend(true);
-      setRes(await postOneProduct(custonFormData));
+      setRes(await updateProducto(product._id, custonFormData));
       setSend(false);
     }
   };
+
+  //////////////////////// LLAMADA PARA OBTENER LOS DATOS DE ESTE PRODUCTO QUE NOS LLEGA POR PARAMS
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await editarProducto(id);
+        setProduct(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   //! ------------------------------------------------------------------------------
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
-    useProductAddError(res, setOkAddProduct, setRes, setAllUser);
+    useProductEditarErrors(res, setOkEditProduct, setRes);
     /*  if (res?.status == 200) bridgeData("ALLUSER"); */
   }, [res]);
 
@@ -61,21 +85,20 @@ export const AgregarProducto = () => {
   //? 3) Estados de navegacion ----> lo veremos en siguiente proyectos
   //! ------------------------------------------------------------------------------
 
-  if (okAddProduct) {
-    console.log("res", res);
-    console.log("registro correcto ya puedes navegar");
+  /*  if (okEditProduct) {
     return <Navigate to="/" />;
-  }
+  } */
   return (
     <>
       <div className="form-wrap">
-        <h1>Agregar producto</h1>
+        <h1>Editar producto</h1>
         <form onSubmit={handleSubmit(formSubmit)}>
           <div className="">
             <label htmlFor="name">Título</label>
             <input
               className="input_user"
               type="text"
+              defaultValue={product.title}
               id="name"
               name="title"
               autoComplete="false"
@@ -86,6 +109,7 @@ export const AgregarProducto = () => {
             <label htmlFor="description">Descripcion</label>
             <input
               className="input_user"
+              defaultValue={product.desc}
               type="text"
               id="description"
               name="desc"
@@ -93,14 +117,14 @@ export const AgregarProducto = () => {
               {...register("desc", { required: true })}
             />
           </div>
-
           <div className="">
+            <img src={product.image} width="100" />
             <label htmlFor="file-upload">Imagen</label>
             <input
               type="file"
               id="file-upload"
               name="image"
-              {...register("image", { required: true })}
+              {...register("image")}
             />
 
             <div className="">
@@ -108,17 +132,9 @@ export const AgregarProducto = () => {
               <input
                 type="text"
                 id="size"
+                defaultValue={product.size}
                 name="size"
                 {...register("size", { required: true })}
-              />
-            </div>
-            <div className="">
-              <label htmlFor="color">Color</label>
-              <input
-                type="text"
-                id="color"
-                name="color"
-                {...register("color", { required: true })}
               />
             </div>
             <div className="sexo">
@@ -145,24 +161,33 @@ export const AgregarProducto = () => {
               />
             </div>
             <div className="">
-              <label htmlFor="price">Precio</label>
+              <label htmlFor="color">Color</label>
               <input
                 type="text"
+                id="color"
+                defaultValue={product.color}
+                name="color"
+                {...register("color", { required: true })}
+              />
+            </div>
+            <div className="">
+              <label htmlFor="price">Precio</label>
+              <input
+                type="number"
                 id="price"
+                defaultValue={product.price}
                 name="price"
                 {...register("price", { required: true })}
               />
             </div>
           </div>
-
           <div className="btn_container">
             <button
               className="btn"
-              type="submit"
               disabled={send}
               style={{ background: send ? "#49c1a388" : "#2f7a67" }}
             >
-              Register
+              Editar producto
             </button>
           </div>
         </form>

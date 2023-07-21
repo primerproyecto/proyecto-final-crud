@@ -7,7 +7,8 @@ export const Home = () => {
   const { products, loading } = useProducts();
   const { user } = useAuth();
   /* useEffect(() => {}, [user]); */
-  console.log("que es user desde la home", user);
+
+  console.log("que es user", user);
 
   return (
     <>
@@ -15,9 +16,13 @@ export const Home = () => {
         <Spinner />
       ) : (
         <div className="grilla">
-          {products?.data?.map((item) => {
-            return <ProductGallery key={item._id} producto={item} />;
-          })}
+          {products.data.length > 0 ? (
+            products?.data?.map((item) => {
+              return <ProductGallery key={item._id} producto={item} />;
+            })
+          ) : (
+            <h1>No hay productos</h1>
+          )}
         </div>
       )}
     </>

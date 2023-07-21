@@ -10,8 +10,9 @@ import {
   Login,
   Profile,
   Register,
-  AgregarProducto,
   ModifyPassword,
+  AgregarProducto,
+  EditarProducto,
 } from "./pages";
 import { ProtectedCheckChildren, Protected } from "./components";
 import { AuthContextProvider } from "./context/authContext.jsx";
@@ -67,6 +68,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               element={
                 <Protected>
                   <AgregarProducto />
+                </Protected>
+              }
+            />
+            <Route
+              path="/editarProducto/:id"
+              element={
+                <Protected>
+                  <EditarProducto />
                 </Protected>
               }
             />
