@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ShoppingCart, Heart } from "react-feather";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useForm } from "react-hook-form";
 import {
@@ -26,6 +26,7 @@ export const ProductGallery = ({ producto }) => {
         },
       ],
     };
+    console.log("que es customformdata", customFormData);
     setIsDisabled(true);
     setRes(await postCarrito(user.carrito, customFormData));
     setIsDisabled(false);
@@ -48,6 +49,7 @@ export const ProductGallery = ({ producto }) => {
 
   return (
     <figure>
+      <strong>{producto.title}</strong>
       <img src={producto.image} alt={producto.title} />
       <p>{producto.desc}</p>
       <p>Precio: {producto.price}</p>
@@ -69,9 +71,12 @@ export const ProductGallery = ({ producto }) => {
               <ShoppingCart />
             </button>
             {user.rol && user.rol === "admin" ? (
-              <button onClick={() => borraProducto(producto._id)}>
-                Eliminar
-              </button>
+              <>
+                <button onClick={() => borraProducto(producto._id)}>
+                  Eliminar
+                </button>
+                <Link to={`/editarProducto/${producto._id}`}>Editar</Link>
+              </>
             ) : (
               ""
             )}

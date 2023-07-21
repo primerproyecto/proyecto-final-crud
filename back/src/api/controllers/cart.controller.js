@@ -1,6 +1,6 @@
-const Cart = require('../models/cart.model');
-const User = require('../models/user.model');
-const setError = require('../../helpers/handle-error');
+const Cart = require("../models/cart.model");
+const User = require("../models/user.model");
+const setError = require("../../helpers/handle-error");
 
 // CREAR CARRITO
 /** PARA CREAR UN CARRITO SE NECESITA, A PARTE DE UN POQUITO DE GRACIA, UN userId UN ARRAY DE PRODUCTO  POR EL REQ.BODY  */
@@ -26,14 +26,14 @@ const createCarrito = async (req, res, next) => {
     if (creadoCarrito) {
       res.status(200).json(creadoCarrito);
     } else {
-      res.json('No se ha podido crear el carrito');
+      res.json("No se ha podido crear el carrito");
     }
   } catch (error) {
     return next(
       setError(
         error.code || 500,
         error.message ||
-          'No se puede establecer conexión con nuestra base de datos'
+          "No se puede establecer conexión con nuestra base de datos"
       )
     );
   }
@@ -53,7 +53,7 @@ const agregarACarrito = async (req, res, next) => {
         setError(
           error.code || 500,
           error.message ||
-            'No se puede establecer conexión con nuestra base de datos'
+            "No se puede establecer conexión con nuestra base de datos"
         )
       );
     }
@@ -62,7 +62,7 @@ const agregarACarrito = async (req, res, next) => {
       setError(
         error.code || 500,
         error.message ||
-          'No se puede establecer conexión con nuestra base de datos'
+          "No se puede establecer conexión con nuestra base de datos"
       )
     );
   }
@@ -72,7 +72,7 @@ const agregarACarrito = async (req, res, next) => {
 const todoMiCarrito = async (req, res, next) => {
   try {
     const usuario = await Cart.findById(req.params.id).populate(
-      'products.productId'
+      "products.productId"
     );
 
     res.status(200).json(usuario);
@@ -81,7 +81,7 @@ const todoMiCarrito = async (req, res, next) => {
       setError(
         error.code || 500,
         error.message ||
-          'No se puede establecer conexión con nuestra base de datos'
+          "No se puede establecer conexión con nuestra base de datos"
       )
     );
   }
@@ -98,14 +98,14 @@ const borrarCarrito = async (req, res, next) => {
     User.findByIdAndUpdate(user_id, { carrito: [] });
 
     if (!carritoDeUsuarioActualizado) {
-      return res.status(404).json({ mensaje: 'Carrito no encontrado' });
+      return res.status(404).json({ mensaje: "Carrito no encontrado" });
     }
-    res.status(200).json('Carrito borrado con éxito');
+    res.status(200).json("Carrito borrado con éxito");
   } catch (error) {
     return next(
       setError(
         error.code || 500,
-        error.message || 'No se pudo borrar producto del carrito'
+        error.message || "No se pudo borrar producto del carrito"
       )
     );
   }
@@ -121,16 +121,12 @@ const agregarProductoAlCarrito = async (req, res) => {
     const productoId = req.body.products[0].productId;
 
     const karrito = await Cart.findById(carritoId).populate(
-      'products.productId'
+      "products.productId"
     );
-    console.log('que es karrito con populate products.productId', karrito);
+    console.log("que es karrito con populate products.productId", karrito);
 
     // Buscar el producto en el carrito
     const productoEnCarrito = karrito.products.find((product) => {
-      console.log(
-        'que es product.productId.toString()',
-        product.productId._id.toString()
-      );
       return product.productId._id.toString() === productoId;
     });
     if (productoEnCarrito) {
@@ -148,24 +144,24 @@ const agregarProductoAlCarrito = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ mensaje: 'Error al agregar producto al carrito', error });
+      .json({ mensaje: "Error al agregar producto al carrito", error });
   }
 };
 
 /* MOSTAR TODOS LOS CARRITOS ...PARA DESARROYO*/
 const todosLosCarritos = async (req, res) => {
   try {
-    const todosLosCarritos = await Cart.find().populate('products');
+    const todosLosCarritos = await Cart.find().populate("products");
 
     if (!todosLosCarritos) {
-      return res.status(404).json({ mensaje: 'Carrito no encontrado' });
+      return res.status(404).json({ mensaje: "Carrito no encontrado" });
     }
 
     res.status(200).json(todosLosCarritos);
   } catch (error) {
     res
       .status(500)
-      .json({ mensaje: 'Error al agregar producto al carrito', error });
+      .json({ mensaje: "Error al agregar producto al carrito", error });
   }
 };
 
@@ -195,12 +191,12 @@ const quitarProductoDelCarrito = async (req, res) => {
 
     res.status(200).json({
       karrito,
-      message: 'La operación de borrado se ha realizado con éxito',
+      message: "La operación de borrado se ha realizado con éxito",
     });
   } catch (error) {
     res
       .status(500)
-      .json({ mensaje: 'Error al quitar producto al carrito', error });
+      .json({ mensaje: "Error al quitar producto al carrito", error });
   }
 };
 
