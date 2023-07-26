@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import "./Header.css";
 import { useAuth } from "../context/authContext";
+import styled from "styled-components";
+import { lightTheme, darkTheme } from "../theme";
 
 import {
   Home,
@@ -16,50 +18,63 @@ export const Header = () => {
   return (
     <>
       <header>
-        <NavLink to="/">
+        <StyleNavLinks to="/">
           <Home /> Inicio
-        </NavLink>
+        </StyleNavLinks>
 
         <nav>
-          {user?.rol === "admin" ? (
-            <NavLink to="/agregarProducto">
-              {" "}
-              <PlusCircle /> productos
-            </NavLink>
+          {user && user.rol === "admin" ? (
+            <StyleNavLinks to="/dashboard">
+              <PlusCircle /> Dashboard
+            </StyleNavLinks>
           ) : null}
           {user !== null ? (
-            <NavLink to={`/carrito/${user.carrito}`}>
+            <StyleNavLinks to={`/carrito/${user.carrito}`}>
               <Layout /> Carrito
-            </NavLink>
+            </StyleNavLinks>
           ) : null}
           {user !== null ? (
             <>
-              <NavLink to="/profile">
+              <StyleNavLinks to="/profile">
                 <UserPlus />
                 Perfil{" "}
-              </NavLink>
+              </StyleNavLinks>
             </>
           ) : null}
           {user == null && (
-            <NavLink to="/login">
+            <StyleNavLinks to="/login">
               <LogIn />
               Login
-            </NavLink>
+            </StyleNavLinks>
           )}
           {user == null && (
-            <NavLink to="/register">
+            <StyleNavLinks to="/register">
               <UserPlus />
               Register
-            </NavLink>
+            </StyleNavLinks>
           )}
 
           {user !== null && (
-            <a href="/login" onClick={() => logout()}>
+            <ALink href="/login" onClick={() => logout()}>
               <LogOut /> Logout
-            </a>
+            </ALink>
           )}
         </nav>
       </header>
     </>
   );
 };
+
+const ALink = styled.a`
+  color: ${(props) => props.theme.text};
+  &:hover {
+    color: ${(props) => props.theme.text};
+  }
+`;
+
+const StyleNavLinks = styled(NavLink)`
+  color: ${(props) => props.theme.text};
+  &:hover {
+    color: ${(props) => props.theme.text};
+  }
+`;

@@ -4,6 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import { loginUser } from "../services/API_user/user.service";
 import { useLoginError } from "../hooks";
 import { useAuth } from "../context/authContext";
+import { lightTheme } from "../theme";
 
 export const Login = () => {
   const { handleSubmit, register } = useForm();
@@ -76,7 +77,9 @@ export const Login = () => {
               className="btn"
               type="submit"
               disabled={send}
-              style={{ background: send ? "#49c1a388" : "#49c1a2" }}
+              style={{
+                background: send ? lightTheme.body : lightTheme.primary,
+              }}
             >
               {send ? "Cargando ....." : "LOGIN"}
             </button>

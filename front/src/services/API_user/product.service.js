@@ -53,44 +53,7 @@ export const updateProducto = async (carritoId, formData) => {
     },
   })
     .then((res) => {
-      console.log("desde updateProduct", res);
-      return res;
+      res;
     })
     .catch((error) => error);
 };
-
-//! ----------------------- CHANGE PASSWORD ----- ESTAMOS LOGADOS----------------
-
-/* export const changePasswordUser = async (formData) => {
-  return APIuser.patch("/users/changepassword", formData, {
-    headers: {
-      Authorization: `Bearer ${updateToken()}`,
-    },
-  })
-    .then((res) => res)
-    .catch((error) => error);
-}; */
-
-//! --------------------- UPDATE ---------------------------------------
-
-/* export const updateUser = async (formData) => {
-  return APIuser.patch("/users/update/update", formData, {
-    headers: {
-      Authorization: `Bearer ${updateToken()}`,
-    },
-  })
-    .then((res) => res)
-    .catch((error) => error);
-}; */
-
-//!----------------------- DELETE ---------------------------------------
-
-/* export const deleteUser = async () => {
-  return APIuser.delete("/users/", {
-    headers: {
-      Authorization: `Bearer ${updateToken()}`,
-    },
-  })
-    .then((res) => res)
-    .catch((error) => error);
-}; */

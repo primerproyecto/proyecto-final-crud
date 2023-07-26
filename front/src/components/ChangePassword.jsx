@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { changePasswordUser } from "../services/API_user/user.service";
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import { useChangePasswordError } from "../hooks";
+import { lightTheme } from "../theme";
+
 export const ChangePassword = () => {
   const { setUser } = useAuth();
   const { handleSubmit, register } = useForm();
@@ -96,7 +98,9 @@ export const ChangePassword = () => {
               className="btn"
               type="submit"
               disabled={send}
-              style={{ background: send ? "#49c1a388" : "#49c1a2" }}
+              style={{
+                background: send ? lightTheme.primary : lightTheme.body,
+              }}
             >
               CHANGE PASSWORD
             </button>

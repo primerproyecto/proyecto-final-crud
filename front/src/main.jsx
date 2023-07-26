@@ -13,17 +13,17 @@ import {
   ModifyPassword,
   AgregarProducto,
   EditarProducto,
+  Dahsboard,
 } from "./pages";
 import { ProtectedCheckChildren, Protected } from "./components";
 import { AuthContextProvider } from "./context/authContext.jsx";
 import { ProductsContextProvider } from "./context/productsContext.jsx";
 import { CartContextProvider } from "./context/cartContext.jsx";
-import GlobalStyle from "./globalStyles.js";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter basename="/">
     <AuthContextProvider>
       <ProductsContextProvider>
-        <GlobalStyle />
         {/* <CartContextProvider> */}
         <Routes>
           <Route path="/" element={<App />}>
@@ -79,7 +79,23 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 </Protected>
               }
             />
+            <Route
+              path="/dashboard"
+              element={
+                <Protected>
+                  <Dahsboard />
+                </Protected>
+              }
+            />
           </Route>
+          <Route
+            path="/dashboard"
+            element={
+              <Protected>
+                <Dahsboard />
+              </Protected>
+            }
+          />
         </Routes>
         {/* </CartContextProvider>  */}
       </ProductsContextProvider>

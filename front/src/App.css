@@ -80,7 +80,6 @@ main {
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   max-width: 50em;
   width: 100%;
@@ -95,6 +94,14 @@ main {
   gap: 1rem;
   max-width: 60rem;
 }
+
 .grilla figure {
   max-width: 150px;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #753;
+    color: #dcb;
+    outline: 5px dashed #000;
+  }
 }

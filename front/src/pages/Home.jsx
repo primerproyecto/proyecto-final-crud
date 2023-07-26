@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { ProductGallery, Spinner } from "../components";
 import { useAuth } from "../context/authContext";
 import { useProducts } from "../context/productsContext";
@@ -6,7 +6,6 @@ import { useProducts } from "../context/productsContext";
 export const Home = () => {
   const { products, loading } = useProducts();
   const { user } = useAuth();
-  /* useEffect(() => {}, [user]); */
 
   console.log("que es user", user);
 

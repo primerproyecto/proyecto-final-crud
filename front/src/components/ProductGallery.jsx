@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { ShoppingCart, Heart } from "react-feather";
+import { ShoppingCart, Heart, Edit } from "react-feather";
 import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import {
   getMyCarrito,
   postCarrito,
 } from "../services/API_user/carrito.service";
 import { borraProducto } from "../services/API_user/product.service";
 import { useCartAddError } from "../hooks/useCartAddError";
+import styled from "styled-components";
 
-export const ProductGallery = ({ producto }) => {
+export const ProductGallery = ({ producto, modo }) => {
   const { user, setCarrito } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
@@ -26,7 +28,6 @@ export const ProductGallery = ({ producto }) => {
         },
       ],
     };
-    console.log("que es customformdata", customFormData);
     setIsDisabled(true);
     setRes(await postCarrito(user.carrito, customFormData));
     setIsDisabled(false);
@@ -46,48 +47,139 @@ export const ProductGallery = ({ producto }) => {
     console.log("que es res", res);
     /*  return <Navigate to={`/carrito/${user.carrito}`} />; */
   }
+  console.log(modo);
 
   return (
-    <figure>
-      <strong>{producto.title}</strong>
-      <img src={producto.image} alt={producto.title} />
-      <p>{producto.desc}</p>
-      <p>Precio: {producto.price}</p>
-      <p>Size: {producto.size}</p>
-      <p>Color: {producto.color}</p>
-      <p>Categoría: {producto.categories}</p>
-      {user && (
-        <>
-          <form onSubmit={handleSubmit(formSubmit)}>
-            <label>
-              <input
-                type="text"
-                hidden={false}
-                value={producto._id}
-                {...register("productId")}
-              />
-            </label>
-            <button disabled={isDisabled}>
-              <ShoppingCart />
-            </button>
-            {user.rol && user.rol === "admin" ? (
-              <>
-                <button onClick={() => borraProducto(producto._id)}>
-                  Eliminar
-                </button>
-                <Link to={`/editarProducto/${producto._id}`}>Editar</Link>
-              </>
-            ) : (
-              ""
-            )}
-          </form>
-          <button>
-            <Heart />
-          </button>{" "}
-        </>
-      )}
+    <>
+      {modo == "admin" ? (
+        <FigureAdmin>
+          <img src={producto.image} alt={producto.title} width="40" />
+          <strong>{producto.title}</strong>
+          {user && (
+            <form onSubmit={handleSubmit(formSubmit)}>
+              <label>
+                <input
+                  type="text"
+                  hidden={true}
+                  value={producto._id}
+                  {...register("productId")}
+                />
+              </label>
+              {user.rol && user.rol !== "admin" && (
+                <Button disabled={isDisabled}>
+                  <ShoppingCart />
+                </Button>
+              )}
 
-      <figcaption></figcaption>
-    </figure>
+              {user.rol && user.rol === "admin" ? (
+                <>
+                  <button
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Are you sure you want to change your password?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "rgb(73, 193, 162)",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "YES",
+                      }).then(async (result) => {
+                        if (result.isConfirmed) {
+                          console.log("que es producto", producto);
+                          borraProducto(producto._id);
+                        }
+                      });
+                    }}
+                  >
+                    Eliminar
+                  </button>
+                  <ButtonAlike to={`/editarProducto/${producto._id}`}>
+                    <Edit />
+                  </ButtonAlike>
+                </>
+              ) : (
+                ""
+              )}
+            </form>
+          )}
+        </FigureAdmin>
+      ) : (
+        <figure>
+          <strong>{producto.title}</strong>
+          <img src={producto.image} alt={producto.title} />
+          <p>Precio: {producto.price}</p>
+          <p>Size: {producto.size}</p>
+          <p>Color: {producto.color}</p>
+          <p>Categoría: {producto.categories}</p>
+          <figcaption>{producto.desc}</figcaption>
+          {user && (
+            <>
+              <form onSubmit={handleSubmit(formSubmit)}>
+                <label>
+                  <input
+                    type="text"
+                    hidden={true}
+                    value={producto._id}
+                    {...register("productId")}
+                  />
+                </label>
+                {user.rol && user.rol !== "admin" && (
+                  <Button disabled={isDisabled}>
+                    <ShoppingCart />
+                  </Button>
+                )}
+
+                {user.rol && user.rol === "admin" ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        Swal.fire({
+                          title:
+                            "Are you sure you want to change your password?",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "rgb(73, 193, 162)",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "YES",
+                        }).then(async (result) => {
+                          if (result.isConfirmed) {
+                            console.log("que es producto", producto);
+                            borraProducto(producto._id);
+                          }
+                        });
+                      }}
+                    >
+                      Eliminar
+                    </button>
+                    <ButtonAlike to={`/editarProducto/${producto._id}`}>
+                      <Edit />
+                    </ButtonAlike>
+                  </>
+                ) : (
+                  ""
+                )}
+              </form>
+            </>
+          )}
+        </figure>
+      )}
+    </>
+    /*  */
   );
 };
+
+const Button = styled.button`
+  border: 1px solid red;
+  cursor: pointer;
+  display: inline-block;
+`;
+
+const ButtonAlike = styled(Link)`
+  border: 1px solid red;
+  cursor: pointer;
+  display: inline-block;
+`;
+
+const FigureAdmin = styled.figure`
+  display: flex;
+  gap: 1rem;
+`;

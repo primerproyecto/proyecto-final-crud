@@ -69,102 +69,104 @@ export const AgregarProducto = () => {
   return (
     <>
       <div className="form-wrap">
-        <h1>Agregar producto</h1>
         <form onSubmit={handleSubmit(formSubmit)}>
-          <div className="">
-            <label htmlFor="name">Título</label>
-            <input
-              className="input_user"
-              type="text"
-              id="name"
-              name="title"
-              autoComplete="false"
-              {...register("title", { required: true })}
-            />
-          </div>
-          <div className="">
-            <label htmlFor="description">Descripcion</label>
-            <input
-              className="input_user"
-              type="text"
-              id="description"
-              name="desc"
-              autoComplete="false"
-              {...register("desc", { required: true })}
-            />
-          </div>
-
-          <div className="">
-            <label htmlFor="file-upload">Imagen</label>
-            <input
-              type="file"
-              id="file-upload"
-              name="image"
-              {...register("image", { required: true })}
-            />
-
-            <div className="">
-              <label htmlFor="size">Size</label>
+          <fieldset>
+            <legend>Agregar producto</legend>
+            <div className="field-wrapper">
+              <label htmlFor="name">Título</label>
               <input
+                className="input_user"
                 type="text"
-                id="size"
-                name="size"
-                {...register("size", { required: true })}
+                id="name"
+                name="title"
+                autoComplete="false"
+                {...register("title", { required: true })}
               />
             </div>
-            <div className="">
-              <label htmlFor="color">Color</label>
+            <div className="field-wrapper">
+              <label htmlFor="description">Descripcion</label>
               <input
+                className="input_user"
                 type="text"
-                id="color"
-                name="color"
-                {...register("color", { required: true })}
+                id="description"
+                name="desc"
+                autoComplete="false"
+                {...register("desc", { required: true })}
               />
             </div>
-            <div className="sexo">
-              <label htmlFor="categories" className="label-radio ">
-                Complementos
-              </label>
-              <input
-                type="radio"
-                name="categories"
-                id="categories"
-                value="Complementos"
-                {...register("categories")}
-              />
-              <label htmlFor="rol1" className="label-radio">
-                Electrónico
-              </label>
 
+            <div className="field-wrapper">
+              <label htmlFor="file-upload">Imagen</label>
               <input
-                type="radio"
-                name="categories"
-                id="rol1"
-                value="Electrónico"
-                {...register("categories")}
+                type="file"
+                id="file-upload"
+                name="image"
+                {...register("image", { required: true })}
               />
-            </div>
-            <div className="">
-              <label htmlFor="price">Precio</label>
-              <input
-                type="text"
-                id="price"
-                name="price"
-                {...register("price", { required: true })}
-              />
-            </div>
-          </div>
 
-          <div className="btn_container">
-            <button
-              className="btn"
-              type="submit"
-              disabled={send}
-              style={{ background: send ? "#49c1a388" : "#2f7a67" }}
-            >
-              Register
-            </button>
-          </div>
+              <div className="field-wrapper">
+                <label htmlFor="size">Size</label>
+                <input
+                  type="text"
+                  id="size"
+                  name="size"
+                  {...register("size", { required: true })}
+                />
+              </div>
+              <div className="field-wrapper">
+                <label htmlFor="color">Color</label>
+                <input
+                  type="text"
+                  id="color"
+                  name="color"
+                  {...register("color", { required: true })}
+                />
+              </div>
+              <div className="sexo">
+                <label htmlFor="categories" className="label-radio ">
+                  Complementos
+                </label>
+                <input
+                  type="radio"
+                  name="categories"
+                  id="categories"
+                  value="Complementos"
+                  {...register("categories")}
+                />
+                <label htmlFor="rol1" className="label-radio">
+                  Electrónico
+                </label>
+
+                <input
+                  type="radio"
+                  name="categories"
+                  id="rol1"
+                  value="Electrónico"
+                  {...register("categories")}
+                />
+              </div>
+              <div className="field-wrapper">
+                <label htmlFor="price">Precio</label>
+                <input
+                  type="text"
+                  id="price"
+                  name="price"
+                  {...register("price", { required: true })}
+                />
+              </div>
+            </div>
+
+            <div className="btn_container">
+              <button
+                className="btn"
+                type="submit"
+                disabled={send}
+                style={{ background: send ? "#49c1a388" : "#2f7a67" }}
+              >
+                Register
+              </button>
+            </div>
+          </fieldset>
         </form>
       </div>
     </>

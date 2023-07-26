@@ -60,7 +60,6 @@ export const Carrito = () => {
   if (removeCarrito) {
     return <Navigate to={`/carrito/${user.carrito}`} />;
   }
-  console.log("que es carrito", carrito);
   return (
     <div>
       <p>Lista de productos del usuario</p>

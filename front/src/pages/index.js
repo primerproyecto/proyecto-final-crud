@@ -8,3 +8,4 @@ export * from "./Register";
 export * from "./ModifyPassword";
 export * from "./AgregarProducto";
 export * from "./EditarProducto";
+export * from "./Dashboard";
