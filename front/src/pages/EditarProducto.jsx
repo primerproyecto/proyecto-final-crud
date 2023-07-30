@@ -38,6 +38,7 @@ export const EditarProducto = () => {
         price: parseInt(formData.price),
         categories: formData.categories,
         image: formData.image[0],
+        destacado: formData.destacado,
       };
       console.log("que es customformdata", custonFormData);
 
@@ -50,6 +51,7 @@ export const EditarProducto = () => {
       const custonFormData = {
         ...formData,
         price: parseInt(formData.price),
+        destacado: formData.destacado,
         categories: "Complementos",
       };
 
@@ -88,6 +90,8 @@ export const EditarProducto = () => {
   /*  if (okEditProduct) {
     return <Navigate to="/" />;
   } */
+
+  console.log("que es producto", product);
   return (
     <>
       <div className="form-wrap">
@@ -178,6 +182,16 @@ export const EditarProducto = () => {
                 defaultValue={product.price}
                 name="price"
                 {...register("price", { required: true })}
+              />
+            </div>
+            <div className="">
+              <label htmlFor="destacado">Destacado</label>
+              <input
+                type="checkbox"
+                id="destacado"
+                checked={product.destacado}
+                name="destacado"
+                {...register("destacado", { required: false })}
               />
             </div>
           </div>

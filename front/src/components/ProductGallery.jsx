@@ -18,6 +18,7 @@ export const ProductGallery = ({ producto, modo }) => {
   const [res, setRes] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
   const [okAgregado, setOkAgregado] = useState(false);
+  /*  console.log("que es destacado", destacado); */
 
   const formSubmit = async (formData) => {
     const customFormData = {
@@ -65,18 +66,18 @@ export const ProductGallery = ({ producto, modo }) => {
                   {...register("productId")}
                 />
               </label>
-              {user.rol && user.rol !== "admin" && (
+              {/*  {user.rol && user.rol !== "admin" && (
                 <Button disabled={isDisabled}>
                   <ShoppingCart />
                 </Button>
-              )}
+              )} */}
 
               {user.rol && user.rol === "admin" ? (
                 <>
                   <button
                     onClick={() => {
                       Swal.fire({
-                        title: "Are you sure you want to change your password?",
+                        title: "Quieres borrar este producto del catálogo?",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "rgb(73, 193, 162)",
@@ -110,6 +111,7 @@ export const ProductGallery = ({ producto, modo }) => {
           <p>Size: {producto.size}</p>
           <p>Color: {producto.color}</p>
           <p>Categoría: {producto.categories}</p>
+          <p>Destacado: {producto.destacado}</p>
           <figcaption>{producto.desc}</figcaption>
           {user && (
             <>

@@ -16,7 +16,8 @@ export const Dahsboard = () => {
           {loading ? (
             <Spinner />
           ) : (
-            <div className="grilla">
+            <fieldset className="grilla">
+              <legend>Todos los productos</legend>
               {products.data.length > 0 ? (
                 products?.data?.map((item) => {
                   return (
@@ -30,7 +31,7 @@ export const Dahsboard = () => {
               ) : (
                 <h1>No hay productos</h1>
               )}
-            </div>
+            </fieldset>
           )}
         </section>
         <section>

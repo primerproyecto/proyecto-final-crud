@@ -154,6 +154,15 @@ export const AgregarProducto = () => {
                   {...register("price", { required: true })}
                 />
               </div>
+              <div className="field-wrapper">
+                <label htmlFor="destacado">Destacdo ?</label>
+                <input
+                  type="checkbox"
+                  id="destacado"
+                  name="destacado"
+                  {...register("destacado", { required: false })}
+                />
+              </div>
             </div>
 
             <div className="btn_container">
@@ -163,7 +172,7 @@ export const AgregarProducto = () => {
                 disabled={send}
                 style={{ background: send ? "#49c1a388" : "#2f7a67" }}
               >
-                Register
+                Agregar
               </button>
             </div>
           </fieldset>

@@ -1,6 +1,12 @@
 # proyecto-final-crud
 Ejercicio final del bootcamp.
-Proyecto final de un crud de una tienda online.
+Proyecto final de un crud de una tienda online con las siguientes librerías de javascript.
+- Expressjs, jsonwebtoken, cloudinary, bcrypt, nodemailer y multer.
+- Mongodb para el almacenamiento en la nube. 
+- React. Para gestionar el frontal de la aplicación.
+
+
+
 
 
 ## Back
@@ -27,6 +33,11 @@ Proyecto final de un crud de una tienda online.
 ### Modelos
 
 #### Modelo usuario
+
+En la aplicación habrá 3 tipos de usuarios:
+- usuarios **anónimos**, que son los que no se han registrado en la apliación.
+- usurios **regulares** son aquellos que se han registrado con el rol de ***user*** en la aplicación.
+- usuarios **administrador**. Aquellos que se han registrador con el rol de ***admin***.
 
 ```
 const UserSchema = new Schema(
@@ -99,9 +110,63 @@ const ProductSchema = new Schema(
     size: { type: String },
     color: { type: String },
     price: { type: Number, required: true, min: 10 },
+    destacado: { type: Boolean, default: false },
   },
   {
     timestamps: true,
   }
 );
 ```
+
+
+
+### ENDPOINTS
+
+#### Endpoints de usuario
+
+```
+UserRoutes.post('/register', upload.single('image'), register);
+UserRoutes.post('/check', checkNewUser);
+UserRoutes.post('/resend', resendCode);
+UserRoutes.post('/login', login);
+UserRoutes.post('/forgotpassword', forgotPassword);
+UserRoutes.patch('/changepassword', [isAuth], modifyPassword);
+UserRoutes.patch('/update/update', [isAuth], upload.single('image'), update);
+
+UserRoutes.delete('/', [isAuth], deleteUser);
+UserRoutes.get('/', allUsers);
+
+UserRoutes.post('/forgotpassword/sendPassword/:id', sendPassword);
+```
+
+
+#### Endpoints de producto
+
+```
+ProductRoutes.get("/getAllProducts", getAllProducts);
+ProductRoutes.get("/:id", getOneProduct);
+ProductRoutes.post("/new", upload.single("image"), postOneProduct);
+ProductRoutes.patch(
+  "/:id",
+  upload.single("image"),
+  isAuthAdmin,
+  updateOneProduct
+);
+ProductRoutes.delete("/:id", isAuthAdmin, deleteOneProduct);
+```
+
+
+#### Endpoints del carrito
+
+````
+CartRoutes.post('/agregar', isAuth, createCarrito);
+CartRoutes.delete('/:id', isAuthAdmin, borrarCarrito);
+CartRoutes.get('/:id', isAuth, todoMiCarrito);
+CartRoutes.post('/:carritoId', isAuth, agregarProductoAlCarrito);
+CartRoutes.patch('/:carritoId', isAuth, quitarProductoDelCarrito);
+
+CartRoutes.get('/', todosLosCarritos);
+````
+
+
+
