@@ -7,6 +7,43 @@ Proyecto final de un crud de una tienda online con las siguientes librerías de 
 
 
 
+## Logica de negocio.
+
+### Gestión de catálogo
+
+Un usuario con rol de admin podrá agregar productos al catálogo de productos que es una colección de items que pueden comprarse en la aplicación.
+
+Asímimo podrá actualizar cualquier dato de los productos a través de la aplicación una vez loginneado.
+
+Este mismo perfil es el que se encargará de poder eliminar los productos del catálogo.
+
+El catálogo de productos, creado por el rol "admin", podrá ser visualizado en la página incial de la aplicación así como en la página de detalle del producto por cualquier visitante que acceda al dominio de puestan en producción.
+
+Los productos podrán ser filtrados por categoría y hacer búsquedas por el campo ```title``` y por el campo ```descripción```.
+
+Si está registrado y logineado, podrá agregarlo al carrito que representa la colección de items que el usuario ha añadido. También podrá quitarlos del carrito a través de la misma aplicación.
+En este carrito se llevará la cuenta del numero de items de cada producto que han sido añadidos.
+
+
+
+### Gestión de usuario
+
+Habrá 3 tipos de usuarios en nuestra aplicación.
+
+- Los ***anónimos***.
+- Los usuarios que tengan ***rol de user*** en el registro.
+- Los ususrios que tengan ***rol de admin*** en el registro.
+
+
+Para identificarse en la aplicación deberán de haber completado el proceso de registro y
+
+Los usuarios accederán o harán login a través del ***email*** que hayan establecido en el registro y la ***contraseña*** desde la página de login.
+También se facilitará la recuperación de la contraseña si ya se han registrado y han olvidado la misma. Se les facilitará al correo que hayan utilizado en el registro otra contraseña.
+
+
+
+
+
 
 
 ## Back
