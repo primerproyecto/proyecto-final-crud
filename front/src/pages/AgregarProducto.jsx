@@ -167,7 +167,6 @@ export const AgregarProducto = () => {
 
             <div className="btn_container">
               <button
-                className="btn"
                 type="submit"
                 disabled={send}
                 style={{ background: send ? "#49c1a388" : "#2f7a67" }}

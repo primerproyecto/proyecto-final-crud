@@ -2,16 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { ProductGallery, Spinner } from "../components";
+import { ProductDashboard, Spinner, AllCarritos } from "../components";
 import { useProducts } from "../context/productsContext";
 import { AgregarProducto } from "./AgregarProducto";
-
 export const Dahsboard = () => {
   const { products, loading } = useProducts();
   return (
     <div className="grilla-dashboard">
       <h2>Dashboard</h2>
       <Grilla>
+        <section>
+          <fieldset>
+            <legend>Todos los carritos</legend>
+            <AllCarritos />
+          </fieldset>
+        </section>
         <section>
           {loading ? (
             <Spinner />
@@ -21,10 +26,10 @@ export const Dahsboard = () => {
               {products.data.length > 0 ? (
                 products?.data?.map((item) => {
                   return (
-                    <ProductGallery
+                    <ProductDashboard
                       key={item._id}
                       producto={item}
-                      modo="admin"
+                      modo="dashboard"
                     />
                   );
                 })
@@ -43,7 +48,7 @@ export const Dahsboard = () => {
 };
 
 const Grilla = styled.div`
-  display: flex;
+  display: grid;
   > section {
     min-width: 50%;
   }

@@ -18,7 +18,6 @@ export const ProductGallery = ({ producto, modo }) => {
   const [res, setRes] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
   const [okAgregado, setOkAgregado] = useState(false);
-  /*  console.log("que es destacado", destacado); */
 
   const formSubmit = async (formData) => {
     const customFormData = {
@@ -48,11 +47,10 @@ export const ProductGallery = ({ producto, modo }) => {
     console.log("que es res", res);
     /*  return <Navigate to={`/carrito/${user.carrito}`} />; */
   }
-  console.log(modo);
 
   return (
     <>
-      {modo == "admin" ? (
+      {modo == "dashboard" ? (
         <FigureAdmin>
           <img src={producto.image} alt={producto.title} width="40" />
           <strong>{producto.title}</strong>
@@ -86,7 +84,7 @@ export const ProductGallery = ({ producto, modo }) => {
                       }).then(async (result) => {
                         if (result.isConfirmed) {
                           console.log("que es producto", producto);
-                          borraProducto(producto._id);
+                          await borraProducto(producto._id);
                         }
                       });
                     }}
@@ -128,36 +126,6 @@ export const ProductGallery = ({ producto, modo }) => {
                   <Button disabled={isDisabled}>
                     <ShoppingCart />
                   </Button>
-                )}
-
-                {user.rol && user.rol === "admin" ? (
-                  <>
-                    <button
-                      onClick={() => {
-                        Swal.fire({
-                          title:
-                            "Are you sure you want to change your password?",
-                          icon: "warning",
-                          showCancelButton: true,
-                          confirmButtonColor: "rgb(73, 193, 162)",
-                          cancelButtonColor: "#d33",
-                          confirmButtonText: "YES",
-                        }).then(async (result) => {
-                          if (result.isConfirmed) {
-                            console.log("que es producto", producto);
-                            borraProducto(producto._id);
-                          }
-                        });
-                      }}
-                    >
-                      Eliminar
-                    </button>
-                    <ButtonAlike to={`/editarProducto/${producto._id}`}>
-                      <Edit />
-                    </ButtonAlike>
-                  </>
-                ) : (
-                  ""
                 )}
               </form>
             </>

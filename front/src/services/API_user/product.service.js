@@ -34,7 +34,7 @@ export const borraProducto = async (carritoId) => {
 };
 
 //! --------------------------- EDITAR PRODUCTO --------------------------------------------
-
+// funcion para recibir el carrito del usuario
 export const editarProducto = async (carritoId) => {
   return APIuser.get(`/products/${carritoId}`, {
     Authorization: `Bearer ${updateToken()}`,
@@ -46,10 +46,11 @@ export const editarProducto = async (carritoId) => {
 //! --------------------------- EDITAR PRODUCTO --------------------------------------------
 
 export const updateProducto = async (carritoId, formData) => {
+  console.log("que es formData desde el updateProcuto en el front", formData);
   return APIuser.patch(`/products/${carritoId}`, formData, {
     headers: {
-      Authorization: `Bearer ${updateToken()}`,
       "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${updateToken()}`,
     },
   })
     .then((res) => {

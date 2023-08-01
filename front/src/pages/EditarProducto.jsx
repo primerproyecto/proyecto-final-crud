@@ -21,7 +21,7 @@ export const EditarProducto = () => {
   const [send, setSend] = useState(false);
   const [okEditProduct, setOkEditProduct] = useState(false);
   const [product, setProduct] = useState({});
-  const { products, loading } = useProducts();
+  /* const { products, loading } = useProducts(); */
 
   //! ------------------------------------------------------------------------------
   //? 1) funcion que se encarga del formulario - de la data del formulario
@@ -35,10 +35,10 @@ export const EditarProducto = () => {
 
       const custonFormData = {
         ...formData,
-        price: parseInt(formData.price),
-        categories: formData.categories,
-        image: formData.image[0],
-        destacado: formData.destacado,
+        /*  price: parseInt(formData.price),
+        categories: formData.categories, */
+        image: inputFile[0] /* 
+        destacado: formData.destacado, */,
       };
       console.log("que es customformdata", custonFormData);
 
@@ -50,9 +50,9 @@ export const EditarProducto = () => {
     } else {
       const custonFormData = {
         ...formData,
-        price: parseInt(formData.price),
+        /* price: parseInt(formData.price),
         destacado: formData.destacado,
-        categories: "Complementos",
+        categories: formData.categories, */
       };
 
       setSend(true);
@@ -79,7 +79,7 @@ export const EditarProducto = () => {
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
-    useProductEditarErrors(res, setOkEditProduct, setRes);
+    useProductEditarErrors(res, setOkEditProduct, setRes, setAllUser);
     /*  if (res?.status == 200) bridgeData("ALLUSER"); */
   }, [res]);
 
@@ -91,7 +91,6 @@ export const EditarProducto = () => {
     return <Navigate to="/" />;
   } */
 
-  console.log("que es producto", product);
   return (
     <>
       <div className="form-wrap">
@@ -189,7 +188,7 @@ export const EditarProducto = () => {
               <input
                 type="checkbox"
                 id="destacado"
-                checked={product.destacado}
+                defaultChecked={product.destacado}
                 name="destacado"
                 {...register("destacado", { required: false })}
               />

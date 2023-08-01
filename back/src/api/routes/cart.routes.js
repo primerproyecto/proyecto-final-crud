@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const {
   createCarrito,
   borrarCarrito,
@@ -6,17 +6,17 @@ const {
   agregarProductoAlCarrito,
   todosLosCarritos,
   quitarProductoDelCarrito,
-} = require('../controllers/cart.controller');
-const { isAuth, isAuthAdmin } = require('../../middlewares/auth.middleware');
+} = require("../controllers/cart.controller");
+const { isAuth, isAuthAdmin } = require("../../middlewares/auth.middleware");
 
 const CartRoutes = express.Router();
 
-CartRoutes.post('/agregar', isAuth, createCarrito);
-CartRoutes.delete('/:id', isAuthAdmin, borrarCarrito);
-CartRoutes.get('/:id', isAuth, todoMiCarrito);
-CartRoutes.post('/:carritoId', isAuth, agregarProductoAlCarrito);
-CartRoutes.patch('/:carritoId', isAuth, quitarProductoDelCarrito);
+CartRoutes.post("/agregar", isAuth, createCarrito);
+CartRoutes.delete("/:id", isAuthAdmin, borrarCarrito);
+CartRoutes.get("/:id", isAuth, todoMiCarrito);
+CartRoutes.post("/:carritoId", isAuth, agregarProductoAlCarrito);
+CartRoutes.patch("/:carritoId", isAuth, quitarProductoDelCarrito);
 
-CartRoutes.get('/', todosLosCarritos);
+CartRoutes.get("/", isAuthAdmin, todosLosCarritos);
 
 module.exports = CartRoutes;

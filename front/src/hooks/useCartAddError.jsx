@@ -8,7 +8,7 @@ export const useCartAddError = (res, setRes, setOkAgregado) => {
     /*  const dataCustom = {
       token: res.data.token,
       user: res.data.user.name,
-      email: res.data.user.email,
+      email: res.data.user.email,S
       _id: res.data.user._id,
       image: res.data.user.imagen,
       check: res.data.user.check,

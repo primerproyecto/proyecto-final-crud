@@ -9,3 +9,5 @@ export * from "./ProtectedCheckChildren";
 export * from "./ChangePassword";
 export * from "./FormProfile";
 export * from "./FigureUser";
+export * from "./ProductDashboard";
+export * from "./AllCarritos";

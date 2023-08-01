@@ -32,7 +32,6 @@ const isAuthAdmin = async (req, res, next) => {
     const decoded = verifyToken(token, process.env.JWT_SECRET);
     console.log("que es decoded.id", decoded.id);
     req.user = await User.findById(decoded.id);
-    console.log("que es req.user", req.user);
     if (req.user.rol !== "admin") {
       return next(new Error("Unauthorized, not admin"));
     }

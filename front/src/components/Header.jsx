@@ -28,7 +28,7 @@ export const Header = () => {
               <PlusCircle /> Dashboard
             </StyleNavLinks>
           ) : null}
-          {user !== null ? (
+          {user && user.rol === "user" ? (
             <StyleNavLinks to={`/carrito/${user.carrito}`}>
               <Layout /> Carrito
             </StyleNavLinks>

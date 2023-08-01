@@ -123,7 +123,6 @@ const agregarProductoAlCarrito = async (req, res) => {
     const karrito = await Cart.findById(carritoId).populate(
       "products.productId"
     );
-    console.log("que es karrito con populate products.productId", karrito);
 
     // Buscar el producto en el carrito
     const productoEnCarrito = karrito.products.find((product) => {
@@ -148,10 +147,10 @@ const agregarProductoAlCarrito = async (req, res) => {
   }
 };
 
-/* MOSTAR TODOS LOS CARRITOS ...PARA DESARROYO*/
+/* MOSTAR TODOS LOS CARRITOS */
 const todosLosCarritos = async (req, res) => {
   try {
-    const todosLosCarritos = await Cart.find().populate("products");
+    const todosLosCarritos = await Cart.find().populate("products.productId");
 
     if (!todosLosCarritos) {
       return res.status(404).json({ mensaje: "Carrito no encontrado" });
@@ -159,9 +158,7 @@ const todosLosCarritos = async (req, res) => {
 
     res.status(200).json(todosLosCarritos);
   } catch (error) {
-    res
-      .status(500)
-      .json({ mensaje: "Error al agregar producto al carrito", error });
+    res.status(500).json({ mensaje: "Error al mostrar los carritos", error });
   }
 };
 

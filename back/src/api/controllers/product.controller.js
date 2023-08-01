@@ -85,13 +85,66 @@ const postOneProduct = async (req, res, next) => {
 
 //ACTUALIZAR PRODUCTO
 const updateOneProduct = async (req, res, next) => {
+  let catchImg = req.file?.path;
+
+  const todo = { ...req.body, image: catchImg };
+
   try {
-    const actualizadoProducto = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    res.status(200).json(actualizadoProducto);
+    // actualizamos los indexes de los elementos unicos por si han modificado
+    await Product.syncIndexes();
+    // instanciamos un nuevo modelo de user
+    const patchProduct = new Product(req.body);
+
+    // si tenemos la req.file le metemos el path de cloudinary
+    if (req.file) {
+      patchProduct.image = req.file.path;
+    }
+
+    try {
+      await Product.findByIdAndUpdate(req.params.id, todo, { new: true });
+      if (req.file) {
+        deleteImgCloudinary(req.user.image);
+      }
+      //! ----------------test  runtime ----------------
+      // buscamos el usuario actualizado
+      const updateProduct = await Product.findById(req.params.id);
+
+      // cogemos la keys del body
+      const updateKeys = Object.keys(req.body);
+
+      // creamos una variable para  guardar los test
+      const testUpdate = [];
+      // recorremos las keys y comparamos
+      updateKeys.forEach((item) => {
+        if (updateProduct[item] == req.body[item]) {
+          testUpdate.push({
+            [item]: true,
+          });
+        } else {
+          testUpdate.push({
+            [item]: false,
+          });
+        }
+      });
+
+      if (req.file) {
+        updateProduct.image == req.file.path
+          ? testUpdate.push({
+              file: true,
+            })
+          : testUpdate.push({
+              file: false,
+            });
+      }
+      return res.status(200).json({
+        testUpdate,
+      });
+    } catch (error) {
+      if (req.file) deleteImgCloudinary(catchImg);
+      return next(error);
+    }
+
+    res.status(200);
   } catch (error) {
     return next(
       setError(
