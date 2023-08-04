@@ -35,24 +35,16 @@ export const EditarProducto = () => {
 
       const custonFormData = {
         ...formData,
-        /*  price: parseInt(formData.price),
-        categories: formData.categories, */
-        image: inputFile[0] /* 
-        destacado: formData.destacado, */,
+        image: inputFile[0],
       };
-      console.log("que es customformdata", custonFormData);
+      const valor = await updateProducto(product._id, custonFormData);
 
       setSend(true);
       setRes(await updateProducto(product._id, custonFormData));
       setSend(false);
-
-      //! me llamo al servicio
     } else {
       const custonFormData = {
         ...formData,
-        /* price: parseInt(formData.price),
-        destacado: formData.destacado,
-        categories: formData.categories, */
       };
 
       setSend(true);
@@ -67,20 +59,20 @@ export const EditarProducto = () => {
     const fetchData = async () => {
       try {
         const response = await editarProducto(id);
+        console.log("que es response", response);
         setProduct(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, []);
+  }, [res]);
 
   //! ------------------------------------------------------------------------------
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
-    useProductEditarErrors(res, setOkEditProduct, setRes, setAllUser);
-    /*  if (res?.status == 200) bridgeData("ALLUSER"); */
+    useProductEditarErrors(res, setOkEditProduct, setRes);
   }, [res]);
 
   //! ------------------------------------------------------------------------------
@@ -140,7 +132,7 @@ export const EditarProducto = () => {
                 {...register("size", { required: true })}
               />
             </div>
-            <div className="sexo">
+            <div className="categories">
               <label htmlFor="categories" className="label-radio ">
                 Complementos
               </label>
@@ -149,17 +141,22 @@ export const EditarProducto = () => {
                 name="categories"
                 id="categories"
                 value="Complementos"
+                defaultChecked={
+                  product.categories === "Complementos" ? true : false
+                }
                 {...register("categories")}
               />
               <label htmlFor="rol1" className="label-radio">
                 Electrónico
               </label>
-
               <input
                 type="radio"
                 name="categories"
                 id="rol1"
                 value="Electrónico"
+                defaultChecked={
+                  product.categories === "Electrónico" ? true : false
+                }
                 {...register("categories")}
               />
             </div>

@@ -30,7 +30,6 @@ const isAuthAdmin = async (req, res, next) => {
   try {
     // ---> decodificamos el token y sacomos el id y email que es con lo que hemos creado el token
     const decoded = verifyToken(token, process.env.JWT_SECRET);
-    console.log("que es decoded.id", decoded.id);
     req.user = await User.findById(decoded.id);
     if (req.user.rol !== "admin") {
       return next(new Error("Unauthorized, not admin"));

@@ -1,12 +1,12 @@
-const User = require('../models/user.model');
-const Cart = require('../models/cart.model');
-const bcrypt = require('bcrypt');
-const dotenv = require('dotenv');
-const nodemailer = require('nodemailer');
-const setError = require('../../helpers/handle-error');
-const { deleteImgCloudinary } = require('../../middlewares/files.middleware');
-const { generateToken } = require('../../utils/token');
-const randomPassword = require('../../utils/randomPassword');
+const User = require("../models/user.model");
+const Cart = require("../models/cart.model");
+const bcrypt = require("bcrypt");
+const dotenv = require("dotenv");
+const nodemailer = require("nodemailer");
+const setError = require("../../helpers/handle-error");
+const { deleteImgCloudinary } = require("../../middlewares/files.middleware");
+const { generateToken } = require("../../utils/token");
+const randomPassword = require("../../utils/randomPassword");
 dotenv.config();
 
 //! ------------------------------------------------------------------------
@@ -22,7 +22,7 @@ const register = async (req, res, next) => {
     const email = process.env.EMAIL;
     const password = process.env.PASSWORD;
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
       auth: {
         user: email,
         pass: password,
@@ -35,9 +35,10 @@ const register = async (req, res, next) => {
     );
 
     //CREO UN NUEVO CARRITO
-    const carrito = new Cart({ products: [] });
+    const carrito = new Cart();
+    console.log("que es KARRITO", carrito);
     const carritoGuardado = await carrito.save();
-    console.log('que es carrito', carritoGuardado.id);
+    console.log("que es carrito", carritoGuardado.id);
 
     const carritoCreado = carritoGuardado.id;
 
@@ -51,7 +52,7 @@ const register = async (req, res, next) => {
     if (req.file) {
       newUser.image = req.file.path;
     } else {
-      newUser.image = 'https://pic.onlinewebfonts.com/svg/img_181369.png';
+      newUser.image = "https://pic.onlinewebfonts.com/svg/img_181369.png";
     }
 
     //! tenemos que buscarlo en la base de datos para saber que no existe
@@ -62,7 +63,7 @@ const register = async (req, res, next) => {
 
     if (userExists) {
       if (req.file) deleteImgCloudinary(catchImg);
-      return next(setError(409, 'This user already exist'));
+      return next(setError(409, "This user already exist"));
     } else {
       try {
         const createUser = await newUser.save();
@@ -72,7 +73,7 @@ const register = async (req, res, next) => {
         const mailOptions = {
           from: email,
           to: req.body.email,
-          subject: 'Code confirmation',
+          subject: "Code confirmation",
           text: `Your code is ${confirmationCode}`,
         };
 
@@ -80,7 +81,7 @@ const register = async (req, res, next) => {
           if (error) {
             console.log(error);
           } else {
-            console.log('Email sent: ' + info.response);
+            console.log("Email sent: " + info.response);
           }
         });
 
@@ -95,7 +96,7 @@ const register = async (req, res, next) => {
   } catch (error) {
     if (req.file) deleteImgCloudinary(catchImg);
     return next(
-      setError(error.code || 500, error.message || 'failed create user')
+      setError(error.code || 500, error.message || "failed create user")
     );
   }
 };
@@ -113,7 +114,7 @@ const checkNewUser = async (req, res, next) => {
     const userExists = await User.findOne({ email });
     if (!userExists) {
       //!No existe----> 404 de no se encuentra
-      return res.status(404).json('User not found');
+      return res.status(404).json("User not found");
     } else {
       // cogemos que comparamos que el codigo que recibimos por la req.body y el del userExists es igual
       if (confirmationCode === userExists.confirmationCode) {
@@ -142,14 +143,14 @@ const checkNewUser = async (req, res, next) => {
           userExists,
           check: false,
           delete: (await User.findById(userExists._id))
-            ? 'error delete user'
-            : 'ok delete user',
+            ? "error delete user"
+            : "ok delete user",
         });
       }
     }
   } catch (error) {
     // siempre en el catch devolvemos un 500 con el error general
-    return next(setError(500, 'General error check code'));
+    return next(setError(500, "General error check code"));
   }
 };
 
@@ -163,7 +164,7 @@ const resendCode = async (req, res, next) => {
     const email = process.env.EMAIL;
     const password = process.env.PASSWORD;
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
       auth: {
         user: email,
         pass: password,
@@ -176,7 +177,7 @@ const resendCode = async (req, res, next) => {
       const mailOptions = {
         from: email,
         to: req.body.email,
-        subject: 'Confirmation code ',
+        subject: "Confirmation code ",
         text: `tu codigo es ${userExists.confirmationCode}`,
       };
 
@@ -184,17 +185,17 @@ const resendCode = async (req, res, next) => {
         if (error) {
           console.log(error);
         } else {
-          console.log('Email sent: ' + info.response);
+          console.log("Email sent: " + info.response);
           return res.status(200).json({
             resend: true,
           });
         }
       });
     } else {
-      return res.status(404).json('User not found');
+      return res.status(404).json("User not found");
     }
   } catch (error) {
-    return next(setError(500, error.message || 'Error general send code'));
+    return next(setError(500, error.message || "Error general send code"));
   }
 };
 
@@ -211,7 +212,7 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email });
     // si no hay usuario entonces lanzamos una respuesta 404 con user not found
     if (!user) {
-      return res.status(404).json('User no found');
+      return res.status(404).json("User no found");
     } else {
       // miramos si las contraseñas son iguales
       if (bcrypt.compareSync(password, user.password)) {
@@ -231,12 +232,12 @@ const login = async (req, res, next) => {
         });
       } else {
         // si la contraseña no esta correcta enviamos un 404 con el invalid password
-        return res.status(404).json('invalid password');
+        return res.status(404).json("invalid password");
       }
     }
   } catch (error) {
     return next(
-      setError(500 || error.code, 'General error login' || error.message)
+      setError(500 || error.code, "General error login" || error.message)
     );
   }
 };
@@ -260,7 +261,7 @@ const forgotPassword = async (req, res, next) => {
       );
     } else {
       // este usuario no esta en la base datos, le mandamos un 404 y le que no esta registrado
-      return res.status(404).json('User not register');
+      return res.status(404).json("User not register");
     }
   } catch (error) {
     return next(error);
@@ -279,7 +280,7 @@ const sendPassword = async (req, res, next) => {
     const password = process.env.PASSWORD;
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
       auth: {
         user: email,
         pass: password,
@@ -290,7 +291,7 @@ const sendPassword = async (req, res, next) => {
     const mailOptions = {
       from: email,
       to: userDb.email,
-      subject: '-----',
+      subject: "-----",
       text: `User: ${userDb.name}. Your new code login is ${passwordSecure} Hemos enviado esto porque tenemos una solicitud de cambio de contraseña, si no has sido ponte en contacto con nosotros, gracias.`,
     };
     // enviamos el correo y dentro del envio gestionamos el guardado de la nuevacontraseña
@@ -300,7 +301,7 @@ const sendPassword = async (req, res, next) => {
 
         // si no se ha enviado el correo enviamos un 404 y le decimos que no hemos hecho nada
         // porque ni hemos actualizado el user, ni tampoco enviado un correo
-        return res.status(404).json('dont sent email and dont update user');
+        return res.status(404).json("dont sent email and dont update user");
       } else {
         // encriptar la contraseña  que generamos arriba
         const newPasswordHash = bcrypt.hashSync(passwordSecure, 10);
@@ -365,7 +366,7 @@ const modifyPassword = async (req, res, next) => {
         return res.status(404).json(error.message);
       }
     } else {
-      return res.status(404).json('password not match');
+      return res.status(404).json("password not match");
     }
   } catch (error) {
     return next(error);
@@ -456,10 +457,10 @@ const deleteUser = async (req, res, next) => {
     await User.findByIdAndDelete(_id);
     await Cart.findByIdAndDelete(carrito);
     if (await User.findById(_id)) {
-      return res.status(404).json('Dont delete');
+      return res.status(404).json("Dont delete");
     } else {
       deleteImgCloudinary(req.user.image);
-      return res.status(200).json('ok delete');
+      return res.status(200).json("ok delete");
     }
   } catch (error) {
     return next(error);
@@ -467,9 +468,13 @@ const deleteUser = async (req, res, next) => {
 };
 
 const allUsers = async (req, res) => {
-  const usuarios = await User.find().populate('carrito');
+  const usuarios = await User.find().populate("carrito");
 
   res.status(200).json(usuarios);
+};
+//todo
+const autoLoginController = async (req, res) => {
+  res.status(200).json("Necesitamos generar el autologin");
 };
 
 module.exports = {
@@ -483,4 +488,5 @@ module.exports = {
   update,
   deleteUser,
   allUsers,
+  autoLoginController,
 };

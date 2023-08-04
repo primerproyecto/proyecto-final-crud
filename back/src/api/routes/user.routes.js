@@ -11,8 +11,9 @@ const {
   update,
   deleteUser,
   allUsers,
+  autoLoginController,
 } = require("../controllers/users.controller");
-const { isAuth, isAuthAdmin } = require("../../middlewares/auth.middleware");
+const { isAuth } = require("../../middlewares/auth.middleware");
 
 const UserRoutes = express.Router();
 
@@ -21,8 +22,10 @@ UserRoutes.post("/check", checkNewUser);
 UserRoutes.post("/resend", resendCode);
 UserRoutes.post("/login", login);
 UserRoutes.post("/forgotpassword", forgotPassword);
-
+UserRoutes.patch("/changepassword", [isAuth], modifyPassword);
 UserRoutes.patch("/update/update", [isAuth], upload.single("image"), update);
+
+//UserRoutes.post("/login/autologin", autoLoginController);
 
 UserRoutes.delete("/", [isAuth], deleteUser);
 UserRoutes.get("/", allUsers);

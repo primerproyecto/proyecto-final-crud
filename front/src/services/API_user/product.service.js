@@ -54,7 +54,7 @@ export const updateProducto = async (carritoId, formData) => {
     },
   })
     .then((res) => {
-      res;
+      return res;
     })
     .catch((error) => error);
 };

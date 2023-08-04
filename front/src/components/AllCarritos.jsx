@@ -20,7 +20,7 @@ export const AllCarritos = () => {
     <div>
       {allCarritos &&
         allCarritos.map((item) => {
-          if (item._id !== "64babe016c57e80da1bd5620") {
+          if (item._id !== "64cbe5a870f01ddd7b6bfe10") {
             return (
               <div key={item._id}>
                 <li>Carrito Id: {item._id}</li>
