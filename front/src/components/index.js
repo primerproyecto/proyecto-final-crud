@@ -11,3 +11,4 @@ export * from "./FormProfile";
 export * from "./FigureUser";
 export * from "./ProductDashboard";
 export * from "./AllCarritos";
+/* export * from "./Buscador"; */

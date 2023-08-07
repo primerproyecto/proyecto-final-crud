@@ -6,7 +6,7 @@ import { ProductDashboard, Spinner, AllCarritos } from "../components";
 import { useProducts } from "../context/productsContext";
 import { AgregarProducto } from "./AgregarProducto";
 export const Dahsboard = () => {
-  const { products, loading } = useProducts();
+  const { products, loading, setRecargar } = useProducts();
   return (
     <div className="grilla-dashboard">
       <h2>Dashboard</h2>
@@ -23,7 +23,7 @@ export const Dahsboard = () => {
           ) : (
             <fieldset className="grilla">
               <legend>Todos los productos</legend>
-              {products.data.length > 0 ? (
+              {products?.data.length > 0 ? (
                 products?.data?.map((item) => {
                   return (
                     <ProductDashboard

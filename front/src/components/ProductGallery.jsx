@@ -103,6 +103,7 @@ export const ProductGallery = ({ producto, modo }) => {
         </FigureAdmin>
       ) : (
         <figure>
+          {producto.destacado && <p>es destacado</p>}
           <strong>{producto.title}</strong>
           <img src={producto.image} alt={producto.title} />
           <p>Precio: {producto.price}</p>

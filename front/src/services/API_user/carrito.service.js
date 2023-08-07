@@ -15,6 +15,7 @@ export const getMyCarrito = async (carritoId) => {
 export const postCarrito = async (carritoId, formData) => {
   return APIuser.post(`/cart/${carritoId}`, formData)
     .then((res) => {
+      console.log("desde el front", res);
       return res;
     })
     .catch((error) => error);

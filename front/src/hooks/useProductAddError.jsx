@@ -1,10 +1,16 @@
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
-export const useProductAddError = (res, setAddOk, userLogin, setRes) => {
+export const useProductAddError = (
+  res,
+  setOkAddProduct,
+  setRes,
+  setRecargar
+) => {
   //? si la respuesta es ok ---- > directamente esta el status en la primera clave es decir: res.status
   //? si la respuesta no esta ok--> res.response.status
   //! ------------------ 200 : todo ok
   if (res?.status == 200) {
-    setAddOk(() => true);
+    setOkAddProduct(() => true);
+    setRecargar((prevState) => !prevState);
     Swal.fire({
       icon: "success",
       title: "Producto agregado al carrito",
