@@ -10,8 +10,6 @@ import {
 } from "../services/API_user/carrito.service";
 import { Navigate } from "react-router-dom";
 
-import { useProducts } from "../context/productsContext";
-
 export const Carrito = () => {
   const { id } = useParams();
 
@@ -25,6 +23,8 @@ export const Carrito = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [removeCarrito, setORemoveCarrito] = useState(false);
 
+
+
   const carritoId = user.carrito;
 
   const { register, handleSubmit } = useForm();
@@ -37,34 +37,34 @@ export const Carrito = () => {
     setRes(await quitarItemCarrito(carritoId, customFormData));
     setIsDisabled(false);
   };
-
+  
   useEffect(() => {
     // Lógica para obtener los valores del endpoint
     const fetchData = async () => {
       try {
         const response = await getMyCarrito(carritoId);
         /*  const arr = [...response.data.products]; */
-        setCarrito(...carrito, response.data.products);
+        setCarrito(response.data.products);
+        console.log('que es response.data.products', response.data.products)
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, []);
+  }, [removeCarrito]);
 
   useEffect(() => {
     /*  console.log("que es carrito", carrito); */
     useCartRemoveError(res, setORemoveCarrito, setRes);
   }, [res]);
 
-  if (removeCarrito) {
-    return <Navigate to={`/carrito/${user.carrito}`} />;
-  }
+
   return (
+   
     <div>
       <p>Lista de productos del usuario</p>
       <ul>
-        {carrito &&
+        {carrito ?
           carrito?.map((item) => {
             return (
               <li key={item._id}>
@@ -83,7 +83,7 @@ export const Carrito = () => {
                 </form>
               </li>
             );
-          })}
+          }) : <p>no hay carrito</p>}
       </ul>
     </div>
   );

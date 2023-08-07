@@ -16,12 +16,6 @@ export const ProductsContextProvider = ({ children }) => {
       setProducts(res);
       setLoading(() => false);
     });
-  }, []);
-  useEffect(() => {
-    getAllProducts().then((res) => {
-      setProducts(res);
-      setLoading(() => false);
-    });
   }, [recargar]);
   // UseMemo memoriza el return de una funcion
   const value = useMemo(
