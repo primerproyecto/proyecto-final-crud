@@ -1,26 +1,23 @@
 import { useEffect, useContext, useState } from "react";
 import { ProductGallery, Spinner } from "../components";
 import Buscador from "../components/Buscador";
-import { Search } from "react-feather";
+import { Search, X } from "react-feather";
 import { useAuth } from "../context/authContext";
 import { useProducts } from "../context/productsContext";
 
 export const Home = () => {
   const { products, loading, setProducts } = useProducts();
-  const { user } = useAuth();
+
+  const [filterProducts, setFilterProducts] = useState(() => products);
 
   const [palabraABuscar, setPalabraABuscar] = useState("");
 
   const handleFormSearch = (e) => {
     e.preventDefault();
     const coincidentes = products?.data.filter((item) => {
-      console.log("que es ", palabraABuscar.toString());
-      item.title == palabraABuscar;
+      return item.title.includes(palabraABuscar);
     });
-    if (coincidentes) {
-      console.log("coincidentes", coincidentes);
-      setProducts(coincidentes);
-    }
+    setFilterProducts({ data: coincidentes });
   };
 
   useEffect(() => {}, [products]);
@@ -44,11 +41,15 @@ export const Home = () => {
               <button>
                 <Search />
               </button>
+              <button onClick={() => setPalabraABuscar("")}>
+                <X />
+              </button>
             </div>
           </form>
           <div className="grilla">
-            {products?.data?.length > 0 ? (
-              products?.data?.map((item) => {
+            {filterProducts?.data?.length > 0 ? (
+              filterProducts?.data?.map((item) => {
+                console.log("que es item", item);
                 return <ProductGallery key={item._id} producto={item} />;
               })
             ) : (
