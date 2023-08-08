@@ -20,7 +20,20 @@ export const Home = () => {
     setFilterProducts({ data: coincidentes });
   };
 
-  useEffect(() => {}, [products]);
+
+  const funcionFiltrar = (objetosAFiltrar) => {
+    const filtrados = filterProducts?.data.filter((item) => {
+      return item.categories === objetosAFiltrar
+    })
+    console.log('que son complementos', filtrados)
+    setFilterProducts({ data: filtrados });
+  }
+  
+
+   useEffect(() => {
+    console.log('hay cambios', filterProducts)
+    
+   }, [filterProducts]);
 
   return (
     <>
@@ -45,11 +58,14 @@ export const Home = () => {
                 <X />
               </button>
             </div>
+            <div>
+              <button onClick={() => funcionFiltrar('Complementos')}>Complementos</button>
+              <button onClick={() => funcionFiltrar('Electrónico')}>Electrónico</button>
+            </div>
           </form>
           <div className="grilla">
-            {filterProducts?.data?.length > 0 ? (
+            {filterProducts ? (
               filterProducts?.data?.map((item) => {
-                console.log("que es item", item);
                 return <ProductGallery key={item._id} producto={item} />;
               })
             ) : (

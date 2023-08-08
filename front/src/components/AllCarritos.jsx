@@ -15,7 +15,6 @@ export const AllCarritos = () => {
     };
     fetchData("que es allcarritos", allCarritos);
   }, []);
-  console.log(allCarritos);
   return (
     <div>
       {allCarritos &&
