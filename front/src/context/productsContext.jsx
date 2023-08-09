@@ -24,6 +24,7 @@ export const ProductsContextProvider = ({ children }) => {
       setProducts,
       loading,
       setRecargar,
+      setLoading
     }),
     [products]
   );

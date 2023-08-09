@@ -3,6 +3,7 @@ import { getAllCarritos } from "../services/API_user/carrito.service";
 
 export const AllCarritos = () => {
   const [allCarritos, setAllCarritos] = useState();
+  console.log('que es allcarrito desde allcarritos', allCarritos)
   useEffect(() => {
     // Lógica para obtener los valores del endpoint
     const fetchData = async () => {

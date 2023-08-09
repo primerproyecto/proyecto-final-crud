@@ -43,7 +43,6 @@ export const Carrito = () => {
     const fetchData = async () => {
       try {
         const response = await getMyCarrito(carritoId);
-        /*  const arr = [...response.data.products]; */
         setCarrito(response.data.products);
         console.log('que es response.data.products', response.data.products)
       } catch (error) {
@@ -68,13 +67,13 @@ export const Carrito = () => {
           carrito?.map((item) => {
             return (
               <li key={item._id}>
-                -Producto {item?.productId?.title} - Cantidad - {item?.cantidad}{" "}
+                -Producto {item?.productId?.title} - Cantidad - {item?.cantidad} - {item._id}
                 - <img src={item?.productId?.image} width="30" alt=" " />
                 <form onSubmit={handleSubmit(formSubmitQuitar)}>
                   <label>
                     <input
                       type="text"
-                      hidden={true}
+                      hidden={false}
                       value={item?.productId?._id}
                       {...register("productId")}
                     />

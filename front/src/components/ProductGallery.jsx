@@ -28,6 +28,7 @@ export const ProductGallery = ({ producto, modo }) => {
         },
       ],
     };
+    console.log('que es customFormData', customFormData)
     setIsDisabled(true);
     setRes(await postCarrito(user.carrito, customFormData));
     setIsDisabled(false);
@@ -50,58 +51,6 @@ export const ProductGallery = ({ producto, modo }) => {
 
   return (
     <>
-      {modo == "dashboard" ? (
-        <FigureAdmin>
-          <img src={producto.image} alt={producto.title} width="40" />
-          <strong>{producto.title}</strong>
-          {user && (
-            <form onSubmit={handleSubmit(formSubmit)}>
-              <label>
-                <input
-                  type="text"
-                  hidden={true}
-                  value={producto._id}
-                  {...register("productId")}
-                />
-              </label>
-              {/*  {user.rol && user.rol !== "admin" && (
-                <Button disabled={isDisabled}>
-                  <ShoppingCart />
-                </Button>
-              )} */}
-
-              {user.rol && user.rol === "admin" ? (
-                <>
-                  <button
-                    onClick={() => {
-                      Swal.fire({
-                        title: "Quieres borrar este producto del catálogo?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "rgb(73, 193, 162)",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "YES",
-                      }).then(async (result) => {
-                        if (result.isConfirmed) {
-                          console.log("que es producto", producto);
-                          await borraProducto(producto._id);
-                        }
-                      });
-                    }}
-                  >
-                    Eliminar
-                  </button>
-                  <ButtonAlike to={`/editarProducto/${producto._id}`}>
-                    <Edit />
-                  </ButtonAlike>
-                </>
-              ) : (
-                ""
-              )}
-            </form>
-          )}
-        </FigureAdmin>
-      ) : (
         <figure>
           {producto.destacado && <p>es destacado</p>}
           <strong>{producto.title}</strong>
@@ -118,7 +67,7 @@ export const ProductGallery = ({ producto, modo }) => {
                 <label>
                   <input
                     type="text"
-                    hidden={true}
+                    hidden={false}
                     value={producto._id}
                     {...register("productId")}
                   />
@@ -132,9 +81,7 @@ export const ProductGallery = ({ producto, modo }) => {
             </>
           )}
         </figure>
-      )}
     </>
-    /*  */
   );
 };
 
