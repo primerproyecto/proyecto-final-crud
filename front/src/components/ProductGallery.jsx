@@ -21,6 +21,7 @@ export const ProductGallery = ({ producto, modo }) => {
 
   const formSubmit = async (formData) => {
     const customFormData = {
+      propietario: user._id,
       products: [
         {
           productId: formData.productId,
@@ -28,7 +29,7 @@ export const ProductGallery = ({ producto, modo }) => {
         },
       ],
     };
-    console.log('que es customFormData', customFormData)
+    console.log("que es customFormData", customFormData);
     setIsDisabled(true);
     setRes(await postCarrito(user.carrito, customFormData));
     setIsDisabled(false);
@@ -51,36 +52,37 @@ export const ProductGallery = ({ producto, modo }) => {
 
   return (
     <>
-        <figure>
-          {producto.destacado && <p>es destacado</p>}
-          <strong>{producto.title}</strong>
-          <img src={producto.image} alt={producto.title} />
-          <p>Precio: {producto.price}</p>
-          <p>Size: {producto.size}</p>
-          <p>Color: {producto.color}</p>
-          <p>Categoría: {producto.categories}</p>
-          <p>Destacado: {producto.destacado}</p>
-          <figcaption>{producto.desc}</figcaption>
-          {user && (
-            <>
-              <form onSubmit={handleSubmit(formSubmit)}>
-                <label>
-                  <input
-                    type="text"
-                    hidden={false}
-                    value={producto._id}
-                    {...register("productId")}
-                  />
-                </label>
-                {user.rol && user.rol !== "admin" && (
-                  <Button disabled={isDisabled}>
-                    <ShoppingCart />
-                  </Button>
-                )}
-              </form>
-            </>
-          )}
-        </figure>
+      <figure>
+        {producto.destacado && <p>es destacado</p>}
+        <strong>{producto.title}</strong>
+        <img src={producto.image} alt={producto.title} />
+        <p>Precio: {producto.price}</p>
+        <p>Size: {producto.size}</p>
+        <p>Color: {producto.color}</p>
+        <p>Categoría: {producto.categories}</p>
+        <p>Destacado: {producto.destacado}</p>
+        <figcaption>{producto.desc}</figcaption>
+        {user && (
+          <>
+            <form onSubmit={handleSubmit(formSubmit)}>
+              <label>
+                <input
+                  type="text"
+                  hidden={false}
+                  style={{ width: "260px" }}
+                  defaultValue={producto._id}
+                  {...register("productId")}
+                />
+              </label>
+              {user.rol && user.rol !== "admin" && (
+                <Button disabled={isDisabled}>
+                  <ShoppingCart />
+                </Button>
+              )}
+            </form>
+          </>
+        )}
+      </figure>
     </>
   );
 };

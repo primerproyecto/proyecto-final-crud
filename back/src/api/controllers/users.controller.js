@@ -34,20 +34,18 @@ const register = async (req, res, next) => {
       Math.random() * (999999 - 100000) + 100000
     );
 
-    //CREO UN NUEVO CARRITO
-    const carrito = new Cart();
-    console.log("que es KARRITO", carrito);
-    const carritoGuardado = await carrito.save();
-    console.log("que es carrito", carritoGuardado.id);
-
-    const carritoCreado = carritoGuardado.id;
-
     //! HACER UNA NUEVA INSTANCIA DE USUARIO
     const newUser = new User({
       ...req.body,
-      carrito: carritoCreado,
+      /* carrito: carritoCreado, */
       confirmationCode,
     });
+    //CREO UN NUEVO CARRITO
+    const carrito = new Cart({ propietario: newUser._id });
+    const carritoGuardado = await carrito.save();
+    newUser.carrito = carritoGuardado._id;
+
+    /* const carritoCreado = carritoGuardado.id; */
     //! le metemos la imagen en caso de recibirla, sino la recibo le meto una estandar
     if (req.file) {
       newUser.image = req.file.path;

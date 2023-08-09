@@ -23,28 +23,26 @@ export const Carrito = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [removeCarrito, setORemoveCarrito] = useState(false);
 
-
-
   const carritoId = user.carrito;
 
   const { register, handleSubmit } = useForm();
 
-  const formSubmitQuitar = async (formData) => {
+  const formSubmitQuitar = async (productId) => {
     const customFormData = {
-      productId: formData.productId,
+      productId: productId,
     };
     setIsDisabled(true);
     setRes(await quitarItemCarrito(carritoId, customFormData));
     setIsDisabled(false);
   };
-  
+
   useEffect(() => {
     // Lógica para obtener los valores del endpoint
     const fetchData = async () => {
       try {
         const response = await getMyCarrito(carritoId);
         setCarrito(response.data.products);
-        console.log('que es response.data.products', response.data.products)
+        console.log("que es response.data.products", response.data.products);
       } catch (error) {
         console.error(error);
       }
@@ -54,35 +52,32 @@ export const Carrito = () => {
 
   useEffect(() => {
     /*  console.log("que es carrito", carrito); */
-    useCartRemoveError(res, setORemoveCarrito, setRes);
+    useCartRemoveError(res, setORemoveCarrito, setRes, setCarrito);
   }, [res]);
 
-
   return (
-   
     <div>
       <p>Lista de productos del usuario</p>
       <ul>
-        {carrito ?
-          carrito?.map((item) => {
+        {console.log("que es carrito", carrito)}
+        {carrito ? (
+          carrito?.map((item, index) => {
             return (
               <li key={item._id}>
-                -Producto {item?.productId?.title} - Cantidad - {item?.cantidad} - {item._id}
+                -Producto {item?.productId?.title} - Cantidad - {item?.cantidad}{" "}
+                - {item.productId._id}
                 - <img src={item?.productId?.image} width="30" alt=" " />
-                <form onSubmit={handleSubmit(formSubmitQuitar)}>
-                  <label>
-                    <input
-                      type="text"
-                      hidden={false}
-                      value={item?.productId?._id}
-                      {...register("productId")}
-                    />
-                  </label>
-                  <button>Eliminar</button>
-                </form>
+                <div>
+                  <button onClick={() => formSubmitQuitar(item.productId._id)}>
+                    Eliminar
+                  </button>
+                </div>
               </li>
             );
-          }) : <p>no hay carrito</p>}
+          })
+        ) : (
+          <p>no hay carrito</p>
+        )}
       </ul>
     </div>
   );

@@ -187,7 +187,7 @@ const quitarProductoDelCarrito = async (req, res) => {
     await karrito.save();
 
     res.status(200).json({
-      karrito,
+      karrito: await Cart.findById(carritoId).populate("products.productId"),
       message: "La operación de borrado se ha realizado con éxito",
     });
   } catch (error) {
