@@ -38,11 +38,11 @@ export const Carrito = () => {
 
   useEffect(() => {
     // Lógica para obtener los valores del endpoint
+    
     const fetchData = async () => {
       try {
         const response = await getMyCarrito(carritoId);
-        setCarrito(response.data.products);
-        console.log("que es response.data.products", response.data.products);
+          setCarrito(response.data.products);
       } catch (error) {
         console.error(error);
       }
@@ -54,6 +54,10 @@ export const Carrito = () => {
     /*  console.log("que es carrito", carrito); */
     useCartRemoveError(res, setORemoveCarrito, setRes, setCarrito);
   }, [res]);
+  useEffect(() => {
+      console.log("actualicemos el carrito", carrito); 
+   
+  }, [carrito]);
 
   return (
     <div>

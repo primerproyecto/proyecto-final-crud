@@ -54,8 +54,7 @@ export const AgregarProducto = () => {
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
-    useProductAddError(res, setOkAddProduct, setRes);
-    /*  if (res?.status == 200) bridgeData("ALLUSER"); */
+    useProductAddError(res, setOkAddProduct, setRes, setRecargar);
   }, [res]);
 
   //! ------------------------------------------------------------------------------
@@ -64,8 +63,6 @@ export const AgregarProducto = () => {
 
   if (okAddProduct) {
     setRecargar((prevState) => !prevState);
-    console.log("res", res);
-    console.log("registro correcto ya puedes navegar");
   }
   return (
     <>

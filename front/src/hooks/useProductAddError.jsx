@@ -10,7 +10,7 @@ export const useProductAddError = (
   //! ------------------ 200 : todo ok
   if (res?.status == 200) {
     setOkAddProduct(() => true);
-    setRecargar((prevState) => !prevState);
+     setRecargar((prevState) => !prevState);
     Swal.fire({
       icon: "success",
       title: "Producto agregado al carrito",

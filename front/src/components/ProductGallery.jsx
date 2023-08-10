@@ -68,7 +68,7 @@ export const ProductGallery = ({ producto, modo }) => {
               <label>
                 <input
                   type="text"
-                  hidden={false}
+                  hidden={true}
                   style={{ width: "260px" }}
                   defaultValue={producto._id}
                   {...register("productId")}

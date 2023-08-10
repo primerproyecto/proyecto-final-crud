@@ -13,7 +13,7 @@ import { borraProducto } from "../services/API_user/product.service";
 import styled from "styled-components";
 import { useCartRemoveError } from "../hooks";
 
-export const ProductDashboard = ({ producto, modo }) => {
+export const ProductDashboard = ({ producto }) => {
   const { user, setCarrito } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
@@ -48,7 +48,7 @@ export const ProductDashboard = ({ producto, modo }) => {
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
-    useCartRemoveError(res, setRes, setOkEliminado);
+    useCartRemoveError(res, setRes, setOkEliminado, setCarrito);
     /* if (res?.status == 200) bridgeData("ALLUSER"); */
   }, [res]);
 
@@ -67,7 +67,7 @@ export const ProductDashboard = ({ producto, modo }) => {
       <FigureAdmin>
         <img src={producto.image} alt={producto.title} width="40" height="40" />
         <p>{producto.title}</p>
-        {user && (
+        
           <form onSubmit={handleSubmit(formSubmit)}>
             <label>
               <input
@@ -77,15 +77,9 @@ export const ProductDashboard = ({ producto, modo }) => {
                 {...register("productId")}
               />
             </label>
-            {/*  {user.rol && user.rol !== "admin" && (
-                <Button disabled={isDisabled}>
-                  <ShoppingCart />
-                </Button>
-              )} */}
+            
 
-            {user.rol && user.rol === "admin" ? (
-              <>
-                <button
+              <button
                   onClick={() => {
                     Swal.fire({
                       title: "Quieres borrar este producto del catálogo?",
@@ -104,18 +98,12 @@ export const ProductDashboard = ({ producto, modo }) => {
                 >
                   Eliminar
                 </button>
+                </form>
                 <ButtonAlike to={`/editarProducto/${producto._id}`}>
                   <Edit />
                 </ButtonAlike>
-              </>
-            ) : (
-              ""
-            )}
-          </form>
-        )}
       </FigureAdmin>
     </>
-    /*  */
   );
 };
 
@@ -128,7 +116,11 @@ const Button = styled.button`
 const ButtonAlike = styled(Link)`
   border: 1px solid red;
   cursor: pointer;
-  display: inline-block;
+  display: block;
+  width: 50px;
+  svg {
+    max-width: 30px;
+  }
 `;
 
 const FigureAdmin = styled.figure`
