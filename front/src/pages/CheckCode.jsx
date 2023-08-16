@@ -8,6 +8,7 @@ import {
 import { useAutoLogin, useCheckCodeError } from "../hooks";
 import { Navigate } from "react-router-dom";
 import { ButtonReSend } from "../components";
+import * as Form from "@radix-ui/react-form";
 
 export const CheckCode = () => {
   const [res, setRes] = useState({});
@@ -83,7 +84,7 @@ export const CheckCode = () => {
       <div className="form-wrap">
         <h1>Verify your code 👌</h1>
         <p>Write the code sent to your email</p>
-        <form onSubmit={handleSubmit(formSubmit)}>
+        {/*  <form onSubmit={handleSubmit(formSubmit)}>
           <div className="user_container form-group">
             <input
               className="input_user"
@@ -109,7 +110,42 @@ export const CheckCode = () => {
               Verify Code
             </button>
           </div>
-        </form>
+        </form> */}
+        <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
+          <Form.Field className="FormField" name="email">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+              }}
+            >
+              <Form.Label className="FormLabel">
+                Código de verificación
+              </Form.Label>
+              <Form.Message className="FormMessage" match="valueMissing">
+                Que has recibido en tu correo
+              </Form.Message>
+              <Form.Message className="FormMessage" match="typeMismatch">
+                Introduce el código válido
+              </Form.Message>
+            </div>
+            <Form.Control asChild>
+              <input
+                className="Input"
+                type="text"
+                required
+                {...register("confirmationCode", { required: false })}
+              />
+            </Form.Control>
+          </Form.Field>
+
+          <Form.Submit asChild>
+            <button className="Button" style={{ marginTop: 10 }}>
+              Verificar código
+            </button>
+          </Form.Submit>
+        </Form.Root>
         <div className="btn_container">
           <ButtonReSend setReloadPageError={setReloadPageError} />
         </div>

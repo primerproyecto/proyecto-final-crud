@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 /* import "./Register.css"; */
 
 import { useEffect, useState } from "react";
@@ -7,9 +7,13 @@ import { useRegisterError } from "../hooks";
 import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
+import * as Form from "@radix-ui/react-form";
+import * as RadioGroup from "@radix-ui/react-radio-group";
+import "./registerStyles.css";
+
 export const Register = () => {
   const { allUser, setAllUser, bridgeData } = useAuth();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
   const [okRegister, setOkRegister] = useState(false);
@@ -64,7 +68,7 @@ export const Register = () => {
   }
   return (
     <>
-      <div className="form-wrap">
+      {/*  <div className="form-wrap">
         <h1>Sign Up</h1>
         <p>It’s free and only takes a minute.</p>
         <form onSubmit={handleSubmit(formSubmit)}>
@@ -153,7 +157,141 @@ export const Register = () => {
             </button>
           </div>
         </form>
-      </div>
+      </div> */}
+      <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
+        <Form.Field className="FormField" name="name">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+            }}
+          >
+            <Form.Label className="FormLabel">Nombre</Form.Label>
+            <Form.Message className="FormMessage" match="valueMissing">
+              Please enter your name
+            </Form.Message>
+            <Form.Message className="FormMessage" match="typeMismatch">
+              Nombre no correcto
+            </Form.Message>
+          </div>
+          <Form.Control asChild>
+            <input
+              className="Input"
+              type="text"
+              required
+              {...register("name", { required: true })}
+            />
+          </Form.Control>
+        </Form.Field>
+        <Form.Field className="FormField" name="password">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+            }}
+          >
+            <Form.Label className="FormLabel">Password</Form.Label>
+            <Form.Message className="FormMessage" match="valueMissing">
+              Please enter your password
+            </Form.Message>
+            <Form.Message className="FormMessage" match="typeMismatch">
+              Please provide a valid password
+            </Form.Message>
+          </div>
+          <Form.Control asChild>
+            <input
+              className="Input"
+              type="password"
+              {...register("password", { required: true })}
+            />
+          </Form.Control>
+        </Form.Field>
+        <Form.Field className="FormField" name="email">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+            }}
+          >
+            <Form.Label className="FormLabel">Email</Form.Label>
+            <Form.Message className="FormMessage" match="valueMissing">
+              Please enter your email
+            </Form.Message>
+            <Form.Message className="FormMessage" match="typeMismatch">
+              Please provide a valid email
+            </Form.Message>
+          </div>
+          <Form.Control asChild>
+            <input
+              className="Input"
+              type="email"
+              required
+              {...register("email", { required: true })}
+            />
+          </Form.Control>
+        </Form.Field>
+        <RadioGroup.Root
+          className="RadioGroupRoot"
+          defaultValue="user"
+          aria-label="View density"
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <RadioGroup.Item
+              className="RadioGroupItem"
+              value="user"
+              id="r1"
+              {...register("user")}
+            >
+              <RadioGroup.Indicator className="RadioGroupIndicator" />
+            </RadioGroup.Item>
+            <label className="Label" htmlFor="r1">
+              Usuario
+            </label>
+          </div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <RadioGroup.Item
+              className="RadioGroupItem"
+              value="admin"
+              {...register("rol")}
+              id="r2"
+            >
+              <RadioGroup.Indicator className="RadioGroupIndicator" />
+            </RadioGroup.Item>
+            <label className="Label" htmlFor="r2">
+              Administrador
+            </label>
+          </div>
+        </RadioGroup.Root>
+        {/* <Controller
+          name="rol"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <RadioGroup {...field}>
+              <RadioGroup.Item value="user">User</RadioGroup.Item>
+              <RadioGroup.Item value="admin">Femenino</RadioGroup.Item>
+            </RadioGroup>
+          )}
+        /> */}
+        <div className="">
+          <label>Imagen</label>
+          <input
+            type="file"
+            name="image"
+            id="file-upload"
+            accept="image/png, image/jpeg"
+          />
+        </div>
+
+        <Form.Submit asChild>
+          <button className="Button" style={{ marginTop: 10 }}>
+            Enviar
+          </button>
+        </Form.Submit>
+      </Form.Root>
     </>
   );
 };

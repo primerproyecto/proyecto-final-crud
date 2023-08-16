@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 /* import "./Register.css"; */
 
+import * as Form from "@radix-ui/react-form";
 import { useEffect, useState } from "react";
 import { postOneProduct } from "../services/API_user/product.service";
 import { useProductAddError } from "../hooks";
@@ -67,8 +68,8 @@ export const AgregarProducto = () => {
   return (
     <>
       <div className="form-wrap">
-        <form onSubmit={handleSubmit(formSubmit)}>
-          <fieldset>
+        <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
+          {/* <fieldset>
             <legend>Agregar producto</legend>
             <div className="field-wrapper">
               <label htmlFor="name">Título</label>
@@ -172,8 +173,84 @@ export const AgregarProducto = () => {
                 Agregar
               </button>
             </div>
-          </fieldset>
-        </form>
+          </fieldset> */}
+          <Form.Field className="FormField" name="title">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+              }}
+            >
+              <Form.Label className="FormLabel">Título del producto</Form.Label>
+              <Form.Message className="FormMessage" match="valueMissing">
+                Please enter your name
+              </Form.Message>
+              <Form.Message className="FormMessage" match="typeMismatch">
+                Nombre no correcto
+              </Form.Message>
+            </div>
+            <Form.Control asChild>
+              <input
+                className="Input"
+                type="text"
+                required
+                {...register("title", { required: true })}
+              />
+            </Form.Control>
+          </Form.Field>
+          <Form.Field className="FormField" name="descripcil,on">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+              }}
+            >
+              <Form.Label className="FormLabel">Descripcion</Form.Label>
+              <Form.Message className="FormMessage" match="valueMissing">
+                Please enter your name
+              </Form.Message>
+              <Form.Message className="FormMessage" match="typeMismatch">
+                Nombre no correcto
+              </Form.Message>
+            </div>
+            <Form.Control asChild>
+              <input
+                className="Input"
+                type="text"
+                required
+                {...register("desc", { required: true })}
+              />
+            </Form.Control>
+          </Form.Field>
+
+          <Form.Field className="FormField" name="descripcion">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+              }}
+            >
+              <Form.Label className="FormLabel">Image</Form.Label>
+            </div>
+            <Form.Control asChild>
+              <input
+                type="file"
+                id="file-upload"
+                name="image"
+                {...register("image", { required: true })}
+              />
+            </Form.Control>
+          </Form.Field>
+
+          <Form.Submit asChild>
+            <button className="Button" style={{ marginTop: 10 }}>
+              Enviar
+            </button>
+          </Form.Submit>
+        </Form.Root>
       </div>
     </>
   );

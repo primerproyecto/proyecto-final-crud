@@ -1,13 +1,15 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { loginUser } from "../services/API_user/user.service";
 import { useLoginError } from "../hooks";
 import { useAuth } from "../context/authContext";
-import { lightTheme } from "../theme";
+import * as Form from "@radix-ui/react-form";
+
+import "./loginStyles.css";
 
 export const Login = () => {
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, control } = useForm();
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
   const [loginOk, setLoginOk] = useState(false);
@@ -15,6 +17,7 @@ export const Login = () => {
 
   //! 1) ------------------ FUNCION QUE GESTIONA EL FORMULARIO----------
   const formSubmit = async (formData) => {
+    console.log("que es formdata", formData);
     setSend(true);
     setRes(await loginUser(formData));
     setSend(false);
@@ -41,7 +44,7 @@ export const Login = () => {
 
   return (
     <>
-      <div className="form-wrap">
+      {/* <div className="form-wrap">
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit(formSubmit)}>
           <div className="form-group">
@@ -98,7 +101,64 @@ export const Login = () => {
         <p className="parrafoLogin">
           Are you not registered? <Link to="/register">Register Here</Link>
         </p>
-      </div>
+      </div> */}
+      <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
+        <Form.Field className="FormField" name="email">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+            }}
+          >
+            <Form.Label className="FormLabel">Email</Form.Label>
+            <Form.Message className="FormMessage" match="valueMissing">
+              Please enter your email
+            </Form.Message>
+            <Form.Message className="FormMessage" match="typeMismatch">
+              Please provide a valid email
+            </Form.Message>
+          </div>
+          <Form.Control asChild>
+            <input
+              className="Input"
+              type="email"
+              required
+              {...register("email", { required: true })}
+            />
+          </Form.Control>
+        </Form.Field>
+        <Form.Field className="FormField" name="password">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+            }}
+          >
+            <Form.Label className="FormLabel">Password</Form.Label>
+            <Form.Message className="FormMessage" match="valueMissing">
+              Please enter your password
+            </Form.Message>
+            <Form.Message className="FormMessage" match="typeMismatch">
+              Please provide a valid password
+            </Form.Message>
+          </div>
+          <Form.Control asChild>
+            <input
+              className="Input"
+              type="password"
+              {...register("password", { required: true })}
+            />
+          </Form.Control>
+        </Form.Field>
+
+        <Form.Submit asChild>
+          <button className="Button" style={{ marginTop: 10 }}>
+            Enviar
+          </button>
+        </Form.Submit>
+      </Form.Root>
     </>
   );
 };

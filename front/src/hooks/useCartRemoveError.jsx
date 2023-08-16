@@ -10,7 +10,7 @@ export const useCartRemoveError = (
   //! ------------------ 200 : todo ok
   /*  console.log("aqui res", res); */
   if (res?.status == 200) {
-    // setORemoveCarrito(() => true);
+    setORemoveCarrito((prevValue) => !prevValue);
     /* onsole.log("que es res.data.karrito", res.data.karrito.products); */
     // setCarrito(() => res.data.karrito.products);
     console.log("que es la resXX", res);

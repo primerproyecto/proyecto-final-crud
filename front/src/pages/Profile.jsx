@@ -5,6 +5,8 @@ import { Key, UserX } from "react-feather";
 import { ChangePassword, FormProfile } from "../components";
 import { useDeleteUser } from "../hooks";
 
+import { Flex, Text, Button } from "@radix-ui/themes";
+
 export const Profile = () => {
   const [changeRender, setChangeRender] = useState(true);
   const { user, setUser } = useAuth();
@@ -12,7 +14,7 @@ export const Profile = () => {
     <div>
       <>
         <div className="flexContainer-ai-center">
-          <a
+          <Button
             href="#"
             className="iconNav"
             onClick={() => setChangeRender(false)}
@@ -20,17 +22,11 @@ export const Profile = () => {
             {" "}
             <Key />
             Cambiar contraseña
-          </a>
-          <a href="#" className="iconNav" onClick={() => setChangeRender(true)}>
-            Cambiar datos
-          </a>
-          <a
-            href="#"
-            className="iconNav"
-            onClick={() => useDeleteUser(setUser)}
-          >
+          </Button>
+          <Button onClick={() => setChangeRender(true)}>Cambiar datos</Button>
+          <Button onClick={() => useDeleteUser(setUser)}>
             <UserX /> Delete user
-          </a>
+          </Button>
         </div>
         <div className="fluidContainerProfile">
           {changeRender ? <FormProfile /> : <ChangePassword />}

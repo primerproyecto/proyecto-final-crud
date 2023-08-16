@@ -3,12 +3,15 @@ import { Outlet } from "react-router-dom";
 import "./App.css";
 import { ThemeProvider, styled } from "styled-components";
 import { Footer, Header } from "./components";
-import { lightTheme, darkTheme, GlobalStyles } from "./theme";
-const App = () => {
-  const [theme, setTheme] = useState("light");
-  const isDarkTheme = theme === "dark";
 
-  const toggleTheme = () => {
+import "@radix-ui/themes/styles.css";
+import { Theme, ThemePanel } from "@radix-ui/themes";
+
+const App = () => {
+  /* const [theme, setTheme] = useState("light");
+  const isDarkTheme = theme === "dark"; */
+
+  /* const toggleTheme = () => {
     const updatedTheme = isDarkTheme ? "light" : "dark";
     setTheme(updatedTheme);
     localStorage.setItem("theme", updatedTheme);
@@ -23,37 +26,17 @@ const App = () => {
     } else if (prefersDark) {
       setTheme("dark");
     }
-  }, []);
+  }, []); */
   return (
     <StrictMode>
-      <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
-        <GlobalStyles />
+      <Theme>
         <Header />
-        <ButtonChange onClick={toggleTheme}>
-          {isDarkTheme ? (
-            <span aria-label="Light mode" role="img">
-              🌞
-            </span>
-          ) : (
-            <span aria-label="Dark mode" role="img">
-              🌜
-            </span>
-          )}
-        </ButtonChange>
         <main>
           <Outlet />
         </main>
-      </ThemeProvider>
+      </Theme>
     </StrictMode>
   );
 };
 
 export default App;
-
-const ButtonChange = styled.button`
-  width: fit-content;
-  border-radius: 4px;
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-`;

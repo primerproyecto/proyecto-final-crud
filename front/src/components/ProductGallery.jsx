@@ -12,6 +12,8 @@ import { borraProducto } from "../services/API_user/product.service";
 import { useCartAddError } from "../hooks/useCartAddError";
 import styled from "styled-components";
 
+import { Flex, Text, Button } from "@radix-ui/themes";
+
 export const ProductGallery = ({ producto, modo }) => {
   const { user, setCarrito } = useAuth();
   const { register, handleSubmit } = useForm();
@@ -77,6 +79,7 @@ export const ProductGallery = ({ producto, modo }) => {
               {user.rol && user.rol !== "admin" && (
                 <Button disabled={isDisabled}>
                   <ShoppingCart />
+                  btoon
                 </Button>
               )}
             </form>
@@ -87,11 +90,11 @@ export const ProductGallery = ({ producto, modo }) => {
   );
 };
 
-const Button = styled.button`
+/* const Button = styled.button`
   border: 1px solid red;
   cursor: pointer;
   display: inline-block;
-`;
+`; */
 
 const ButtonAlike = styled(Link)`
   border: 1px solid red;

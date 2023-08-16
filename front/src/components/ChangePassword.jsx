@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { changePasswordUser } from "../services/API_user/user.service";
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import { useChangePasswordError } from "../hooks";
-import { lightTheme } from "../theme";
 
 export const ChangePassword = () => {
   const { setUser } = useAuth();
