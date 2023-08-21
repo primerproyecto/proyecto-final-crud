@@ -1,30 +1,20 @@
+import { Toast } from "@radix-ui/react-toast";
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
+
 export const useCartAddError = (res, setRes, setOkAgregado) => {
   //? si la respuesta es ok ---- > directamente esta el status en la primera clave es decir: res.status
   //? si la respuesta no esta ok--> res.response.status
   //! ------------------ 200 : todo ok
   /*  console.log("aqui res", res); */
   if (res?.status == 200) {
-    /*  const dataCustom = {
-      token: res.data.token,
-      user: res.data.user.name,
-      email: res.data.user.email,S
-      _id: res.data.user._id,
-      image: res.data.user.imagen,
-      check: res.data.user.check,
-      rol: res.data.user.rol,
-      carrito: res.data.user.carrito,
-    };
-    const dataString = JSON.stringify(dataCustom);
-    userLogin(dataString); */
-    setOkAgregado(() => true);
-    Swal.fire({
-      icon: "success",
-      title: "Agregado",
-      text: "Producto agregado al carrito ✅",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    setOkAgregado((prevState) => !prevState);
+    // Swal.fire({
+    //   icon: "success",
+    //   title: "Agregado",
+    //   text: "Producto agregado al carrito ✅",
+    //   showConfirmButton: false,
+    //   timer: 1500,
+    // });
   }
 
   //! ------------------- 404: 'password dont match'

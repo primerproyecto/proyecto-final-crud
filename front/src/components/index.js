@@ -12,3 +12,4 @@ export * from "./FigureUser";
 export * from "./ProductDashboard";
 export * from "./AllCarritos";
 /* export * from "./Buscador"; */
+export * from "./UI/toast/toast"

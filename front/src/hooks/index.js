@@ -12,3 +12,4 @@ export * from "./useChangePasswordError";
 export * from "./useUpdateError";
 export * from "./useDeleteUser";
 export * from "./useProductEditarErrors";
+export * from "./useProductRemoveError";

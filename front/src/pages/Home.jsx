@@ -15,6 +15,9 @@ import {
   TextAlignRightIcon,
 } from "@radix-ui/react-icons";
 import "./homeStyles.css";
+import { Button, Flex } from "@radix-ui/themes";
+
+
 
 export const Home = () => {
   const { products, loading, setProducts, setLoading } = useProducts();
@@ -103,10 +106,12 @@ export const Home = () => {
                   Please provide a valid email
                 </Form.Message>
               </div>
+              
               <Form.Control asChild>
-                <>
+              <Flex gap="3">
                   <input
                     className="Input"
+                    flex={4}
                     type="text"
                     required
                     value={palabraABuscar}
@@ -114,17 +119,19 @@ export const Home = () => {
                       setPalabraABuscar(e.target.value);
                     }}
                   />
-                  <button className="Button">
+                  <Button className="Button" size="small">
                     <Search />
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                  size="small"
                     className="Button"
                     onClick={() => setMostrarTodos(true)}
                   >
                     <X /> Limpiar campo de búsqueda
-                  </button>
-                </>
+                  </Button>
+                  </Flex>
               </Form.Control>
+              
             </Form.Field>
           </Form.Root>
 

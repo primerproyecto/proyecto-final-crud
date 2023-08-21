@@ -165,7 +165,7 @@ export const Header = () => {
               </NavigationMenu.Item>
             ) : null}
 
-            {user && user.rol === "user" ? (
+            {user && user.rol === "admin"  ? (
               <NavigationMenu.Item>
                 <NavigationMenu.Link
                   className="NavigationMenuLink"

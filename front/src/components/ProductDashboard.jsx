@@ -11,9 +11,9 @@ import {
 import { borraProducto } from "../services/API_user/product.service";
 
 import styled from "styled-components";
-import { useCartRemoveError } from "../hooks";
+import { useProductRemoveError } from "../hooks";
 
-export const ProductDashboard = ({ producto }) => {
+export const ProductDashboard = ({ producto, setProducts }) => {
   const { user, setCarrito } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
@@ -48,7 +48,7 @@ export const ProductDashboard = ({ producto }) => {
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
-    useCartRemoveError(res, setRes, setOkEliminado, setCarrito);
+    useProductRemoveError(res, setRes, setOkEliminado, setProducts);
     /* if (res?.status == 200) bridgeData("ALLUSER"); */
   }, [res]);
 

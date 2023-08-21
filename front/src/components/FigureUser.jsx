@@ -1,11 +1,15 @@
+import React from 'react';
+import * as Avatar from '@radix-ui/react-avatar';
+import './avatarStyles.css';
 export const FigureUser = (user) => {
   return (
-    <figure className="dataProfile">
-      <img
+    <Avatar.Root>
+     <Avatar.Image
+        className="AvatarImage"
         src={user.user.image}
-        alt="user image"
-        className="imageUser avatar"
+        // alt={`Avatar de ${user.user.nombre}`}
       />
-    </figure>
+      <Avatar.Fallback className="AvatarFallback" delayMs={600}></Avatar.Fallback>
+    </Avatar.Root>
   );
 };

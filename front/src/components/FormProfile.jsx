@@ -50,7 +50,6 @@ export const FormProfile = () => {
   //! -------------- 2 ) useEffect que gestiona la parte de la respuesta ------- customHook
 
   useEffect(() => {
-    console.log(res);
     useUpdateError(res, setRes, setUser, logout);
   }, [res]);
 

@@ -5,6 +5,7 @@ import { loginUser } from "../services/API_user/user.service";
 import { useLoginError } from "../hooks";
 import { useAuth } from "../context/authContext";
 import * as Form from "@radix-ui/react-form";
+import { Flex, Text, Button, Heading, Strong, Box, Card, Container } from "@radix-ui/themes";
 
 import "./loginStyles.css";
 
@@ -43,74 +44,12 @@ export const Login = () => {
   }
 
   return (
-    <>
-      {/* <div className="form-wrap">
-        <h1>Sign In</h1>
-        <form onSubmit={handleSubmit(formSubmit)}>
-          <div className="form-group">
-            <label htmlFor="email" className="custom-placeholder">
-              Email
-            </label>
-            <input
-              className="input_user"
-              type="email"
-              id="email"
-              name="email"
-              autoComplete="false"
-              {...register("email", { required: true })}
-            />
-
-            <div className="form-group">
-              <label htmlFor="password" className="custom-placeholder">
-                Password
-              </label>
-              <input
-                className="input_user"
-                type="password"
-                id="password"
-                name="password"
-                autoComplete="false"
-                {...register("password", { required: true })}
-              />
-            </div>
-          </div>
-
-          <div className="btn_container">
-            <button
-              className="btn"
-              type="submit"
-              disabled={send}
-              style={{
-                background: send ? lightTheme.body : lightTheme.primary,
-              }}
-            >
-              {send ? "Cargando ....." : "LOGIN"}
-            </button>
-          </div>
-          <p className="bottom-text">
-            <small>
-              Have you forgotten the password?
-              <Link to="/forgotpassword" className="anchorCustom">
-                Olvidé mi contraseña
-              </Link>
-            </small>
-          </p>
-        </form>
-      </div>
-      <div className="footerForm">
-        <p className="parrafoLogin">
-          Are you not registered? <Link to="/register">Register Here</Link>
-        </p>
-      </div> */}
+    <Container size="1">
+    <Card size="5">
+    <Flex align="center">
       <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
         <Form.Field className="FormField" name="email">
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              justifyContent: "space-between",
-            }}
-          >
+          <div>
             <Form.Label className="FormLabel">Email</Form.Label>
             <Form.Message className="FormMessage" match="valueMissing">
               Please enter your email
@@ -129,13 +68,7 @@ export const Login = () => {
           </Form.Control>
         </Form.Field>
         <Form.Field className="FormField" name="password">
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              justifyContent: "space-between",
-            }}
-          >
+          <div>
             <Form.Label className="FormLabel">Password</Form.Label>
             <Form.Message className="FormMessage" match="valueMissing">
               Please enter your password
@@ -154,11 +87,13 @@ export const Login = () => {
         </Form.Field>
 
         <Form.Submit asChild>
-          <button className="Button" style={{ marginTop: 10 }}>
+          <Button className="Button" style={{ marginTop: 10 }} accent="ogange">
             Enviar
-          </button>
+          </Button>
         </Form.Submit>
       </Form.Root>
-    </>
+      </Flex>
+    </Card>
+    </Container>
   );
 };

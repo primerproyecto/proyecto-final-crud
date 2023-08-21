@@ -9,6 +9,9 @@ import {
   quitarItemCarrito,
 } from "../services/API_user/carrito.service";
 import { Navigate } from "react-router-dom";
+import { Box, Container,Text, Heading, Strong, Button } from "@radix-ui/themes";
+
+
 
 export const Carrito = () => {
   const { id } = useParams();
@@ -60,7 +63,8 @@ export const Carrito = () => {
   }, [carrito]);
 
   return (
-    <div>
+    <Box style={{ background: 'var(--gray-a2)', borderRadius: 'var(--radius-3)' }} width="100%">
+    <Container size="1">
       <p>Lista de productos del usuario</p>
       <ul>
         {console.log("que es carrito", carrito)}
@@ -68,13 +72,12 @@ export const Carrito = () => {
           carrito?.map((item, index) => {
             return (
               <li key={item._id}>
-                -Producto {item?.productId?.title} - Cantidad - {item?.cantidad}{" "}
-                - {item.productId._id}
-                - <img src={item?.productId?.image} width="30" alt=" " />
+                <Heading>{item?.productId?.title} </Heading><Text><Strong>Cantidad </Strong> - {item?.cantidad}</Text> 
+                - <img src={item?.productId?.image} width="50" alt=" " />
                 <div>
-                  <button onClick={() => formSubmitQuitar(item.productId._id)}>
+                  <Button onClick={() => formSubmitQuitar(item.productId._id)}>
                     Eliminar
-                  </button>
+                  </Button>
                 </div>
               </li>
             );
@@ -83,6 +86,7 @@ export const Carrito = () => {
           <p>no hay carrito</p>
         )}
       </ul>
-    </div>
+      </Container>
+    </Box>
   );
 };

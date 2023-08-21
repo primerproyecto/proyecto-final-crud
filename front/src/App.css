@@ -96,7 +96,6 @@ main {
 }
 
 .grilla figure {
-  max-width: 150px;
 }
 @media (prefers-color-scheme: dark) {
   body {
