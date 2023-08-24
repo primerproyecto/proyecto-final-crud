@@ -31,6 +31,7 @@ export const Carrito = () => {
   const { register, handleSubmit } = useForm();
 
   const formSubmitQuitar = async (productId) => {
+    console.log('ques es productId', productId)
     const customFormData = {
       productId: productId,
     };
@@ -70,11 +71,13 @@ export const Carrito = () => {
         {console.log("que es carrito", carrito)}
         {carrito ? (
           carrito?.map((item, index) => {
+            console.log('que es item')
             return (
               <li key={item._id}>
                 <Heading>{item?.productId?.title} </Heading><Text><Strong>Cantidad </Strong> - {item?.cantidad}</Text> 
                 - <img src={item?.productId?.image} width="50" alt=" " />
                 <div>
+                {console.log('el error', item)}
                   <Button onClick={() => formSubmitQuitar(item.productId._id)}>
                     Eliminar
                   </Button>

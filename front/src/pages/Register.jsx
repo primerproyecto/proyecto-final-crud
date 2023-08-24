@@ -157,7 +157,7 @@ export const Register = () => {
               className="RadioGroupItem"
               value="user"
               id="r1"
-              {...register("user")}
+              {...register("rol")}
             >
               <RadioGroup.Indicator className="RadioGroupIndicator" />
             </RadioGroup.Item>

@@ -11,14 +11,25 @@ import {
 import { borraProducto } from "../services/API_user/product.service";
 import { useCartAddError } from "../hooks/useCartAddError";
 import styled from "styled-components";
+import {capitalizarPrimeraLetra} from '../utils/text'
 
 import { createPortal } from "react-dom";
 
-import { Flex, Text, Button, Heading, Strong, Box } from "@radix-ui/themes";
+import {
+  Flex,
+  Text,
+  Button,
+  Heading,
+  Strong,
+  Box,
+  Badge,
+  Card,
+} from "@radix-ui/themes";
 import * as Toast from "@radix-ui/react-toast";
 
 export const ProductGallery = ({ producto, modo }) => {
   const { user, setCarrito } = useAuth();
+  console.log("que es user", user);
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
@@ -53,37 +64,35 @@ export const ProductGallery = ({ producto, modo }) => {
   //! ------------------------------------------------------------------------------
   if (okAgregado) {
     console.log("que es res", res);
-    // return (
-    //   <>
-
-    //   </>
-    // )
   }
 
   return (
     <>
-      <figure>
+      <Card style={{ maxWidth: 350 }}>
         {producto.destacado && <p>es destacado</p>}
-        <Text>
-          <Strong>{producto.title}</Strong>
+       
+        <Box>
+          <img src={producto.image} alt={producto.title} />
+        </Box>
+        <Text as="h1" size={1}>
+          <Strong>{capitalizarPrimeraLetra(producto.title)}</Strong>
         </Text>
-        <Box><img src={producto.image} alt={producto.title} /></Box>
+
+        <Flex gap="3" justify="between">
+          <Text as="p">
+            <Strong>Size:</Strong> {producto.size}
+          </Text>
+          <Text as="p">
+            <Strong>Color:</Strong> {producto.color}
+          </Text>
+          <Badge color="orange" size={2}>
+            {producto.categories}
+          </Badge>
+        </Flex>
         <Text as="p">
-          <Strong>Precio:</Strong> {producto.price}
+          <Strong>Descripcion:</Strong>
+          {producto.desc}
         </Text>
-        <Text as="p">
-          <Strong>Size:</Strong> {producto.size}
-        </Text>
-        <Text>
-          <Strong>Color:</Strong> {producto.color}
-        </Text>
-        <Text>
-          <Strong>Categoría:</Strong> {producto.categories}
-        </Text>
-        <Text>
-          <Strong>Destacado:</Strong> {producto.destacado}
-        </Text>
-        <Text>{producto.desc}</Text>
         {user && (
           <>
             <form onSubmit={handleSubmit(formSubmit)}>
@@ -91,12 +100,13 @@ export const ProductGallery = ({ producto, modo }) => {
                 <input
                   type="text"
                   hidden={true}
+                  style={{ display: "none" }}
                   defaultValue={producto._id}
                   {...register("productId")}
                 />
               </label>
               {user.rol && user.rol !== "admin" && (
-                <Button disabled={isDisabled}>
+                <Button className="Button" disabled={isDisabled}>
                   <ShoppingCart />
                   Agregar
                 </Button>
@@ -104,14 +114,10 @@ export const ProductGallery = ({ producto, modo }) => {
             </form>
           </>
         )}
-      </figure>
-
+      </Card>
       {okAgregado &&
         createPortal(
-          <Toast.Provider
-            swipeDirection="right"
-            duration={200000}
-          >
+          <Toast.Provider swipeDirection="right" duration={20000}>
             <Toast.Root
               className="ToastRoot"
               open={okAgregado}

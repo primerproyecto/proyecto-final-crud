@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import "./Uploadfile.css";
 import { useForm } from "react-hook-form";
+
+import { Button, Box, Container, Flex, Text, IconButton } from "@radix-ui/themes";
+import { UploadIcon } from "@radix-ui/react-icons";
+
+
 export const Uploadfile = ({ registerForm }) => {
   const { register, handleSubmit } = useForm();
   const ekUpload = () => {
@@ -71,7 +76,8 @@ export const Uploadfile = ({ registerForm }) => {
   });
 
   return (
-    <div id="file-upload-form" className="uploader">
+    <Box>
+    <Container size="3">
       <input
         id="file-upload"
         type="file"
@@ -80,22 +86,25 @@ export const Uploadfile = ({ registerForm }) => {
         {...registerForm}
       />
 
-      <label htmlFor="file-upload" id="file-drag">
+      <Box htmlFor="file-upload" id="file-drag">
         <img id="file-image" src="#" alt="Preview" className="hidden" />
         <div id="start">
-          <i className="fa fa-download" aria-hidden="true"></i>
-          <div className="divSelect">Select a file or drag here</div>
+        <Flex gap="3" align="center">
+            <UploadIcon width="40" height="40" />
+          <Text>Arrastra imagen</Text>
           <div id="notimage" className="hidden">
             Please select an image
           </div>
-          <span id="file-upload-btn" className="btn btn-primary">
+          <Text>
             Select a file
-          </span>
+          </Text>
+          </Flex>
         </div>
         <div id="response" className="hidden">
           <div id="messages"></div>
         </div>
-      </label>
-    </div>
+      </Box>
+      </Container>
+    </Box>
   );
 };

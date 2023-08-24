@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { ProductDashboard, Spinner, AllCarritos } from "../components";
 import { useProducts } from "../context/productsContext";
 import { AgregarProducto } from "./AgregarProducto";
+import { Button, Box, Container } from "@radix-ui/themes";
 
 export const Dahsboard = () => {
   const { products, loading, setRecargar, setProducts } = useProducts();
-  console.log('que son PRODUCTS', products?.data)
   
 
 
@@ -16,6 +16,8 @@ export const Dahsboard = () => {
 
 
   return (
+    <Box>
+    <Container size="3">
     <div className="grilla-dashboard">
       <h2>Dashboard</h2>
       <Grilla>
@@ -52,6 +54,8 @@ export const Dahsboard = () => {
         </section>
       </Grilla>
     </div>
+    </Container>
+    </Box>
   );
 };
 

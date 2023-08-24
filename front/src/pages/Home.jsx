@@ -15,12 +15,11 @@ import {
   TextAlignRightIcon,
 } from "@radix-ui/react-icons";
 import "./homeStyles.css";
-import { Button, Flex } from "@radix-ui/themes";
-
-
+import { Button, Flex, Box, Container, Section } from "@radix-ui/themes";
 
 export const Home = () => {
   const { products, loading, setProducts, setLoading } = useProducts();
+  console.log('que son products', products)
 
   const [filterProducts, setFilterProducts] = useState(() => products);
 
@@ -72,23 +71,8 @@ export const Home = () => {
         <Spinner />
       ) : (
         <>
-          {/* <form onSubmit={handleFormSearch}>
-            <div>
-              <input
-                type="text"
-                value={palabraABuscar}
-                onChange={(e) => {
-                  setPalabraABuscar(e.target.value);
-                }}
-              />
-              <button>
-                <Search />
-              </button>
-              <button onClick={() => setPalabraABuscar("")}>
-                <X />
-              </button>
-            </div>
-          </form> */}
+          <Box>
+          <Container size="3">
           <Form.Root className="FormRoot" onSubmit={handleFormSearch}>
             <Form.Field className="FormField" name="email">
               <div
@@ -99,19 +83,13 @@ export const Home = () => {
                 }}
               >
                 <Form.Label className="FormLabel">Buscar producto</Form.Label>
-                <Form.Message className="FormMessage" match="valueMissing">
-                  Please enter your email
-                </Form.Message>
-                <Form.Message className="FormMessage" match="typeMismatch">
-                  Please provide a valid email
-                </Form.Message>
               </div>
-              
+
               <Form.Control asChild>
-              <Flex gap="3">
+                <Flex gap="3">
+                <Box grow="1">
                   <input
                     className="Input"
-                    flex={4}
                     type="text"
                     required
                     value={palabraABuscar}
@@ -119,19 +97,23 @@ export const Home = () => {
                       setPalabraABuscar(e.target.value);
                     }}
                   />
+                  </Box>
+                  <Box>
                   <Button className="Button" size="small">
                     <Search />
                   </Button>
+                  </Box>
+                  <Box>
                   <Button
-                  size="small"
+                    size="small"
                     className="Button"
                     onClick={() => setMostrarTodos(true)}
                   >
-                    <X /> Limpiar campo de búsqueda
+                    <X /> 
                   </Button>
-                  </Flex>
+                  </Box>
+                </Flex>
               </Form.Control>
-              
             </Form.Field>
           </Form.Root>
 
@@ -170,15 +152,30 @@ export const Home = () => {
               </ToggleGroup.Item>
             </ToggleGroup.Root>
           </div>
+          <div className="destacados">
+          {filterProducts ? (
+              filterProducts?.data?.map((item) => {
+                if(item.destacado) {
+                  return <Section><ProductGallery key={item._id} producto={item} /></Section>;
+                }
+               
+              })
+            ) : (
+              <h1>No hay productos destacados</h1>
+            )}
+
+          </div>
           <div className="grilla">
             {filterProducts ? (
               filterProducts?.data?.map((item) => {
-                return <ProductGallery key={item._id} producto={item} />;
+                return <Section><ProductGallery key={item._id} producto={item} /></Section>;
               })
             ) : (
               <h1>No hay productos</h1>
             )}
           </div>
+          </Container>
+          </Box>
         </>
       )}
     </>

@@ -216,7 +216,6 @@ const login = async (req, res, next) => {
       if (bcrypt.compareSync(password, user.password)) {
         // si lo hay generamos un token
         const token = generateToken(user._id, email);
-
         // devolvemos el user auth y el token
         return res.status(200).json({
           user: {
@@ -225,6 +224,7 @@ const login = async (req, res, next) => {
             rol: user.rol,
             carrito: user.carrito,
             imagen: user.image,
+            name: user.name
           },
           token,
         });

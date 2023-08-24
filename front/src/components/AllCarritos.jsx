@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllCarritos } from "../services/API_user/carrito.service";
+import * as Avatar from "@radix-ui/react-avatar";
+import { Flex, Text, Button, Heading, Strong, Box, Card, Container } from "@radix-ui/themes";
 
 export const AllCarritos = () => {
   const [allCarritos, setAllCarritos] = useState();
@@ -13,8 +15,11 @@ export const AllCarritos = () => {
         console.error(error);
       }
     };
-    fetchData("que es allcarritos", allCarritos);
+    fetchData(allCarritos);
   }, []);
+
+  useEffect(() => {
+  });
   return (
     <div>
       {allCarritos &&
@@ -22,20 +27,32 @@ export const AllCarritos = () => {
           if (item._id && item._id !== "64cd2c33ea565eecb1f99b65") {
             return (
               <div key={item._id}>
-                <li>Carrito Id: {item._id}</li>
+                <li>
+                  <Avatar.Root className="AvatarRoot">
+                    <Avatar.Image
+                      className="AvatarImage"
+                      src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
+                      alt="Colm Tuite"
+                    />
+                    <Avatar.Fallback className="AvatarFallback" delayMs={600}>
+                      CT
+                    </Avatar.Fallback>
+                  </Avatar.Root>{" "}
+                  {item.propietario.name}
+                </li>
                 <li>
                   Productos:
-                  <ul>
+                  <ol>
                     {item.products.map((item) => {
                       if (item.productId) {
                         return (
                           <li key={item.productId._id}>
-                            {item.productId.title} - cantidad {item.cantidad}
+                           <Text> {item.productId.title} - cantidad {item.cantidad}</Text>
                           </li>
                         );
                       }
                     })}
-                  </ul>
+                  </ol>
                 </li>
               </div>
             );

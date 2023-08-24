@@ -7,12 +7,14 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import { updateUser } from "../services/API_user/user.service";
 import { useUpdateError } from "../hooks";
+import { Button, Box, Container, Flex, Text } from "@radix-ui/themes";
 
 export const FormProfile = () => {
   const { user, setUser, logout } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
+  console.log('que es userss', user)
 
   const defaultData = {
     name: user?.user,
@@ -54,18 +56,14 @@ export const FormProfile = () => {
   }, [res]);
 
   return (
-    <>
-      <div className="containerProfile">
-        <div className="containerDataNoChange">
+    <Box>
+    <Container  size="1">
+        <Flex gap={3}>
           <FigureUser user={user} />
-        </div>
+          <Text>{user.name}</Text>
+          <Text>{user.rol}</Text>
+        </Flex>
         <div className="form-wrap formProfile">
-          <h1>Change your data profile ♻</h1>
-          <p>Please, enter your new data profile</p>
-          <p>Carrito id: {user.carrito}</p>
-          <span>
-            Nombre {user.email} - {user.rol}
-          </span>
           <form onSubmit={handleSubmit(formSubmit)}>
             <div className="user_container form-group">
               <input
@@ -77,24 +75,19 @@ export const FormProfile = () => {
                 defaultValue={defaultData?.name}
                 {...register("name")}
               />
-              <label htmlFor="custom-input" className="custom-placeholder">
-                username
-              </label>
             </div>
             <Uploadfile />
             <div className="btn_container">
-              <button
-                className="btn"
+              <Button
                 type="submit"
                 disabled={send}
-                style={{ background: send ? "#49c1a388" : "#49c1a2" }}
               >
                 CHANGE DATA PROFILE
-              </button>
+              </Button>
             </div>
           </form>
         </div>
-      </div>
-    </>
+      </Container>
+    </Box>
   );
 };

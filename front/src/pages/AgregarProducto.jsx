@@ -9,9 +9,10 @@ import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useProducts } from "../context/productsContext";
 import { ProductGallery, Spinner } from "../components";
+import * as Switch from "@radix-ui/react-switch";
+import * as RadioGroup from "@radix-ui/react-radio-group";
 
 export const AgregarProducto = () => {
-  const { allUser, setAllUser, bridgeData } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
@@ -34,7 +35,7 @@ export const AgregarProducto = () => {
         ...formData,
         image: inputFile[0],
       };
-
+      console.log('que es lo que mando desde el form', custonFormData)
       setSend(true);
       setRes(await postOneProduct(custonFormData));
       setSend(false);
@@ -183,12 +184,6 @@ export const AgregarProducto = () => {
               }}
             >
               <Form.Label className="FormLabel">Título del producto</Form.Label>
-              <Form.Message className="FormMessage" match="valueMissing">
-                Please enter your name
-              </Form.Message>
-              <Form.Message className="FormMessage" match="typeMismatch">
-                Nombre no correcto
-              </Form.Message>
             </div>
             <Form.Control asChild>
               <input
@@ -199,7 +194,7 @@ export const AgregarProducto = () => {
               />
             </Form.Control>
           </Form.Field>
-          <Form.Field className="FormField" name="descripcil,on">
+          <Form.Field className="FormField" name="desc">
             <div
               style={{
                 display: "flex",
@@ -208,12 +203,6 @@ export const AgregarProducto = () => {
               }}
             >
               <Form.Label className="FormLabel">Descripcion</Form.Label>
-              <Form.Message className="FormMessage" match="valueMissing">
-                Please enter your name
-              </Form.Message>
-              <Form.Message className="FormMessage" match="typeMismatch">
-                Nombre no correcto
-              </Form.Message>
             </div>
             <Form.Control asChild>
               <input
@@ -224,8 +213,27 @@ export const AgregarProducto = () => {
               />
             </Form.Control>
           </Form.Field>
+          <Form.Field className="FormField" name="price">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+              }}
+            >
+              <Form.Label className="FormLabel">Precio</Form.Label>
+            </div>
+            <Form.Control asChild>
+              <input
+                className="Input"
+                type="number"
+                required
+                {...register("price", { required: true })}
+              />
+            </Form.Control>
+          </Form.Field>
 
-          <Form.Field className="FormField" name="descripcion">
+          <Form.Field className="FormField" name="image">
             <div
               style={{
                 display: "flex",
@@ -242,6 +250,117 @@ export const AgregarProducto = () => {
                 name="image"
                 {...register("image", { required: true })}
               />
+            </Form.Control>
+          </Form.Field>
+
+          <Form.Field className="FormField" name="size">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+              }}
+            >
+              <Form.Label className="FormLabel">Tamaño</Form.Label>
+            </div>
+            <Form.Control asChild>
+              <input
+                className="Input"
+                type="text"
+                required
+                {...register("size", { required: true })}
+              />
+            </Form.Control>
+          </Form.Field>
+          <Form.Field className="FormField" name="color">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+              }}
+            >
+              <Form.Label className="FormLabel">Color</Form.Label>
+            </div>
+            <Form.Control asChild>
+              <input
+                className="Input"
+                type="text"
+                required
+                {...register("color", { required: true })}
+              />
+            </Form.Control>
+          </Form.Field>
+          <Form.Field className="FormField" name="destacado">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+              }}
+            >
+              <Form.Label className="FormLabel">Destacado</Form.Label>
+            </div>
+            <Form.Control asChild>
+            <Switch.Root
+              id="destacado"
+              className="SwitchRoot"
+              defaultChecked={false}
+            >
+              <Switch.Thumb
+                className="SwitchThumb"
+                checked
+                name="destacado"
+                {...register("destacado", { required: false })}
+              />
+            </Switch.Root>
+            </Form.Control>
+          </Form.Field>
+
+          <Form.Field className="FormField" name="categories">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+              }}
+            >
+              <Form.Label className="FormLabel">Categorias</Form.Label>
+            </div>
+            <Form.Control asChild>
+            <RadioGroup.Root
+                className="RadioGroupRoot"
+                aria-label="View density"
+                defaultValue="Complementos"
+                name="categories"
+              >
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <RadioGroup.Item
+                    className="RadioGroupItem"
+                    value="Complementos"
+                    id="r1"
+                    {...register("categories")}
+                  >
+                    <RadioGroup.Indicator className="RadioGroupIndicator" />
+                  </RadioGroup.Item>
+                  <label className="Label" htmlFor="r1">
+                    Complementos
+                  </label>
+                </div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <RadioGroup.Item
+                    className="RadioGroupItem"
+                    value="Electrónico"
+                    {...register("categories")}
+                    id="r2"
+                  >
+                    <RadioGroup.Indicator className="RadioGroupIndicator" />
+                  </RadioGroup.Item>
+                  <label className="Label" htmlFor="r2">
+                    Electrónico
+                  </label>
+                </div>
+              </RadioGroup.Root>
             </Form.Control>
           </Form.Field>
 
