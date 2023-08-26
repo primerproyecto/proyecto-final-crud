@@ -4,20 +4,18 @@ import "./Header.css";
 import { useAuth } from "../context/authContext";
 import styled from "styled-components";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import { CaretDownIcon, DashboardIcon, ExitIcon, HomeIcon } from "@radix-ui/react-icons";
+import { CaretDownIcon, DashboardIcon, ExitIcon, HomeIcon, AvatarIcon, BackpackIcon, EnterIcon, InputIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import "./headerStyles.css";
 import * as Toolbar from "@radix-ui/react-toolbar";
-import { User } from "react-feather";
 
 
 export const Header = () => {
   const { user, logout } = useAuth();
   return (
     <>
-      <Toolbar.Root>
+      <Toolbar.Root className="topToolbar">
         <NavigationMenu.Root
-          defaultValue="amarillo"
           className="NavigationMenuRoot"
         >
           <NavigationMenu.List className="NavigationMenuList">
@@ -32,7 +30,7 @@ export const Header = () => {
               <NavigationMenu.Item>
                 <NavigationMenu.Link className="NavigationMenuLink" asChild>
                   <NavLink to={`/carrito/${user.carrito}`} active="true">
-                    Carrito
+                    <BackpackIcon />Carrito
                   </NavLink>
                 </NavigationMenu.Link>
               </NavigationMenu.Item>
@@ -52,7 +50,7 @@ export const Header = () => {
               <NavigationMenu.Item>
                 <NavigationMenu.Link className="NavigationMenuLink" asChild>
                   <NavLink to="/profile" active="true">
-                    <User />Profile
+                    <AvatarIcon />Profile
                   </NavLink>
                 </NavigationMenu.Link>
               </NavigationMenu.Item>
@@ -71,7 +69,7 @@ export const Header = () => {
               {user == null && (
                 <NavigationMenu.Link className="NavigationMenuLink" asChild>
                   <NavLink to="/register" active="true">
-                    Register
+                    <InputIcon />Register
                   </NavLink>
                 </NavigationMenu.Link>
               )}
@@ -80,7 +78,7 @@ export const Header = () => {
               {user == null && (
                 <NavigationMenu.Link className="NavigationMenuLink" asChild>
                   <NavLink to="/login" active="true">
-                    Log in
+                    <EnterIcon />Log in
                   </NavLink>
                 </NavigationMenu.Link>
               )}

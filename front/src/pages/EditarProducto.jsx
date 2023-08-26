@@ -50,7 +50,7 @@ export const EditarProducto = () => {
       };
       const valor = await updateProducto(product._id, custonFormData);
 
-      console.log('que es custonFormData', custonFormData)
+      console.log("que es custonFormData", custonFormData);
 
       setSend(true);
       setRes(await updateProducto(product._id, custonFormData));
@@ -92,9 +92,7 @@ export const EditarProducto = () => {
   //? 3) Estados de navegacion ----> lo veremos en siguiente proyectos
   //! ------------------------------------------------------------------------------
 
-  /*  if (okEditProduct) {
-    return <Navigate to="/" />;
-  } */
+
 
   return (
     <Box>
@@ -137,14 +135,13 @@ export const EditarProducto = () => {
               <Form.Control asChild>
                 <textarea
                   className="Textarea"
+                  defaultValue={product.desc}
                   name="desc"
                   {...register("desc", { required: true })}
-                >
-                  {product.desc}
-                </textarea>
+                ></textarea>
               </Form.Control>
             </Form.Field>
-            
+
             <div className="">
               <img src={product.image} width="100" />
               <label htmlFor="file-upload">Imagen</label>
@@ -155,58 +152,78 @@ export const EditarProducto = () => {
                 {...register("image")}
               />
 
-              <div className="">
-                <label htmlFor="size">Size</label>
-                <input
-                  type="text"
-                  id="size"
-                  defaultValue={product.size}
-                  name="size"
-                  {...register("size", { required: true })}
-                />
-              </div>
-             
+              <Form.Field className="FormField" name="size">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Form.Label className="FormLabel">Size</Form.Label>
+                </div>
+                <Form.Control asChild>
+                  <input
+                    className="Input"
+                    type="text"
+                    defaultValue={product.size}
+                    required
+                    name="size"
+                    {...register("size", { required: true })}
+                  />
+                </Form.Control>
+              </Form.Field>
+
               <Flex align="center" gap="2">
-              <label htmlFor="categories" className="label-radio ">
-                Complementos
-              </label>
-              <input
-                type="radio"
-                name="categories"
-                id="categories"
-                value="Complementos"
-                defaultChecked={
-                  product.categories === "Complementos" ? true : false
-                }
-                {...register("categories")}
-              />
-              <label htmlFor="rol1" className="label-radio">
-                Electrónico
-              </label>
-              <input
-                type="radio"
-                name="categories"
-                id="rol1"
-                value="Electrónico"
-                defaultChecked={
-                  product.categories === "Electrónico" ? true : false
-                }
-                {...register("categories")}
-              />
+                <label htmlFor="categories" className="label-radio ">
+                  Complementos
+                </label>
+                <input
+                  type="radio"
+                  name="categories"
+                  id="categories"
+                  value="Complementos"
+                  checked={product.categories == "Complementos" ? 'true' : 'false'}
+                  {...register("categories")}
+                />
+                <label htmlFor="rol1" className="label-radio">
+                  Electrónico
+                </label>
+                <input
+                  type="radio"
+                  name="categories"
+                  id="rol1"
+                  value="Electrónico"
+                  checked={product.categories == "Electrónico" ? 'true' : 'false'}
+                  defaultChecked={
+                    product.categories == "Electrónico" ? true : false
+                  }
+                  {...register("categories")}
+                />
               </Flex>
 
-              
-              <div className="">
-                <label htmlFor="color">Color</label>
-                <input
-                  type="text"
-                  id="color"
-                  defaultValue={product.color}
-                  name="color"
-                  {...register("color", { required: true })}
-                />
-              </div>
-              
+              <Form.Field className="FormField" name="color">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Form.Label className="FormLabel">Color</Form.Label>
+                </div>
+                <Form.Control asChild>
+                  <input
+                    className="Input"
+                    type="text"
+                    defaultValue={product.size}
+                    required
+                    name="color"
+                    {...register("color", { required: true })}
+                  />
+                </Form.Control>
+              </Form.Field>
+
               <Form.Field className="FormField" name="name">
                 <div
                   style={{
@@ -228,29 +245,24 @@ export const EditarProducto = () => {
                   />
                 </Form.Control>
               </Form.Field>
-
-              
             </div>
             <div className="field-wrapper">
-                <label htmlFor="destacado">Destacdo ?</label>
-                <input
-                  type="checkbox"
-                  id="destacado"
-                  name="destacado"
-                  className="SwitchRoot"
-                  {...register("destacado", { required: false })}
-                />
-              </div>
-            
-            <div className="btn_container">
-              <Button
-                className="Button"
-                disabled={send}
-                style={{ background: send ? "#49c1a388" : "#2f7a67" }}
-              >
+              <label htmlFor="destacado">Destacdo ?</label>
+              <input
+                type="checkbox"
+                id="destacado"
+                name="destacado"
+                className="SwitchRoot"
+                defaultChecked={product.destacado}
+                {...register("destacado", { required: false })}
+              />
+            </div>
+
+            <Box mt="5">
+              <Button disabled={send} size="3">
                 Editar producto
               </Button>
-            </div>
+            </Box>
           </Form.Root>
         </div>
       </Container>

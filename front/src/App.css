@@ -114,3 +114,8 @@ input[type="checkbox"]{
 .active{
   color: hotpink !important;
 }
+.topToolbar {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+}

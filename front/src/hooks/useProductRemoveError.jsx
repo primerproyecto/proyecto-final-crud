@@ -13,15 +13,15 @@ export const useProductRemoveError = (
   if (res?.status == 200) {
     setOkEliminado((prevState) => !prevState);
     /* onsole.log("que es res.data.karrito", res.data.karrito.products); */
-    setProducts(() => res?.data?.karrito?.products);
+//    setProducts(() => res?.data?.karrito?.products);
     console.log("que es la resXX", res);
-    // Swal.fire({
-    //   icon: "success",
-    //   title: "Eliminado",
-    //   text: "Producto ekiminado del carrito ✅",
-    //   showConfirmButton: false,
-    //   timer: 1500,
-    // });
+    Swal.fire({
+      icon: "success",
+      title: "Eliminado",
+      text: res.data,
+      showConfirmButton: false,
+      timer: 1500,
+    });
   }
 
   //! ------------------- 404: 'password dont match'

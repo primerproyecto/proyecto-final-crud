@@ -169,7 +169,7 @@ export const ChangePassword = () => {
           </div> */}
         
         <Form.Submit asChild>
-        <Button className="Button" style={{ marginTop: 10 }}>
+        <Button size="3" style={{ marginTop: 10 }}>
           Cambiar contraseña
         </Button>
       </Form.Submit>

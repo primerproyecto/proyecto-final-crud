@@ -82,9 +82,7 @@ export const AgregarProducto = () => {
   return (
     <Box>
       <Container size="3">
-        <div className="form-wrap">
           <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
-           
             <Heading as="h2" size="7">
               Agregar productos
             </Heading>
@@ -209,9 +207,10 @@ export const AgregarProducto = () => {
                 />
               </Form.Control>
             </Form.Field>
-            
-            <div className="field-wrapper">
-                <label htmlFor="destacado">Destacdo ?</label>
+            <Form.Field>
+              <Form.Control asChild>
+              <>
+              <label htmlFor="destacado">Destacdo ?</label>
                 <input
                   type="checkbox"
                   id="destacado"
@@ -219,7 +218,10 @@ export const AgregarProducto = () => {
                   className="SwitchRoot"
                   {...register("destacado", { required: false })}
                 />
-              </div>
+                </>
+              </Form.Control>
+            </Form.Field>
+            
             
             <div className="sexo">
               <label htmlFor="categories" className="label-radio ">
@@ -246,12 +248,11 @@ export const AgregarProducto = () => {
             </div>
 
             <Form.Submit asChild>
-              <Button className="Button" style={{ marginTop: 10 }}>
+              <Button size="3" style={{ marginTop: 10 }}>
                 Enviar
               </Button>
             </Form.Submit>
           </Form.Root>
-        </div>
       </Container>
     </Box>
   );

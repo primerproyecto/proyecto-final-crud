@@ -11,7 +11,8 @@ import {
 import { borraProducto } from "../services/API_user/product.service";
 import { useCartAddError } from "../hooks/useCartAddError";
 import styled from "styled-components";
-import {capitalizarPrimeraLetra} from '../utils/text'
+import { capitalizarPrimeraLetra } from "../utils/text";
+Share2Icon
 
 import { createPortal } from "react-dom";
 
@@ -24,9 +25,12 @@ import {
   Box,
   Badge,
   Card,
+  AspectRatio,
+  Inset,
 } from "@radix-ui/themes";
 import * as Toast from "@radix-ui/react-toast";
-import './toast-styles.css'
+import "./toast-styles.css";
+import { Share2Icon } from "@radix-ui/react-icons";
 
 export const ProductGallery = ({ producto, modo }) => {
   const { user, setCarrito } = useAuth();
@@ -62,34 +66,38 @@ export const ProductGallery = ({ producto, modo }) => {
   //! ------------------------------------------------------------------------------
   //? 3) Estados de navegacion ----> lo veremos en siguiente proyectos
   //! ------------------------------------------------------------------------------
-  if (okAgregado) {
-    console.log("que es res", res);
-  }
+  // if (okAgregado) {
+  //   console.log("que es res", res);
+  // }
 
   return (
     <>
-      <Card style={{ maxWidth: 350 }} style={{backgroundColor: producto.destacado ? 'red': 'blue'}}>
-        {producto.destacado && <p>es destacado</p>}
-       
-        <Box>
+      <Card>
+        <Inset side="top" mb="5">
           <img src={producto.image} alt={producto.title} />
-        </Box>
-        <Text as="h1" size={1}>
+        </Inset>
+        <Text as="h1" size="7" mb="3">
           <Strong>{capitalizarPrimeraLetra(producto.title)}</Strong>
         </Text>
 
-        <Flex gap="3" justify="between">
-          <Text as="p">
-            <Strong>Size:</Strong> {producto.size}
-          </Text>
-          <Text as="p">
-            <Strong>Color:</Strong> {producto.color}
-          </Text>
-          <Badge color="orange" size={2}>
-            {producto.categories}
+        <Flex gap="3" justify="around">
+          <Box grow="1" align="center">
+            <Text size="5">
+              <Strong>Size:</Strong> {producto.size}
+            </Text>
+          </Box>
+          <Box grow="1" align="center">
+            <Text size="5">
+              <Strong>Color:</Strong> {producto.color}
+            </Text>
+          </Box>
+        </Flex>
+        <Flex align="center" width="100%" mb="4" mt="4">
+          <Badge color="pink" size="2" radius="full" mr="auto" ml="auto">
+            <Text size="5">{producto.categories}</Text>
           </Badge>
         </Flex>
-        <Text as="p">
+        <Text size="5">
           <Strong>Descripcion:</Strong>
           {producto.desc}
         </Text>
@@ -106,8 +114,8 @@ export const ProductGallery = ({ producto, modo }) => {
                 />
               </label>
               {user.rol && user.rol !== "admin" && (
-                <Button className="Button" disabled={isDisabled}>
-                  <ShoppingCart />
+                <Button size="4" disabled={isDisabled} mt="5">
+                  <Share2Icon />
                   Agregar
                 </Button>
               )}

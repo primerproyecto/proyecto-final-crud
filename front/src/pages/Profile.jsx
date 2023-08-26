@@ -5,17 +5,24 @@ import { Key, UserX } from "react-feather";
 import { ChangePassword, FormProfile } from "../components";
 import { useDeleteUser } from "../hooks";
 
-
-import { Flex, Text, Button, Container, Box, Avatar, Heading, } from "@radix-ui/themes";
-import '../components/avatarStyles.css'
+import {
+  Flex,
+  Text,
+  Button,
+  Container,
+  Box,
+  Avatar,
+  Heading,
+} from "@radix-ui/themes";
+import "../components/avatarStyles.css";
 
 export const Profile = () => {
   const [changeRender, setChangeRender] = useState(true);
   const { user, setUser } = useAuth();
   return (
-      <Box>
+    <Box>
       <Container size="3">
-        <div className="flexContainer-ai-center">
+        <Flex gap="3" align="center">
           <Button
             href="#"
             className="iconNav"
@@ -26,15 +33,14 @@ export const Profile = () => {
             Cambiar contraseña
           </Button>
           <Button onClick={() => setChangeRender(true)}>Cambiar datos</Button>
-          <Button onClick={() => useDeleteUser(setUser)}>
+          <Button onClick={() => useDeleteUser(setUser)} color="red">
             <UserX /> Delete user
           </Button>
-        </div>
-        <div className="fluidContainerProfile">
+        </Flex>
+        <Box>
           {changeRender ? <FormProfile /> : <ChangePassword />}
-        </div>
-        </Container>
-      </Box>
-      
+        </Box>
+      </Container>
+    </Box>
   );
 };
