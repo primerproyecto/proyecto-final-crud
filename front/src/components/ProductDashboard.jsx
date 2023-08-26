@@ -12,6 +12,8 @@ import {
 } from "../services/API_user/carrito.service";
 import { borraProducto } from "../services/API_user/product.service";
 import { Toast } from "@radix-ui/react-toast";
+import './toast-styles.css'
+
 
 import {
   Flex,
@@ -30,6 +32,7 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import styled from "styled-components";
 import { useProductRemoveError } from "../hooks";
 import * as Avatar from "@radix-ui/react-avatar";
+import { capitalizarPrimeraLetra } from "../utils/text";
 
 export const ProductDashboard = ({ producto, setProducts }) => {
   const { user, setCarrito } = useAuth();
@@ -89,19 +92,18 @@ export const ProductDashboard = ({ producto, setProducts }) => {
   return (
     <>
       <Card>
+      <Flex gap="3" align="center" direction="column">
         <Avatar.Root className="AvatarRoot">
           <Avatar.Image
             className="AvatarImage"
             src={producto.image}
             alt={producto.title}
+            width="300px"
           />
-          <Avatar.Fallback className="AvatarFallback" delayMs={600}>
-            CT
-          </Avatar.Fallback>
         </Avatar.Root>
-        <p>{producto.title}</p>
+        <Text size="5"><Strong>{capitalizarPrimeraLetra(producto.title)}</Strong></Text>
 
-        <form onSubmit={handleSubmit(formSubmit)}>
+       <Flex gap="5" p="3"> <form onSubmit={handleSubmit(formSubmit)}>
           {/* <label>
             <input
               type="text"
@@ -133,7 +135,7 @@ export const ProductDashboard = ({ producto, setProducts }) => {
           </Button> */}
           <Dialog.Root>
           <Dialog.Trigger asChild>
-            <button className="Button violet">Eliminar</button>
+            <Button className="Button violet">Eliminar</Button>
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay className="DialogOverlay" />
@@ -151,12 +153,12 @@ export const ProductDashboard = ({ producto, setProducts }) => {
                 }}
               >
                 <Dialog.Close asChild>
-                  <button
+                  <Button
                     className="Button green"
                     onClick={async () => borrar()}
                   >
                     Eliminar producto
-                  </button>
+                  </Button>
                 </Dialog.Close>
               </div>
               <Dialog.Close asChild>
@@ -168,10 +170,12 @@ export const ProductDashboard = ({ producto, setProducts }) => {
           </Dialog.Portal>
         </Dialog.Root>
         </form>
-        <Link href={`/editarProducto/${producto._id}`}>
+        <Link className="Button violet" href={`/editarProducto/${producto._id}`}>Editar</Link>
+        </Flex>
+        {/* <Link href={`/editarProducto/${producto._id}`}>
           <Edit />
-        </Link>
-        
+        </Link> */}
+        </Flex>
       </Card>
       {okEliminado &&
         createPortal(
@@ -187,14 +191,6 @@ export const ProductDashboard = ({ producto, setProducts }) => {
               <Toast.Title className="ToastTitle">
                 <Text>Producto eliminado del carrito</Text>
               </Toast.Title>
-              <Toast.Description asChild>amecico a desayuna</Toast.Description>
-              <Toast.Action
-                className="ToastAction"
-                asChild
-                altText="Goto schedule to undo"
-              >
-                <button className="Button small green">Undo</button>
-              </Toast.Action>
             </Toast.Root>
             <Toast.Viewport className="ToastViewport" />
           </Toast.Provider>,

@@ -5,6 +5,9 @@ import { changePasswordUser } from "../services/API_user/user.service";
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import { useChangePasswordError } from "../hooks";
 
+import * as Form from '@radix-ui/react-form';
+import { Button, Box, Container, Section, Heading } from "@radix-ui/themes";
+
 export const ChangePassword = () => {
   const { setUser } = useAuth();
   const { handleSubmit, register } = useForm();
@@ -48,12 +51,75 @@ export const ChangePassword = () => {
   }, [res]);
 
   return (
-    <>
-      <div className="form-wrap">
-        <h1>Change your password ♻</h1>
+    <Section>
+    <Box>
+    <Container size="3">
+    <Heading as="h1" size="6" mb="4">Cambiar contraseña</Heading>
+      <Form.Root className="FormRoot">
+      <Form.Field className="FormField" name="name">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+            }}
+          >
+            <Form.Label className="FormLabel">Contraseña</Form.Label>
+          </div>
+          <Form.Control asChild>
+            <input
+              className="Input"
+              type="password"
+              name="password"
+              {...register("password", { required: true })}
+            />
+          </Form.Control>
+        </Form.Field>
+
+        <Form.Field className="FormField" name="name">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+            }}
+          >
+            <Form.Label className="FormLabel">Nueva contraseña</Form.Label>
+          </div>
+          <Form.Control asChild>
+            <input
+              className="Input"
+              type="password"
+              name="newPassword"
+              {...register("newPassword", { required: true })}
+            />
+          </Form.Control>
+        </Form.Field>
+
+        <Form.Field className="FormField" name="name">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+            }}
+          >
+            <Form.Label className="FormLabel">Confirma la nueva contraseña</Form.Label>
+          </div>
+          <Form.Control asChild>
+            <input
+              className="Input"
+              type="password"
+              name="confirmPassword"
+              {...register("confirmPassword", { required: true })}
+            />
+          </Form.Control>
+        </Form.Field>
+      
+        {/* <h1>Change your password ♻</h1>
         <p>Please, enter your old and new passwords</p>
         <form onSubmit={handleSubmit(formSubmit)}>
-          <div className="password_container form-group">
+          {/* <div className="password_container form-group">
             <label htmlFor="custom-input" className="custom-placeholder">
               Old password
             </label>
@@ -65,8 +131,8 @@ export const ChangePassword = () => {
               autoComplete="false"
               {...register("password", { required: true })}
             />
-          </div>
-          <div className="newPassword_container form-group">
+          </div> */}
+          {/* <div className="newPassword_container form-group">
             <label htmlFor="custom-input" className="custom-placeholder">
               New password
             </label>
@@ -78,8 +144,8 @@ export const ChangePassword = () => {
               autoComplete="false"
               {...register("newPassword", { required: true })}
             />
-          </div>
-          <div className="confirmPassword_container form-group">
+          </div> */}
+          {/* <div className="confirmPassword_container form-group">
             <label htmlFor="custom-input" className="custom-placeholder">
               Confirm new password
             </label>
@@ -91,21 +157,25 @@ export const ChangePassword = () => {
               autoComplete="false"
               {...register("confirmPassword", { required: true })}
             />
-          </div>
-          <div className="btn_container">
+          </div> */}
+          {/* <div className="btn_container">
             <button
               className="btn"
               type="submit"
               disabled={send}
-              style={{
-                background: send ? lightTheme.primary : lightTheme.body,
-              }}
             >
               CHANGE PASSWORD
             </button>
-          </div>
-        </form>
-      </div>
-    </>
+          </div> */}
+        
+        <Form.Submit asChild>
+        <Button className="Button" style={{ marginTop: 10 }}>
+          Cambiar contraseña
+        </Button>
+      </Form.Submit>
+      </Form.Root>
+      </Container>
+    </Box>
+    </Section>
   );
 };

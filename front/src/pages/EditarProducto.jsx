@@ -144,30 +144,7 @@ export const EditarProducto = () => {
                 </textarea>
               </Form.Control>
             </Form.Field>
-            {/* <div className="">
-            <label htmlFor="name">Título</label>
-            <input
-              className="input_user"
-              type="text"
-              defaultValue={product.title}
-              id="name"
-              name="title"
-              autoComplete="false"
-              {...register("title", { required: true })}
-            />
-          </div> */}
-            {/* <div className="">
-            <label htmlFor="description">Descripcion</label>
-            <input
-              className="input_user"
-              defaultValue={product.desc}
-              type="text"
-              id="description"
-              name="desc"
-              autoComplete="false"
-              {...register("desc", { required: true })}
-            />
-          </div> */}
+            
             <div className="">
               <img src={product.image} width="100" />
               <label htmlFor="file-upload">Imagen</label>
@@ -188,32 +165,7 @@ export const EditarProducto = () => {
                   {...register("size", { required: true })}
                 />
               </div>
-              {/* <Select.Root defaultValue={product.size}>
-                <Select.Trigger className="SelectTrigger">
-                  <Select.Value placeholder="Seleciona un tamaño" />
-                  <Select.Icon className="SelectIcon">
-                    <ChevronDownIcon />
-                  </Select.Icon>
-                </Select.Trigger>
-
-                <Select.Portal>
-                  <Select.Content className="SelectContent">
-                    <Select.ScrollUpButton className="SelectScrollButton" />
-                    <Select.Viewport className="SelectViewport">
-
-                      <Select.Group>
-                        <Select.Item>
-                          <Select.ItemText value="aurora">Aurora</Select.ItemText>
-                        </Select.Item>
-                      </Select.Group>
-
-                      <Select.Separator />
-                    </Select.Viewport>
-                    <Select.ScrollDownButton />
-                    <Select.Arrow />
-                  </Select.Content>
-                </Select.Portal>
-              </Select.Root> */}
+             
               <Flex align="center" gap="2">
               <label htmlFor="categories" className="label-radio ">
                 Complementos
@@ -243,44 +195,7 @@ export const EditarProducto = () => {
               />
               </Flex>
 
-              {/* <RadioGroup.Root
-                className="RadioGroupRoot"
-                aria-label="View density"
-                defaultValue={
-                  product.categories === "Complementos"
-                    ? "Complementos"
-                    : "Electrónico"
-                }
-                name="categories"
-                
-              >
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <RadioGroup.Item
-                    className="RadioGroupItem"
-                    value="Complementos"
-                    id="r1"
-                    {...register("categories")}
-                  >
-                    <RadioGroup.Indicator className="RadioGroupIndicator" />
-                  </RadioGroup.Item>
-                  <label className="Label" htmlFor="r1">
-                    Complementos
-                  </label>
-                </div>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <RadioGroup.Item
-                    className="RadioGroupItem"
-                    value="Electrónico"
-                    id="r2"
-                    {...register("categories")}
-                  >
-                    <RadioGroup.Indicator className="RadioGroupIndicator" />
-                  </RadioGroup.Item>
-                  <label className="Label" htmlFor="r2">
-                    Electrónico
-                  </label>
-                </div>
-              </RadioGroup.Root> */}
+              
               <div className="">
                 <label htmlFor="color">Color</label>
                 <input
@@ -291,16 +206,7 @@ export const EditarProducto = () => {
                   {...register("color", { required: true })}
                 />
               </div>
-              {/* <div className="">
-                <label htmlFor="price">Precio</label>
-                <input
-                  type="number"
-                  id="price"
-                  defaultValue={product.price}
-                  name="price"
-                  {...register("price", { required: true })}
-                />
-              </div> */}
+              
               <Form.Field className="FormField" name="name">
                 <div
                   style={{
@@ -323,64 +229,19 @@ export const EditarProducto = () => {
                 </Form.Control>
               </Form.Field>
 
-              {/* <div className="">
-                
+              
+            </div>
+            <div className="field-wrapper">
+                <label htmlFor="destacado">Destacdo ?</label>
                 <input
                   type="checkbox"
                   id="destacado"
-                  defaultChecked={product.destacado}
                   name="destacado"
+                  className="SwitchRoot"
                   {...register("destacado", { required: false })}
                 />
-              </div>*/}
-            </div>
-            <label htmlFor="destacado" style={{ paddingRight: 15 }}>
-              Destacado
-            </label>
-            <Switch.Root
-              id="destacado"
-              className="SwitchRoot"
-              defaultChecked={product.destacado}
-            >
-              <Switch.Thumb
-                className="SwitchThumb"
-                checked
-                name="destacado"
-                {...register("destacado", { required: false })}
-              />
-            </Switch.Root>
-            {/* <RadioGroup.Root
-                className="RadioGroupRoot"
-                aria-label="View density"
-                value={product.destacado}
-              >
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <RadioGroup.Item
-                    className="RadioGroupItem"
-                    value="Complementos"
-                    id="r1"
-                    {...register("destacado")}
-                  >
-                    <RadioGroup.Indicator className="RadioGroupIndicator" />
-                  </RadioGroup.Item>
-                  <label className="Label" htmlFor="r1">
-                    Complementos
-                  </label>
-                </div>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <RadioGroup.Item
-                    className="RadioGroupItem"
-                    value="Electrónico"
-                    {...register("destacado")}
-                    id="r2"
-                  >
-                    <RadioGroup.Indicator className="RadioGroupIndicator" />
-                  </RadioGroup.Item>
-                  <label className="Label" htmlFor="r2">
-                    Electrónico
-                  </label>
-                </div>
-              </RadioGroup.Root> */}
+              </div>
+            
             <div className="btn_container">
               <Button
                 className="Button"

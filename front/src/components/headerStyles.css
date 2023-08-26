@@ -57,10 +57,17 @@ p {
 }
 
 .NavigationMenuLink {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
   text-decoration: none;
   font-size: 15px;
   line-height: 1;
+}
+.NavigationMenuLink svg {
+  width: 15px !important;
+  height: 15px !important;
 }
 
 .NavigationMenuContent {

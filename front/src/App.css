@@ -104,3 +104,13 @@ main {
     outline: 5px dashed #000;
   }
 }
+
+
+input[type="radio"],
+input[type="checkbox"]{
+  appearance: auto;
+}
+
+.active{
+  color: hotpink !important;
+}

@@ -26,10 +26,10 @@ import {
   Card,
 } from "@radix-ui/themes";
 import * as Toast from "@radix-ui/react-toast";
+import './toast-styles.css'
 
 export const ProductGallery = ({ producto, modo }) => {
   const { user, setCarrito } = useAuth();
-  console.log("que es user", user);
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
@@ -68,7 +68,7 @@ export const ProductGallery = ({ producto, modo }) => {
 
   return (
     <>
-      <Card style={{ maxWidth: 350 }}>
+      <Card style={{ maxWidth: 350 }} style={{backgroundColor: producto.destacado ? 'red': 'blue'}}>
         {producto.destacado && <p>es destacado</p>}
        
         <Box>
@@ -117,7 +117,7 @@ export const ProductGallery = ({ producto, modo }) => {
       </Card>
       {okAgregado &&
         createPortal(
-          <Toast.Provider swipeDirection="right" duration={20000}>
+          <Toast.Provider swipeDirection="right" duration={2000}>
             <Toast.Root
               className="ToastRoot"
               open={okAgregado}
@@ -126,14 +126,6 @@ export const ProductGallery = ({ producto, modo }) => {
               <Toast.Title className="ToastTitle">
                 <Text>Producto agregado al carrito</Text>
               </Toast.Title>
-              <Toast.Description asChild>amecico a desayuna</Toast.Description>
-              <Toast.Action
-                className="ToastAction"
-                asChild
-                altText="Goto schedule to undo"
-              >
-                <button className="Button small green">Undo</button>
-              </Toast.Action>
             </Toast.Root>
             <Toast.Viewport className="ToastViewport" />
           </Toast.Provider>,

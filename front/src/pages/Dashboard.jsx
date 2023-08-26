@@ -5,53 +5,50 @@ import styled from "styled-components";
 import { ProductDashboard, Spinner, AllCarritos } from "../components";
 import { useProducts } from "../context/productsContext";
 import { AgregarProducto } from "./AgregarProducto";
-import { Button, Box, Container } from "@radix-ui/themes";
+import { Button, Box, Container, Heading, Flex, Section, Grid } from "@radix-ui/themes";
 
 export const Dahsboard = () => {
   const { products, loading, setRecargar, setProducts } = useProducts();
-  
-
-
-
-
 
   return (
     <Box>
     <Container size="3">
     <div className="grilla-dashboard">
-      <h2>Dashboard</h2>
+      <Heading as="h1" size="8">Dashboard</Heading>
       <Grilla>
-        <section>
-          <fieldset>
-            <legend>Todos los carritos</legend>
+        <Section>
+          <Heading as="h2" size="7" mb="4">Todos los carritos</Heading>
             <AllCarritos />
-          </fieldset>
-        </section>
-        <section>
+        </Section>
+        <Section>
           {loading ? (
             <Spinner />
           ) : (
-            <fieldset className="grilla">
-              <legend>Todos los productos</legend>
+            <>
+              <Heading as="h2" size="7" mb="4">Todos los productos del catálogo</Heading>
+              <Grid columns="3" gap="3" width="auto">
               {products?.data ? (
                 products?.data?.map((item) => {
                   return (
+                    
                     <ProductDashboard
                       key={item._id}
                       producto={item}
                       setProducts={setProducts}
                     />
+                    
                   );
                 })
               ) : (
                 <h1>No hay productos</h1>
               )}
-            </fieldset>
+              </Grid>
+              </>
           )}
-        </section>
-        <section>
+        </Section>
+        <Section>
           <AgregarProducto />
-        </section>
+        </Section>
       </Grilla>
     </div>
     </Container>

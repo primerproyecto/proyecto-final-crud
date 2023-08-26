@@ -15,18 +15,20 @@ import {
   TextAlignRightIcon,
 } from "@radix-ui/react-icons";
 import "./homeStyles.css";
+import './stylesCarrito.css'
 import { Button, Flex, Box, Container, Section } from "@radix-ui/themes";
 
 export const Home = () => {
   const { products, loading, setProducts, setLoading } = useProducts();
-  console.log('que son products', products)
+  // console.log('que son products', products)
 
   const [filterProducts, setFilterProducts] = useState(() => products);
+  console.log("1 - que eson filterProducts", filterProducts);
 
   const [palabraABuscar, setPalabraABuscar] = useState("");
   const [mostrarTodos, setMostrarTodos] = useState(false);
 
-  const [value, setValue] = React.useState("Complementos");
+  const [value, setValue] = React.useState('');
   // función para manejar el envío de formulario.
   const handleFormSearch = (e) => {
     e.preventDefault();
@@ -41,8 +43,10 @@ export const Home = () => {
     const filtrados = products?.data.filter((item) => {
       return item.categories === categoriaABuscar;
     });
-    console.log("que eson filtrados", filtrados);
-    setFilterProducts({ data: filtrados });
+    // console.log("que eson filtrados", filtrados);
+    // console.log("2 - que eson filterProducts", filterProducts);
+    //  setFilterProducts({ data: filtrados });
+    //  console.log("3 - que eson filterProducts", filterProducts);
   };
 
   useEffect(() => {
@@ -55,6 +59,7 @@ export const Home = () => {
   }, [mostrarTodos]);
 
   useEffect(() => {
+    console.log('ALGO CAMBIA', value)
     if (value === "Complementos") {
       setFilterProducts({ data: funcionFiltrar("Complementos") });
     }
@@ -123,10 +128,14 @@ export const Home = () => {
               type="single"
               defaultValue="center"
               value={value}
+              name="categories"
               aria-label="Text alignment"
               onValueChange={(value) => {
                 console.log("que es value", value);
-                if (value) setValue(value);
+                if (value) {
+                   setValue(value);
+                  // setFilterProducts(funcionFiltrar(value))
+                }
               }}
             >
               <ToggleGroup.Item
@@ -152,11 +161,11 @@ export const Home = () => {
               </ToggleGroup.Item>
             </ToggleGroup.Root>
           </div>
-          <div className="destacados">
+          {/* <div className="destacados">
           {filterProducts ? (
               filterProducts?.data?.map((item) => {
                 if(item.destacado) {
-                  return <Section><ProductGallery key={item._id} producto={item} /></Section>;
+                  return <Section key={item._id}><ProductGallery producto={item} /></Section>;
                 }
                
               })
@@ -164,11 +173,11 @@ export const Home = () => {
               <h1>No hay productos destacados</h1>
             )}
 
-          </div>
+          </div> */}
           <div className="grilla">
             {filterProducts ? (
               filterProducts?.data?.map((item) => {
-                return <Section><ProductGallery key={item._id} producto={item} /></Section>;
+                return <Section key={item._id} ><ProductGallery key={item._id} producto={item} /></Section>;
               })
             ) : (
               <h1>No hay productos</h1>

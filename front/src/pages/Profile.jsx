@@ -6,7 +6,8 @@ import { ChangePassword, FormProfile } from "../components";
 import { useDeleteUser } from "../hooks";
 
 
-import { Flex, Text, Button, Container, Box, Avatar } from "@radix-ui/themes";
+import { Flex, Text, Button, Container, Box, Avatar, Heading, } from "@radix-ui/themes";
+import '../components/avatarStyles.css'
 
 export const Profile = () => {
   const [changeRender, setChangeRender] = useState(true);
