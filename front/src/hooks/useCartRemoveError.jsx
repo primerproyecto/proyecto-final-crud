@@ -3,24 +3,13 @@ export const useCartRemoveError = (
   res,
   setORemoveCarrito,
   setRes,
-  setCarrito
+  setCarrito,
 ) => {
   //? si la respuesta es ok ---- > directamente esta el status en la primera clave es decir: res.status
   //? si la respuesta no esta ok--> res.response.status
   //! ------------------ 200 : todo ok
-  /*  console.log("aqui res", res); */
   if (res?.status == 200) {
     setORemoveCarrito((prevValue) => !prevValue);
-    /* onsole.log("que es res.data.karrito", res.data.karrito.products); */
-    // setCarrito(() => res.data.karrito.products);
-    console.log("que es la resXX", res);
-    Swal.fire({
-      icon: "success",
-      title: "Eliminado",
-      text: "Producto ekiminado del carrito ✅",
-      showConfirmButton: false,
-      timer: 1500,
-    });
   }
 
   //! ------------------- 404: 'password dont match'

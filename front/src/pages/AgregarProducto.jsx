@@ -19,6 +19,14 @@ import {
   Heading,
   Flex,
   Section,
+  TextArea,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogRoot,
+  DialogDescription,
+  DialogClose,
+  Text
 } from "@radix-ui/themes";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { CheckIcon } from "@radix-ui/react-icons";
@@ -76,17 +84,12 @@ export const AgregarProducto = () => {
   //? 3) Estados de navegacion ----> lo veremos en siguiente proyectos
   //! ------------------------------------------------------------------------------
 
-  if (okAddProduct) {
-    setRecargar((prevState) => !prevState);
-  }
   return (
-    <Box>
-      <Container size="3">
+    <>
+      <Box>
+        <Container size="3">
           <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
-            <Heading as="h2" size="7">
-              Agregar productos
-            </Heading>
-            <Heading as="h3" size="5">
+            <Heading as="h2" size="7" mb="4">
               Agregar productos
             </Heading>
             <Form.Field className="FormField" name="title">
@@ -121,7 +124,7 @@ export const AgregarProducto = () => {
                 <Form.Label className="FormLabel">Descripcion</Form.Label>
               </div>
               <Form.Control asChild>
-                <input
+                <TextArea
                   className="Input"
                   type="text"
                   required
@@ -209,49 +212,50 @@ export const AgregarProducto = () => {
             </Form.Field>
             <Form.Field className="FormField">
               <Form.Control asChild>
-              <><Flex gap="3" direction="column">
-
-              
-              <label className="FormLabel" htmlFor="destacado">Destacado ?</label>
-                <input
-                  type="checkbox"
-                  id="destacado"
-                  name="destacado"
-                  className="SwitchRoot"
-                  {...register("destacado", { required: false })}
-                />
-                </Flex>
+                <>
+                  <Flex gap="3" direction="column">
+                    <label className="FormLabel" htmlFor="destacado">
+                      Destacado ?
+                    </label>
+                    <input
+                      type="checkbox"
+                      id="destacado"
+                      name="destacado"
+                      className="SwitchRoot"
+                      {...register("destacado", { required: false })}
+                    />
+                  </Flex>
                 </>
               </Form.Control>
             </Form.Field>
-            
-            <Form.Field className="FormField">
-            <Flex gap="3" direction="column">
-            <label className="FormLabel" htmlFor="categories">
-                Categoría
-              </label>
-              <Flex gap="3"><label  htmlFor="categories">
-                Complementos
-              </label>
-              <input
-                type="radio"
-                name="categories"
-                id="categories"
-                value="Complementos"
-                {...register("categories")}
-              />
-              <label htmlFor="rol1" className="label-radio">
-                Electrónico
-              </label>
 
-              <input
-                type="radio"
-                name="categories"
-                id="rol1"
-                value="Electrónico"
-                {...register("categories")}
-              /></Flex>
-            </Flex>
+            <Form.Field className="FormField">
+              <Flex gap="3" direction="column">
+                <label className="FormLabel" htmlFor="categories">
+                  Categoría
+                </label>
+                <Flex gap="3">
+                  <label htmlFor="categories">Complementos</label>
+                  <input
+                    type="radio"
+                    name="categories"
+                    id="categories"
+                    value="Complementos"
+                    {...register("categories")}
+                  />
+                  <label htmlFor="rol1" className="label-radio">
+                    Electrónico
+                  </label>
+
+                  <input
+                    type="radio"
+                    name="categories"
+                    id="rol1"
+                    value="Electrónico"
+                    {...register("categories")}
+                  />
+                </Flex>
+              </Flex>
             </Form.Field>
 
             <Form.Submit asChild>
@@ -260,7 +264,23 @@ export const AgregarProducto = () => {
               </Button>
             </Form.Submit>
           </Form.Root>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+      <DialogRoot open={okAddProduct}>
+        <DialogContent>
+          <DialogTitle>Producto agregado al carrito</DialogTitle>
+          <DialogDescription size="4" mb="4">
+          <Text>El producto se ha agregado satisfactoriamente al catálogo de productos"</Text>
+          </DialogDescription>
+          <Flex gap="3" justify="end">
+            <DialogClose>
+              <Button size="3" variant="soft" color="gray"  onClick={() => setOkAddProduct(false)}>
+                Close
+              </Button>
+            </DialogClose>
+          </Flex>
+        </DialogContent>
+      </DialogRoot>
+    </>
   );
 };

@@ -4,7 +4,7 @@ import "./App.css";
 
 import { Footer, Header } from "./components";
 
-import "@radix-ui/themes/styles.css";
+
 import { Theme, ThemePanel, Section } from "@radix-ui/themes";
 import { ThemeProvider } from 'next-themes';
 

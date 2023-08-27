@@ -35,7 +35,7 @@ export const AllCarritos = () => {
         allCarritos.map((item) => {
           if (item._id && item._id !== "64cd2c33ea565eecb1f99b65") {
             return (
-              <Card key={item._id} mb="4">
+              <Card key={item._id} mb="4" style={{boxShadow: 'var(--shadow-2)'}}>
                 <Flex gap="3" align="center">
                   <Flex shrink="0">
                     <Avatar.Root className="AvatarRoot">

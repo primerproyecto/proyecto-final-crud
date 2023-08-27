@@ -21,6 +21,7 @@ import { AuthContextProvider } from "./context/authContext.jsx";
 import { ProductsContextProvider } from "./context/productsContext.jsx";
 import { CartContextProvider } from "./context/cartContext.jsx";
 import DetalleProducto from "./pages/DetalleProducto.jsx";
+import "@radix-ui/themes/styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>

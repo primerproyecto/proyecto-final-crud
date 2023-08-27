@@ -87,7 +87,7 @@ export const ProductDashboard = ({ producto, setProducts }) => {
 
   return (
     <>
-      <Card>
+      <Card style={{boxShadow: 'var(--shadow-3)'}}>
         <Flex gap="3" align="center" direction="column">
           <Avatar.Root className="AvatarRoot">
             <Avatar.Image
@@ -137,12 +137,14 @@ export const ProductDashboard = ({ producto, setProducts }) => {
                 Eliminar
               </Button>
             </form>
+            <Button asChild>
             <Link
-              className="Button violet"
               href={`/editarProducto/${producto._id}`}
             >
               Editar
             </Link>
+            </Button>
+            
           </Flex>
         </Flex>
       </Card>

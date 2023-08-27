@@ -9,15 +9,8 @@ export const useProductAddError = (
   //? si la respuesta no esta ok--> res.response.status
   //! ------------------ 200 : todo ok
   if (res?.status == 200) {
-    setOkAddProduct(() => true);
-     setRecargar((prevState) => !prevState);
-    Swal.fire({
-      icon: "success",
-      title: "Producto agregado al carrito",
-      text: "El producto se ha agregado satisfactoriamente al catálogo de productos ✅",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+      setOkAddProduct(() => true);
+      setRecargar((prevState) => !prevState);
   }
 
   //! ------------------- 404: 'password dont match'

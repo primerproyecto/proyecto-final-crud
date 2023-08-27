@@ -40,7 +40,12 @@ export const Dahsboard = () => {
                   <Heading as="h2" size="7" mb="4">
                     Todos los productos del catálogo
                   </Heading>
-                  <Grid columns="3" gap="3" width="auto">
+                  <Grid columns={{
+                initial: '1',
+                sm: '2',
+                md: '3',
+                lg: '4'
+              }} gap="3" mt="5">
                     {products?.data ? (
                       products?.data?.map((item) => {
                         return (

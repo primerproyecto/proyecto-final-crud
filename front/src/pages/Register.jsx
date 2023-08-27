@@ -76,8 +76,8 @@ export const Register = () => {
           borderRadius: "var(--radius-3)",
         }}
       >
-        <Container size="1">
-        <Card size="5">
+        <Container size="2">
+        <Card size="5" m="6" style={{boxShadow: 'var(--shadow-5)'}}>
           <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
             <Form.Field className="FormField" name="name">
               <div

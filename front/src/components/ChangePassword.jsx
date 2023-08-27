@@ -51,10 +51,9 @@ export const ChangePassword = () => {
   }, [res]);
 
   return (
-    <Section>
     <Box>
     <Container size="3">
-    <Heading as="h1" size="6" mb="4">Cambiar contraseña</Heading>
+    <Heading as="h1" size="6" mb="2" mt="3">Cambiar contraseña</Heading>
       <Form.Root className="FormRoot">
       <Form.Field className="FormField" name="name">
           <div
@@ -115,59 +114,6 @@ export const ChangePassword = () => {
             />
           </Form.Control>
         </Form.Field>
-      
-        {/* <h1>Change your password ♻</h1>
-        <p>Please, enter your old and new passwords</p>
-        <form onSubmit={handleSubmit(formSubmit)}>
-          {/* <div className="password_container form-group">
-            <label htmlFor="custom-input" className="custom-placeholder">
-              Old password
-            </label>
-            <input
-              className="input_user"
-              type="password"
-              id="password"
-              name="password"
-              autoComplete="false"
-              {...register("password", { required: true })}
-            />
-          </div> */}
-          {/* <div className="newPassword_container form-group">
-            <label htmlFor="custom-input" className="custom-placeholder">
-              New password
-            </label>
-            <input
-              className="input_user"
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              autoComplete="false"
-              {...register("newPassword", { required: true })}
-            />
-          </div> */}
-          {/* <div className="confirmPassword_container form-group">
-            <label htmlFor="custom-input" className="custom-placeholder">
-              Confirm new password
-            </label>
-            <input
-              className="input_user"
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              autoComplete="false"
-              {...register("confirmPassword", { required: true })}
-            />
-          </div> */}
-          {/* <div className="btn_container">
-            <button
-              className="btn"
-              type="submit"
-              disabled={send}
-            >
-              CHANGE PASSWORD
-            </button>
-          </div> */}
-        
         <Form.Submit asChild>
         <Button size="3" style={{ marginTop: 10 }}>
           Cambiar contraseña
@@ -176,6 +122,5 @@ export const ChangePassword = () => {
       </Form.Root>
       </Container>
     </Box>
-    </Section>
   );
 };

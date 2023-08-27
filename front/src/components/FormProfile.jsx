@@ -64,7 +64,10 @@ export const FormProfile = () => {
   return (
     <>
       <Box>
+      <Container size="3">
+      <Heading as="h1" size="6" mb="4" mt="3">Cambiar nombre de usuario o avatar</Heading>
         <Flex gap="3" align="center">
+        
           <Avatar src={user.image} fallback="S" size="7" />
           <Heading size="6">{user.user}</Heading>
           <Text>{user.rol}</Text>
@@ -101,6 +104,7 @@ export const FormProfile = () => {
             </Button>
           </Form.Submit>
         </Form.Root>
+        </Container>
       </Box>
     </>
   );

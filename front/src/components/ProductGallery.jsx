@@ -87,16 +87,20 @@ export const ProductGallery = ({ itemId, producto }) => {
         </Text>
 
         <Flex gap="3" justify="around">
-          <Box grow="1" align="center">
+        <Flex grow="1" align="center" gap="3">
             <Text size="5">
-              <Strong>Size:</Strong> {producto.size}
+              <Strong>Size:</Strong> 
             </Text>
-          </Box>
-          <Box grow="1" align="center">
+            <Text size="5">{producto.size}
+            </Text>
+          </Flex>
+          <Flex grow="1" align="center" gap="3">
             <Text size="5">
-              <Strong>Color:</Strong> {producto.color}
+              <Strong>Color:</Strong> 
             </Text>
-          </Box>
+            <Text size="5">{producto.color}
+            </Text>
+          </Flex>
         </Flex>
         <Flex align="center" width="100%" mb="4" mt="4">
           <Badge color="pink" size="2" radius="full" mr="auto" ml="auto">

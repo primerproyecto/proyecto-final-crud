@@ -51,7 +51,7 @@ export const Login = () => {
         }}
       >
     <Container size="1">
-    <Card size="5">
+    <Card size="5" m="6" style={{boxShadow: 'var(--shadow-5)'}}>
     <Flex align="center">
       <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
         <Form.Field className="FormField" name="email">

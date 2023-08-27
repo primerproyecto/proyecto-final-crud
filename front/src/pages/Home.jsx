@@ -19,7 +19,7 @@ import {
 } from "@radix-ui/react-icons";
 import "./homeStyles.css";
 import "./stylesCarrito.css";
-import { Button, Flex, Box, Container, Section, Grid, Heading } from "@radix-ui/themes";
+import { Button, Flex, Box, Container, Section, Grid, Heading, Separator } from "@radix-ui/themes";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
@@ -73,12 +73,15 @@ export const Home = () => {
       ) : (
         <>
           <Box>
-            <Container size="3">
+            <Container size="3" ml="2" mr="2">
+            <Flex gap="9" align="center" justify="between">
               <form onSubmit={handleFormSearch}>
                 <Flex gap="3" align="center">
                   <input
                     type="text"
                     value={palabraABuscar}
+                    className="Input"
+                    placeholder="buscar producto"
                     onChange={(e) => {
                       setPalabraABuscar(e.target.value);
                     }}
@@ -91,34 +94,37 @@ export const Home = () => {
                   </Button>
                 </Flex>
               </form>
+              <Separator orientation="vertical"/>
               <Flex gap="3" align="center">
                 <Button
                   variant="surface"
-                  size="3"
                   onClick={() => funcionFiltrar("Complementos")}
                 >
                   Complementos
                 </Button>
                 <Button
                   variant="surface"
-                  size="3"
                   onClick={() => funcionFiltrar("Electrónico")}
                 >
                   Electrónico
                 </Button>
                 <Button
                   variant="surface"
-                  size="3"
                   onClick={() => setMostrarTodos((prevValue) => !prevValue)}
                 >
                   Todos
                 </Button>
               </Flex>
-              <Grid columns="3" gap="3" mt="5">
+              </Flex>
+              <Grid columns={{
+                initial: '1',
+                sm: '2',
+                lg: '3'
+              }} gap="3" mt="5">
                 {filterProducts ? (
                   filterProducts?.data?.map((item) => {
                     return (
-                      <Box key={item._id}>
+                      <Box key={item._id} style={{boxShadow: 'var(--shadow-3)'}}>
                         <ProductGallery itemId={item._id} producto={item} />
                       </Box>
                     );
