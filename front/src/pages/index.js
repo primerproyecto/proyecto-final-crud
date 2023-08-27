@@ -9,3 +9,4 @@ export * from "./ModifyPassword";
 export * from "./AgregarProducto";
 export * from "./EditarProducto";
 export * from "./Dashboard";
+export * from "./DetalleProducto";

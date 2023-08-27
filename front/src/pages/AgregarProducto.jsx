@@ -207,10 +207,12 @@ export const AgregarProducto = () => {
                 />
               </Form.Control>
             </Form.Field>
-            <Form.Field>
+            <Form.Field className="FormField">
               <Form.Control asChild>
-              <>
-              <label htmlFor="destacado">Destacdo ?</label>
+              <><Flex gap="3" direction="column">
+
+              
+              <label className="FormLabel" htmlFor="destacado">Destacado ?</label>
                 <input
                   type="checkbox"
                   id="destacado"
@@ -218,13 +220,17 @@ export const AgregarProducto = () => {
                   className="SwitchRoot"
                   {...register("destacado", { required: false })}
                 />
+                </Flex>
                 </>
               </Form.Control>
             </Form.Field>
             
-            
-            <div className="sexo">
-              <label htmlFor="categories" className="label-radio ">
+            <Form.Field className="FormField">
+            <Flex gap="3" direction="column">
+            <label className="FormLabel" htmlFor="categories">
+                Categoría
+              </label>
+              <Flex gap="3"><label  htmlFor="categories">
                 Complementos
               </label>
               <input
@@ -244,8 +250,9 @@ export const AgregarProducto = () => {
                 id="rol1"
                 value="Electrónico"
                 {...register("categories")}
-              />
-            </div>
+              /></Flex>
+            </Flex>
+            </Form.Field>
 
             <Form.Submit asChild>
               <Button size="3" style={{ marginTop: 10 }}>

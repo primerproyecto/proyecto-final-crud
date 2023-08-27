@@ -21,7 +21,7 @@ import {
 } from "@radix-ui/themes";
 import * as Avatar from "@radix-ui/react-avatar";
 import "./stylesCarrito.css";
-import { capitalizarPrimeraLetra } from "../utils/text";
+import { capitalizarPrimeraLetra, aEuros } from "../utils";
 
 export const Carrito = () => {
   const { id } = useParams();
@@ -29,7 +29,6 @@ export const Carrito = () => {
   const [carrito, setCarrito] = useState([]);
 
   const { user } = useAuth();
-  console.log('quien es user', user)
   const idI11 = useId();
 
   const [res, setRes] = useState({});
@@ -78,8 +77,10 @@ export const Carrito = () => {
       style={{ background: "var(--gray-a2)", borderRadius: "var(--radius-3)" }}
     >
       <Container size="2">
-      <Box pt="6" pb="8">
-        <Heading as="h1" size="9">El carrito de {user.user}</Heading>
+        <Box pt="6" pb="8">
+          <Heading as="h1" size="9">
+            El carrito de {capitalizarPrimeraLetra(user.user)}
+          </Heading>
         </Box>
         {carrito?.map((item, index) => {
           return (
@@ -98,7 +99,7 @@ export const Carrito = () => {
                     {capitalizarPrimeraLetra(item?.productId?.title)}{" "}
                   </Heading>
                 </Box>
-                
+
                 <Text>
                   ( {item?.cantidad}{" "}
                   {item?.cantidad > 1 ? "productos" : "producto"} )
@@ -106,12 +107,16 @@ export const Carrito = () => {
                 <Text>
                   <Text size="4">
                     <Strong>
-                      TOTAL : {item?.cantidad * item?.productId.price}{" "}
+                      TOTAL :{" "}
+                      {aEuros.format(item?.cantidad * item?.productId.price)}
                     </Strong>
                   </Text>
                 </Text>
                 <Flex direction="row-reverse" grow="1">
-                  <Button size="3" onClick={() => formSubmitQuitar(item.productId._id)}>
+                  <Button
+                    size="3"
+                    onClick={() => formSubmitQuitar(item.productId._id)}
+                  >
                     Eliminar
                   </Button>
                 </Flex>

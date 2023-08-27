@@ -7,6 +7,7 @@ import { useProducts } from "../context/productsContext";
 import { getAllProducts } from "../services/API_user/product.service";
 import * as Form from "@radix-ui/react-form";
 
+
 import React from "react";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import {
@@ -14,11 +15,12 @@ import {
   TextAlignCenterIcon,
   TextAlignRightIcon,
   MagnifyingGlassIcon,
-  Cross1Icon
+  Cross1Icon,
 } from "@radix-ui/react-icons";
 import "./homeStyles.css";
 import "./stylesCarrito.css";
-import { Button, Flex, Box, Container, Section } from "@radix-ui/themes";
+import { Button, Flex, Box, Container, Section, Grid, Heading } from "@radix-ui/themes";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
   const { products, loading, setProducts, setLoading } = useProducts();
@@ -39,7 +41,6 @@ export const Home = () => {
     setFilterProducts({ data: coincidentes });
   };
 
- 
   const funcionFiltrar = (categoriaABuscar) => {
     const filtrados = products?.data.filter((item) => {
       return item.categories === categoriaABuscar;
@@ -74,48 +75,58 @@ export const Home = () => {
           <Box>
             <Container size="3">
               <form onSubmit={handleFormSearch}>
-            <Flex gap="3" align="center">
-              <input
-                type="text"
-                value={palabraABuscar}
-                onChange={(e) => {
-                  setPalabraABuscar(e.target.value);
-                }}
-              />
-              <Button>
-                <MagnifyingGlassIcon />
-              </Button>
-              <Button onClick={() => setPalabraABuscar("")}>
-                <Cross1Icon />
-              </Button>
-            </Flex>
-          </form>
+                <Flex gap="3" align="center">
+                  <input
+                    type="text"
+                    value={palabraABuscar}
+                    onChange={(e) => {
+                      setPalabraABuscar(e.target.value);
+                    }}
+                  />
+                  <Button>
+                    <MagnifyingGlassIcon />
+                  </Button>
+                  <Button onClick={() => setPalabraABuscar("")}>
+                    <Cross1Icon />
+                  </Button>
+                </Flex>
+              </form>
               <Flex gap="3" align="center">
-                <Button variant="surface" size="3" onClick={() => funcionFiltrar("Complementos")}>
+                <Button
+                  variant="surface"
+                  size="3"
+                  onClick={() => funcionFiltrar("Complementos")}
+                >
                   Complementos
                 </Button>
-                <Button variant="surface" size="3" onClick={() => funcionFiltrar("Electrónico")}>
+                <Button
+                  variant="surface"
+                  size="3"
+                  onClick={() => funcionFiltrar("Electrónico")}
+                >
                   Electrónico
                 </Button>
-                <Button variant="surface" size="3"
+                <Button
+                  variant="surface"
+                  size="3"
                   onClick={() => setMostrarTodos((prevValue) => !prevValue)}
                 >
                   Todos
                 </Button>
               </Flex>
-              <div className="grilla">
+              <Grid columns="3" gap="3" mt="5">
                 {filterProducts ? (
                   filterProducts?.data?.map((item) => {
                     return (
-                      <Section key={item._id}>
-                        <ProductGallery key={item._id} producto={item} />
-                      </Section>
+                      <Box key={item._id}>
+                        <ProductGallery itemId={item._id} producto={item} />
+                      </Box>
                     );
                   })
                 ) : (
-                  <h1>No hay productos</h1>
+                  <Heading as="h1" size="6">No hay productos</Heading>
                 )}
-              </div>
+              </Grid>
             </Container>
           </Box>
         </>

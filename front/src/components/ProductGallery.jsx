@@ -12,7 +12,7 @@ import { borraProducto } from "../services/API_user/product.service";
 import { useCartAddError } from "../hooks/useCartAddError";
 import styled from "styled-components";
 import { capitalizarPrimeraLetra } from "../utils/text";
-Share2Icon
+Share2Icon;
 
 import { createPortal } from "react-dom";
 
@@ -31,8 +31,9 @@ import {
 import * as Toast from "@radix-ui/react-toast";
 import "./toast-styles.css";
 import { Share2Icon } from "@radix-ui/react-icons";
+import { aEuros } from "../utils";
 
-export const ProductGallery = ({ producto, modo }) => {
+export const ProductGallery = ({ itemId, producto }) => {
   const { user, setCarrito } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
@@ -74,10 +75,15 @@ export const ProductGallery = ({ producto, modo }) => {
     <>
       <Card>
         <Inset side="top" mb="5">
-          <img src={producto.image} alt={producto.title} />
+          <Link to={`/detalleProducto/${itemId}`}>
+            <img src={producto.image} alt={producto.title} />
+          </Link>
         </Inset>
         <Text as="h1" size="7" mb="3">
           <Strong>{capitalizarPrimeraLetra(producto.title)}</Strong>
+        </Text>
+        <Text as="h2" size="5" mb="3" color="pink">
+          <Strong>{aEuros.format(producto.price)}</Strong>
         </Text>
 
         <Flex gap="3" justify="around">
@@ -115,7 +121,6 @@ export const ProductGallery = ({ producto, modo }) => {
               </label>
               {user.rol && user.rol !== "admin" && (
                 <Button size="4" disabled={isDisabled} mt="5">
-                  <Share2Icon />
                   Agregar
                 </Button>
               )}

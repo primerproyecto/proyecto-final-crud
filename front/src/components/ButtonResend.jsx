@@ -2,6 +2,9 @@ import { useAuth } from "../context/authContext";
 import { useEffect, useState } from "react";
 import { resendCodeConfirmationUser } from "../services/API_user/user.service";
 import { useResendCode } from "../hooks";
+import {
+  Button,
+} from "@radix-ui/themes";
 
 export const ButtonReSend = ({ setReloadPageError }) => {
   const [res, setRes] = useState({});
@@ -38,14 +41,13 @@ export const ButtonReSend = ({ setReloadPageError }) => {
   }, [res]);
 
   return (
-    <button
+    <Button
       id="btnResend"
-      className="btn"
       disabled={send}
-      style={{ background: send ? "#49c1a388" : "#49c1a2" }}
       onClick={() => handleReSend()}
+      size="3"
     >
       Resend Code
-    </button>
+    </Button>
   );
 };

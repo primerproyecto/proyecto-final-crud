@@ -10,6 +10,17 @@ import { Navigate } from "react-router-dom";
 import { ButtonReSend } from "../components";
 import * as Form from "@radix-ui/react-form";
 
+import {
+  Button,
+  Box,
+  Container,
+  Flex,
+  Text,
+  Heading,
+  Avatar,
+  Section,
+} from "@radix-ui/themes";
+
 export const CheckCode = () => {
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
@@ -80,11 +91,14 @@ export const CheckCode = () => {
     return <Navigate to="/login" />;
   }
   return (
-    <>
-      <div className="form-wrap">
-        <h1>Verify your code 👌</h1>
-        <p>Write the code sent to your email</p>
-        {/*  <form onSubmit={handleSubmit(formSubmit)}>
+    <Box>
+      <Container size="2">
+        <Section>
+          <Heading as="h1" size="8" mb="4">
+            Verify your code 👌
+          </Heading>
+          <Text>Write the code sent to your email</Text>
+          {/*  <form onSubmit={handleSubmit(formSubmit)}>
           <div className="user_container form-group">
             <input
               className="input_user"
@@ -111,51 +125,53 @@ export const CheckCode = () => {
             </button>
           </div>
         </form> */}
-        <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
-          <Form.Field className="FormField" name="email">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "space-between",
-              }}
-            >
-              <Form.Label className="FormLabel">
-                Código de verificación
-              </Form.Label>
-              <Form.Message className="FormMessage" match="valueMissing">
-                Que has recibido en tu correo
-              </Form.Message>
-              <Form.Message className="FormMessage" match="typeMismatch">
-                Introduce el código válido
-              </Form.Message>
-            </div>
-            <Form.Control asChild>
-              <input
-                className="Input"
-                type="text"
-                required
-                {...register("confirmationCode", { required: false })}
-              />
-            </Form.Control>
-          </Form.Field>
-
-          <Form.Submit asChild>
-            <button className="Button" style={{ marginTop: 10 }}>
-              Verificar código
-            </button>
-          </Form.Submit>
-        </Form.Root>
-        <div className="btn_container">
+        <Flex gap="3" align="baseline" mb="5">
+          <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
+            <Flex gap="3" align="baseline">
+              <Form.Field className="FormField" name="email">
+                <Flex gap="3">
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Form.Label className="FormLabel">
+                      Código de verificación
+                    </Form.Label>
+                    <Form.Message className="FormMessage" match="valueMissing">
+                      Que has recibido en tu correo
+                    </Form.Message>
+                    <Form.Message className="FormMessage" match="typeMismatch">
+                      Introduce el código válido
+                    </Form.Message>
+                  </div>
+                  <Form.Control asChild>
+                    <input
+                      className="Input"
+                      type="text"
+                      required
+                      {...register("confirmationCode", { required: false })}
+                    />
+                  </Form.Control>
+                </Flex>
+              </Form.Field>
+              <Form.Submit asChild>
+                <Button size="3" style={{ marginTop: 10 }}>
+                  Verificar código
+                </Button>
+              </Form.Submit>
+            </Flex>
+          </Form.Root>
           <ButtonReSend setReloadPageError={setReloadPageError} />
-        </div>
-        <p className="bottom-text">
-          <small>
+          </Flex>
+          <Text as="p">
             If the code is not correct ❌, your user will be deleted from the
             database and you will need to register again.{" "}
-          </small>
-        </p>
-      </div>
-    </>
+          </Text>
+        </Section>
+      </Container>
+    </Box>
   );
 };

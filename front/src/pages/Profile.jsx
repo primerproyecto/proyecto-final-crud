@@ -13,6 +13,7 @@ import {
   Box,
   Avatar,
   Heading,
+  Card,
 } from "@radix-ui/themes";
 import "../components/avatarStyles.css";
 
@@ -22,7 +23,8 @@ export const Profile = () => {
   return (
     <Box>
       <Container size="3">
-        <Flex gap="3" align="center">
+      <Card>
+        <Flex gap="3" align="center" mb="5">
           <Button
             href="#"
             className="iconNav"
@@ -40,6 +42,7 @@ export const Profile = () => {
         <Box>
           {changeRender ? <FormProfile /> : <ChangePassword />}
         </Box>
+        </Card>
       </Container>
     </Box>
   );

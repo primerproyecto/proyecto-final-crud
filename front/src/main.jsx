@@ -20,6 +20,7 @@ import { ProtectedCheckChildren, Protected } from "./components";
 import { AuthContextProvider } from "./context/authContext.jsx";
 import { ProductsContextProvider } from "./context/productsContext.jsx";
 import { CartContextProvider } from "./context/cartContext.jsx";
+import DetalleProducto from "./pages/DetalleProducto.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -89,15 +90,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                   </Protected>
                 }
               />
+              <Route
+                path="/detalleProducto/:id"
+                element={
+                    <DetalleProducto />
+                }
+              />
             </Route>
-            <Route
-              path="/dashboard"
-              element={
-                <Protected>
-                  <Dahsboard />
-                </Protected>
-              }
-            />
+            
           </Routes>
           {/* </CartContextProvider>  */}
         </ProductsContextProvider>

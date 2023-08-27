@@ -44,6 +44,12 @@ export const Login = () => {
   }
 
   return (
+    <Box
+        style={{
+          background: "var(--gray-a2)",
+          borderRadius: "var(--radius-3)",
+        }}
+      >
     <Container size="1">
     <Card size="5">
     <Flex align="center">
@@ -95,5 +101,6 @@ export const Login = () => {
       </Flex>
     </Card>
     </Container>
+    </Box>
   );
 };

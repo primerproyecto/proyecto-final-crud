@@ -95,15 +95,6 @@ main {
   max-width: 60rem;
 }
 
-.grilla figure {
-}
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #753;
-    color: #dcb;
-    outline: 5px dashed #000;
-  }
-}
 
 
 input[type="radio"],
@@ -118,4 +109,7 @@ input[type="checkbox"]{
   position: sticky;
   top: 0;
   z-index: 9;
+}
+button:hover{
+  cursor: pointer;
 }

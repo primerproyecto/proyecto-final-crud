@@ -10,7 +10,8 @@ import { useAuth } from "../context/authContext";
 import * as Form from "@radix-ui/react-form";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import "./registerStyles.css";
-import { Button, Box, Container } from "@radix-ui/themes";
+import { Button, Box, Container, Card } from "@radix-ui/themes";
+import { Uploadfile } from "../components";
 
 export const Register = () => {
   const { allUser, setAllUser, bridgeData } = useAuth();
@@ -76,6 +77,7 @@ export const Register = () => {
         }}
       >
         <Container size="1">
+        <Card size="5">
           <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
             <Form.Field className="FormField" name="name">
               <div
@@ -151,6 +153,11 @@ export const Register = () => {
                 />
               </Form.Control>
             </Form.Field>
+            <Form.Field className="FormField">
+              <Form.Label className="FormLabel">
+                Rol
+              </Form.Label>
+            </Form.Field>
             <RadioGroup.Root
               className="RadioGroupRoot"
               defaultValue="user"
@@ -184,7 +191,7 @@ export const Register = () => {
               </div>
             </RadioGroup.Root>
 
-            <div className="">
+            {/* <div className="">
               <label>Imagen</label>
               <input
                 type="file"
@@ -192,7 +199,14 @@ export const Register = () => {
                 id="file-upload"
                 accept="image/png, image/jpeg"
               />
-            </div>
+            </div> */}
+            <Form.Field className="FormField">
+              <Form.Label className="FormLabel">
+                Upload image
+              </Form.Label>
+              <Uploadfile />
+            </Form.Field>
+            
 
             <Form.Submit asChild>
               <Button size="3" style={{ marginTop: 10 }}>
@@ -200,6 +214,7 @@ export const Register = () => {
               </Button>
             </Form.Submit>
           </Form.Root>
+          </Card>
         </Container>
       </Box>
     </>
