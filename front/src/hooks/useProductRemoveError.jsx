@@ -4,24 +4,12 @@ export const useProductRemoveError = (
   res,
   setRes,
   setOkEliminado,
-  setProducts
+  setProducts,
+  setEliminarProducto
 ) => {
-  //? si la respuesta es ok ---- > directamente esta el status en la primera clave es decir: res.status
-  //? si la respuesta no esta ok--> res.response.status
-  //! ------------------ 200 : todo ok
-  /*  console.log("aqui res", res); */
   if (res?.status == 200) {
     setOkEliminado((prevState) => !prevState);
-    /* onsole.log("que es res.data.karrito", res.data.karrito.products); */
-//    setProducts(() => res?.data?.karrito?.products);
-    console.log("que es la resXX", res);
-    Swal.fire({
-      icon: "success",
-      title: "Eliminado",
-      text: res.data,
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    setEliminarProducto((prevState) => !prevState)
   }
 
   //! ------------------- 404: 'password dont match'

@@ -32,7 +32,7 @@ import { useProductRemoveError } from "../hooks";
 import * as Avatar from "@radix-ui/react-avatar";
 import { capitalizarPrimeraLetra } from "../utils/text";
 
-export const ProductDashboard = ({ producto, setProducts }) => {
+export const ProductDashboard = ({ producto, setProducts, setEliminarProducto }) => {
   const { user, setCarrito } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
@@ -73,7 +73,7 @@ export const ProductDashboard = ({ producto, setProducts }) => {
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
-    useProductRemoveError(res, setRes, setOkEliminado, setProducts);
+    useProductRemoveError(res, setRes, setOkEliminado, setProducts, setEliminarProducto);
     /* if (res?.status == 200) bridgeData("ALLUSER"); */
   }, [res]);
 

@@ -13,12 +13,21 @@ import {
   Flex,
   Section,
   Grid,
+  AlertDialogRoot,
+  AlertDialogTitle,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialog,
 } from "@radix-ui/themes";
+import * as Toast from '@radix-ui/react-toast';
 
 export const Dahsboard = () => {
   const { products, loading, setRecargar, setProducts } = useProducts();
 
+  const [eleminarProducto, setEliminarProducto] = useState(false)
+
   return (
+    <>
     <Box>
       <Container size="3">
         <div className="grilla-dashboard">
@@ -53,6 +62,7 @@ export const Dahsboard = () => {
                             key={item._id}
                             producto={item}
                             setProducts={setProducts}
+                            setEliminarProducto={setEliminarProducto}
                           />
                         );
                       })
@@ -70,6 +80,14 @@ export const Dahsboard = () => {
         </div>
       </Container>
     </Box>
+    <Toast.Provider swipeDirection="right">
+
+      <Toast.Root className="ToastRoot" open={eleminarProducto} onOpenChange={setEliminarProducto} >
+        <Toast.Title className="ToastTitle">Producto Eliminado</Toast.Title>
+      </Toast.Root>
+      <Toast.Viewport className="ToastViewport" />
+    </Toast.Provider>
+    </>
   );
 };
 
