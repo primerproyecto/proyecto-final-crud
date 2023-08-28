@@ -1,17 +1,10 @@
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
-export const useForgotPassword = (res, setRes, setForgotOk) => {
+export const useForgotPassword = (res, setRes, setForgotOk, setMensaje404) => {
   //! -------- 200 ={ updateUser: true, sendPassword: true}
   if (res?.status == 200) {
     if (res?.data?.sendPassword == true && res?.data?.updateUser == true) {
       setForgotOk(() => true);
       setRes(() => ({}));
-      Swal.fire({
-        icon: "success",
-        title: "Change password ok",
-        text: "Send email with your new password ✅",
-        showConfirmButton: false,
-        timer: 3000,
-      });
     }
   }
 
@@ -31,15 +24,9 @@ export const useForgotPassword = (res, setRes, setForgotOk) => {
   }
 
   //! -------- 404 = 'dont send email and dont update user'
-  if (res?.response?.data?.includes("User not register")) {
+  if (res?.response?.status == 404)  {
     setRes(() => ({}));
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "No hay nadie con esa dirección",
-      showConfirmButton: false,
-      timer: 3000,
-    });
+    setMensaje404((prevState) => !prevState)
   }
 
   //! -------- 500 = interval server error

@@ -16,14 +16,14 @@ export const useLoginError = (res, setLoginOk, userLogin, setRes) => {
     };
     const dataString = JSON.stringify(dataCustom);
     userLogin(dataString);
-    setLoginOk(() => true);
-    Swal.fire({
-      icon: "success",
-      title: "Welcome to my Page 💌",
-      text: "Login ok ✅",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    setLoginOk((prevState) => !prevState);
+    // Swal.fire({
+    //   icon: "success",
+    //   title: "Welcome to my Page  xxxx💌",
+    //   text: "Login ok ✅",
+    //   showConfirmButton: false,
+    //   timer: 1500,
+    // });
   }
 
   //! ------------------- 404: 'password dont match'

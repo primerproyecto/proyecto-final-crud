@@ -81,6 +81,7 @@ export const ProductGallery = ({ itemId, producto }) => {
         <Text as="h1" size="7" mb="3">
           <Strong>{capitalizarPrimeraLetra(producto.title)}</Strong>
         </Text>
+        {/* <Button>Agregar a favoritos</Button> */}
         <Text as="h2" size="5" mb="3" color="pink">
           <Strong>{aEuros.format(producto.price)}</Strong>
         </Text>
@@ -122,8 +123,7 @@ export const ProductGallery = ({ itemId, producto }) => {
                   {...register("productId")}
                 />
               </label>
-              {user.rol && user.rol !== "admin" && (
-                <Button size="4" disabled={isDisabled} mt="5">
+              {user.rol && user.rol !== "admin" && (<Button size="4" disabled={isDisabled} mt="5">
                   Agregar
                 </Button>
               )}
