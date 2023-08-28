@@ -29,7 +29,6 @@ import {
   Inset,
 } from "@radix-ui/themes";
 import * as Toast from "@radix-ui/react-toast";
-import "./toast-styles.css";
 import { Share2Icon } from "@radix-ui/react-icons";
 import { aEuros } from "../utils";
 

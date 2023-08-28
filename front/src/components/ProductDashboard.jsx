@@ -12,7 +12,6 @@ import {
 } from "../services/API_user/carrito.service";
 import { borraProducto } from "../services/API_user/product.service";
 import * as Toast from "@radix-ui/react-toast";
-import "./toast-styles.css";
 
 import {
   Flex,

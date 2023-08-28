@@ -174,10 +174,6 @@ export const Carrito = () => {
 
       <Toast.Root className="ToastRoot" open={removeCarrito} onOpenChange={setORemoveCarrito}>
         <Toast.Title className="ToastTitle">Producto borrado</Toast.Title>
-        <Toast.Description asChild>
-          <time className="ToastDescription" >
-          </time>
-        </Toast.Description>
       </Toast.Root>
       <Toast.Viewport className="ToastViewport" />
     </Toast.Provider>

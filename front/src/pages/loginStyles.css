@@ -28,7 +28,7 @@ button {
 
 .FormMessage {
   font-size: 13px;
-  color: white;
+  color: var(--pink-9);
   opacity: 0.8;
 }
 

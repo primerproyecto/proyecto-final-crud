@@ -24,7 +24,6 @@ import { useProducts } from "../context/productsContext";
 import { useAuth } from "../context/authContext";
 import { useCartAddError } from "../hooks/useCartAddError";
 import * as Toast from "@radix-ui/react-toast";
-import "../components/toast-styles.css";
 import { Share2Icon } from "@radix-ui/react-icons";
 
 const DetalleProducto = () => {

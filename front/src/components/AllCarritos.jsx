@@ -11,8 +11,7 @@ import {
   Card,
   Container,
 } from "@radix-ui/themes";
-import { capitalizarPrimeraLetra } from "../utils/text";
-import { aEuros } from "../utils";
+import { aEuros, capitalizarPrimeraLetra } from "../utils";
 
 export const AllCarritos = () => {
   const [allCarritos, setAllCarritos] = useState();
@@ -27,13 +26,12 @@ export const AllCarritos = () => {
     };
     fetchData(allCarritos);
   }, []);
-
   useEffect(() => {});
   return (
     <Box>
       {allCarritos &&
         allCarritos.map((item) => {
-          if (item._id && item._id !== "64cd2c33ea565eecb1f99b65") {
+          if (item.propietario.rol && item.propietario.rol === "user") {
             return (
               <Card key={item._id} mb="4" style={{boxShadow: 'var(--shadow-2)'}}>
                 <Flex gap="3" align="center">
@@ -41,7 +39,7 @@ export const AllCarritos = () => {
                     <Avatar.Root className="AvatarRoot">
                       <Avatar.Image
                         className="AvatarImage"
-                        src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
+                        src={item.propietario.image}
                         alt="Colm Tuite"
                       />
                     </Avatar.Root>{" "}

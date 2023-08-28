@@ -21,6 +21,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
+import * as Toast from '@radix-ui/react-toast';
 
 export const EditarProducto = () => {
   const { id } = useParams();
@@ -92,9 +93,8 @@ export const EditarProducto = () => {
   //? 3) Estados de navegacion ----> lo veremos en siguiente proyectos
   //! ------------------------------------------------------------------------------
 
-
-
   return (
+    <>
     <Box>
       <Container size="3">
         <div className="form-wrap">
@@ -109,6 +109,12 @@ export const EditarProducto = () => {
                 }}
               >
                 <Form.Label className="FormLabel">Título</Form.Label>
+                <Form.Message className="FormMessage" match="valueMissing">
+                  Agrega un título a este producto. Campo obligatorio
+                </Form.Message>
+                <Form.Message className="FormMessage" match="typeMismatch">
+                  Please provide a valid email
+                </Form.Message>
               </div>
               <Form.Control asChild>
                 <input
@@ -131,6 +137,9 @@ export const EditarProducto = () => {
                 }}
               >
                 <Form.Label className="FormLabel">Descripción</Form.Label>
+                <Form.Message className="FormMessage" match="valueMissing">
+                  Agrega descripción al producto. Campo obligatorio
+                </Form.Message>
               </div>
               <Form.Control asChild>
                 <textarea
@@ -183,8 +192,8 @@ export const EditarProducto = () => {
                   name="categories"
                   id="categories"
                   value="Complementos"
-                  checked={product.categories == "Complementos" ? 'true' : 'false'}
                   {...register("categories")}
+                  checked={product.categories == "Complementos" ? true : false}
                 />
                 <label htmlFor="rol1" className="label-radio">
                   Electrónico
@@ -194,10 +203,7 @@ export const EditarProducto = () => {
                   name="categories"
                   id="rol1"
                   value="Electrónico"
-                  checked={product.categories == "Electrónico" ? 'true' : 'false'}
-                  defaultChecked={
-                    product.categories == "Electrónico" ? true : false
-                  }
+                  checked={product.categories === "Electrónico" ? true : false}
                   {...register("categories")}
                 />
               </Flex>
@@ -233,11 +239,14 @@ export const EditarProducto = () => {
                   }}
                 >
                   <Form.Label className="FormLabel">Precio</Form.Label>
+                  <Form.Message className="FormMessage" match="valueMissing">
+                  Es obligatorio establecer un precio con un valor numérico
+                </Form.Message>
                 </div>
                 <Form.Control asChild>
                   <input
                     className="Input"
-                    type="text"
+                    type="number"
                     defaultValue={product.price}
                     required
                     name="price"
@@ -267,5 +276,13 @@ export const EditarProducto = () => {
         </div>
       </Container>
     </Box>
+    <Toast.Provider swipeDirection="right">
+
+      <Toast.Root className="ToastRoot" open={okEditProduct} onOpenChange={setOkEditProduct}>
+        <Toast.Title className="ToastTitle">Producto Editado</Toast.Title>
+      </Toast.Root>
+      <Toast.Viewport className="ToastViewport" />
+    </Toast.Provider>
+    </>
   );
 };
