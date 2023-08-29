@@ -31,6 +31,7 @@ export const Login = () => {
   const [send, setSend] = useState(false);
   const [loginOk, setLoginOk] = useState(false);
   const { userLogin, setUser } = useAuth();
+  const [userNotFound, setUserNotFound] = useState(false);
 
   //! 1) ------------------ FUNCION QUE GESTIONA EL FORMULARIO----------
   const formSubmit = async (formData) => {
@@ -46,7 +47,7 @@ export const Login = () => {
     setUser(() => null);
   }, []);
   useEffect(() => {
-    useLoginError(res, setLoginOk, userLogin, setRes);
+    useLoginError(res, setLoginOk, userLogin, setRes, setUserNotFound);
   }, [res]);
 
   //! 3) ------------------ ESTADOS DE NAVEGACION O ESTADOS DE FUNCIONALIDADES OK
@@ -144,6 +145,28 @@ export const Login = () => {
                 variant="soft"
                 color="gray"
                 onClick={() => setOkAddProduct(false)}
+              >
+                Close
+              </Button>
+            </DialogClose>
+          </Flex>
+        </DialogContent>
+      </DialogRoot>
+      <DialogRoot open={userNotFound}>
+        <DialogContent>
+          <DialogTitle>Usuario no encontrado</DialogTitle>
+          <DialogDescription size="4" mb="4">
+            <Text>
+              No hay registrada ninguna dirección como esa.
+            </Text>
+          </DialogDescription>
+          <Flex gap="3" justify="end">
+            <DialogClose>
+              <Button
+                size="3"
+                variant="soft"
+                color="gray"
+                onClick={() => setUserNotFound(false)}
               >
                 Close
               </Button>

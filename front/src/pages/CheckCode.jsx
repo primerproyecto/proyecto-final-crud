@@ -1,12 +1,12 @@
 import { useAuth } from "../context/authContext";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   checkCodeConfirmationUser,
   resendCodeConfirmationUser,
 } from "../services/API_user/user.service";
 import { useAutoLogin, useCheckCodeError } from "../hooks";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { ButtonReSend } from "../components";
 import * as Form from "@radix-ui/react-form";
 
@@ -14,11 +14,17 @@ import {
   Button,
   Box,
   Container,
-  Flex,
-  Text,
   Heading,
-  Avatar,
+  Flex,
   Section,
+  TextArea,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogRoot,
+  DialogDescription,
+  DialogClose,
+  Text
 } from "@radix-ui/themes";
 
 export const CheckCode = () => {
@@ -30,6 +36,13 @@ export const CheckCode = () => {
   const { allUser, userLogin, setUser, user } = useAuth();
   const { register, handleSubmit } = useForm();
 
+  const inputRef = useRef(null);
+
+  const [correcto, setCorrecto] = useState(false)
+
+  const navigate = useNavigate()
+
+  
   //! 1) ---------------LAS FUNCIONES QUE GESTIONAN LOS SUBMIT DE LOS FORMULARIOS--------
   const formSubmit = async (formData) => {
     const userLocal = localStorage.getItem("user");
@@ -68,18 +81,25 @@ export const CheckCode = () => {
       setOkCheck,
       setUser,
       setReloadPageError,
-      setRes
+      setRes,
+      setCorrecto
     );
   }, [res]);
+
+  useEffect(() => {
+      // inputRef.current.focus();
+  },[])
+
 
   //!3) ----------------- ESTADOS DE NAVEGACION O DE CONFIRMACION DE QUE LA FUNCIONALIDAD ESTA OK ----
   if (okCheck) {
     if (!localStorage.getItem("user")) {
       // autologin
       setOkCheck(() => false);
-      useAutoLogin(allUser, userLogin, setOkCheck);
+      return
+      //useAutoLogin(allUser, userLogin, setOkCheck);
     } else {
-      return <Navigate to="/profile" />;
+      return <Navigate to="/login" />;
     }
   }
 
@@ -91,6 +111,7 @@ export const CheckCode = () => {
     return <Navigate to="/login" />;
   }
   return (
+    <>
     <Box>
       <Container size="2">
         <Section>
@@ -98,33 +119,6 @@ export const CheckCode = () => {
             Verify your code 👌
           </Heading>
           <Text>Write the code sent to your email</Text>
-          {/*  <form onSubmit={handleSubmit(formSubmit)}>
-          <div className="user_container form-group">
-            <input
-              className="input_user"
-              type="text"
-              id="name"
-              name="name"
-              autoComplete="false"
-              {...register("confirmationCode", { required: false })}
-            />
-            <label htmlFor="custom-input" className="custom-placeholder">
-              Registration code
-            </label>
-          </div>
-
-          <div className="btn_container">
-            <button
-              id="btnCheck"
-              className="btn"
-              type="submit"
-              disabled={send}
-              style={{ background: send ? "#49c1a388" : "#49c1a2" }}
-            >
-              Verify Code
-            </button>
-          </div>
-        </form> */}
         <Flex gap="3" align="baseline" mb="5">
           <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
             <Flex gap="3" align="baseline">
@@ -153,6 +147,7 @@ export const CheckCode = () => {
                       type="text"
                       required
                       {...register("confirmationCode", { required: false })}
+                      // ref={inputRef}
                     />
                   </Form.Control>
                 </Flex>
@@ -173,5 +168,21 @@ export const CheckCode = () => {
         </Section>
       </Container>
     </Box>
+    <DialogRoot open={correcto}>
+        <DialogContent>
+          <DialogTitle>Código correcto</DialogTitle>
+          <DialogDescription size="4" mb="4">
+          <Text>Hemos verificado tu email y ya está guardado en nuestra base de datos</Text>
+          </DialogDescription>
+          <Flex gap="3" justify="end">
+            <DialogClose>
+              <Button size="3" variant="soft" color="gray"  onClick={() => setCorrecto(false)}>
+                Close
+              </Button>
+            </DialogClose>
+          </Flex>
+        </DialogContent>
+      </DialogRoot>
+    </>
   );
 };

@@ -10,8 +10,24 @@ import { useAuth } from "../context/authContext";
 import * as Form from "@radix-ui/react-form";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import "./registerStyles.css";
-import { Button, Box, Container, Card } from "@radix-ui/themes";
 import { Uploadfile } from "../components";
+import {
+  Button,
+  Box,
+  Container,
+  Heading,
+  Flex,
+  Section,
+  TextArea,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogRoot,
+  DialogDescription,
+  DialogClose,
+  Text,
+  Card 
+} from "@radix-ui/themes";
 
 export const Register = () => {
   const { allUser, setAllUser, bridgeData } = useAuth();
@@ -19,6 +35,8 @@ export const Register = () => {
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
   const [okRegister, setOkRegister] = useState(false);
+
+  const [emailDuplicado, setEmailDuplicado] = useState(false);
 
   //! ------------------------------------------------------------------------------
   //? 1) funcion que se encarga del formulario - de la data del formulario
@@ -33,6 +51,7 @@ export const Register = () => {
       const custonFormData = {
         ...formData,
         image: inputFile[0],
+        favoritos: []
       };
 
       setSend(true);
@@ -57,7 +76,7 @@ export const Register = () => {
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
-    useRegisterError(res, setOkRegister, setRes, setAllUser);
+    useRegisterError(res, setOkRegister, setRes, setAllUser, setEmailDuplicado);
     if (res?.status == 201) bridgeData("ALLUSER");
   }, [res]);
 
@@ -217,6 +236,21 @@ export const Register = () => {
           </Card>
         </Container>
       </Box>
+      <DialogRoot open={emailDuplicado}>
+        <DialogContent>
+          <DialogTitle>Producto agregado al carrito</DialogTitle>
+          <DialogDescription size="4" mb="4">
+          <Text>El producto se ha agregado satisfactoriamente al catálogo de productos"</Text>
+          </DialogDescription>
+          <Flex gap="3" justify="end">
+            <DialogClose>
+              <Button size="3" variant="soft" color="gray"  onClick={() => setEmailDuplicado(false)}>
+                Close
+              </Button>
+            </DialogClose>
+          </Flex>
+        </DialogContent>
+      </DialogRoot>
     </>
   );
 };

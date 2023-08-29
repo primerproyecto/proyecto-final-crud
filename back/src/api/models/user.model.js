@@ -26,6 +26,9 @@ const UserSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Cart',
     },
+    favoritos: {
+      type: Schema.Types.Array
+    }
   },
   {
     timestamps: true,

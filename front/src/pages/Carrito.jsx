@@ -9,6 +9,7 @@ import {
   quitarItemCarrito,
 } from "../services/API_user/carrito.service";
 import { Navigate } from "react-router-dom";
+import useSWR from 'swr';
 import {
   Box,
   Container,
@@ -23,11 +24,13 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialog,
+  Separator,
 } from "@radix-ui/themes";
 import * as Avatar from "@radix-ui/react-avatar";
 import "./stylesCarrito.css";
-import { capitalizarPrimeraLetra, aEuros } from "../utils";
-import * as Toast from '@radix-ui/react-toast';
+import { capitalizarPrimeraLetra, aEuros, fetcher } from "../utils";
+import * as Toast from "@radix-ui/react-toast";
+
 
 export const Carrito = () => {
   const { id } = useParams();
@@ -37,20 +40,24 @@ export const Carrito = () => {
   const { user } = useAuth();
   const idI11 = useId();
 
+  console.log("que es user", user);
+
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [removeCarrito, setORemoveCarrito] = useState(false);
   const [mensajePrevio, setMensajePrevio] = useState(false);
 
-  const [itemProductId, setItemProductId] = useState('');
-  const [toastRemoveOk, setToastRemoveOk] = useState(false)
+  const [itemProductId, setItemProductId] = useState("");
+  const [toastRemoveOk, setToastRemoveOk] = useState(false);
 
   const carritoId = user.carrito;
-
-  
-
   const { register, handleSubmit } = useForm();
+
+  const { data, error, isLoading } = useSWR('https://api.github.com/repos/vercel/swr', fetcher)
+
+  console.log('que es DATA', data)
+
 
   const formSubmitQuitar = async (productId) => {
     console.log("ques es productId", productId);
@@ -80,9 +87,6 @@ export const Carrito = () => {
     /*  console.log("que es carrito", carrito); */
     useCartRemoveError(res, setORemoveCarrito, setRes, setCarrito);
   }, [res]);
-  useEffect(() => {
-    console.log("actualicemos el carrito", carrito);
-  }, [carrito]);
 
   return (
     <>
@@ -92,10 +96,11 @@ export const Carrito = () => {
           borderRadius: "var(--radius-3)",
         }}
       >
+     
         <Container size="2">
           <Box pt="6" pb="8">
-            <Heading as="h1" size="9">
-              El carrito de {capitalizarPrimeraLetra(user.user)}
+            <Heading as="h1" size="7">
+            {data?.name}El carrito de {capitalizarPrimeraLetra(user.user)}
             </Heading>
           </Box>
           {carrito?.map((item, index) => {
@@ -136,9 +141,9 @@ export const Carrito = () => {
                       size="3"
                       // onClick={() => formSubmitQuitar(item.productId._id)}
                       onClick={() => {
-                        setItemProductId(item.productId._id)
-                        setMensajePrevio(true)
-                        }}
+                        setItemProductId(item.productId._id);
+                        setMensajePrevio(true);
+                      }}
                     >
                       Eliminar
                     </Button>
@@ -147,8 +152,14 @@ export const Carrito = () => {
               </Card>
             );
           })}
+          <Box>
+            <Heading as="h1" size="7" mt="8">
+              Los artículos favoritos de {capitalizarPrimeraLetra(user.user)}
+            </Heading>
+          </Box>
         </Container>
       </Box>
+
       <AlertDialog.Root open={mensajePrevio} onOpenChange={setMensajePrevio}>
         <AlertDialog.Content style={{ maxWidth: 450 }}>
           <AlertDialog.Title>Eliminar producto</AlertDialog.Title>
@@ -157,13 +168,18 @@ export const Carrito = () => {
           </AlertDialog.Description>
 
           <Flex gap="3" mt="4" justify="end">
-            <AlertDialog.Cancel >
+            <AlertDialog.Cancel>
               <Button variant="soft" color="gray" size="3">
                 Cancelar
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
-              <Button variant="solid" color="red" size="3" onClick={() => formSubmitQuitar(itemProductId)}>
+              <Button
+                variant="solid"
+                color="red"
+                size="3"
+                onClick={() => formSubmitQuitar(itemProductId)}
+              >
                 Borrar producto
               </Button>
             </AlertDialog.Action>
@@ -171,12 +187,15 @@ export const Carrito = () => {
         </AlertDialog.Content>
       </AlertDialog.Root>
       <Toast.Provider swipeDirection="right">
-
-      <Toast.Root className="ToastRoot" open={removeCarrito} onOpenChange={setORemoveCarrito}>
-        <Toast.Title className="ToastTitle">Producto borrado</Toast.Title>
-      </Toast.Root>
-      <Toast.Viewport className="ToastViewport" />
-    </Toast.Provider>
+        <Toast.Root
+          className="ToastRoot"
+          open={removeCarrito}
+          onOpenChange={setORemoveCarrito}
+        >
+          <Toast.Title className="ToastTitle">Producto borrado</Toast.Title>
+        </Toast.Root>
+        <Toast.Viewport className="ToastViewport" />
+      </Toast.Provider>
     </>
   );
 };

@@ -20,6 +20,7 @@ export const useAutoLogin = async (allUser, userLogin, setOkCheck) => {
         image: setData.data.user.image,
         check: setData.data.user.check,
         rol: setData.data.user.rol,
+        favoritos: setData.user.favoritos
       };
 
       const dataString = JSON.stringify(dataCustom);

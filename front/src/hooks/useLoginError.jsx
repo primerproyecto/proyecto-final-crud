@@ -1,5 +1,5 @@
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
-export const useLoginError = (res, setLoginOk, userLogin, setRes) => {
+export const useLoginError = (res, setLoginOk, userLogin, setRes, setUserNotFound) => {
   //? si la respuesta es ok ---- > directamente esta el status en la primera clave es decir: res.status
   //? si la respuesta no esta ok--> res.response.status
   //! ------------------ 200 : todo ok
@@ -41,13 +41,14 @@ export const useLoginError = (res, setLoginOk, userLogin, setRes) => {
 
   //! ------------------- 404: 'User no register'
   if (res?.response?.data?.includes("User no found")) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Unregistered user ❎",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    // Swal.fire({
+    //   icon: "error",
+    //   title: "Oops...",
+    //   text: "Unregistered user ❎",
+    //   showConfirmButton: false,
+    //   timer: 1500,
+    // });
+    setUserNotFound((prevstate) => !prevstate)
     setRes(() => {});
   }
 

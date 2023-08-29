@@ -34,16 +34,28 @@ const register = async (req, res, next) => {
       Math.random() * (999999 - 100000) + 100000
     );
 
+    
+
     //! HACER UNA NUEVA INSTANCIA DE USUARIO
     const newUser = new User({
       ...req.body,
       /* carrito: carritoCreado, */
-      confirmationCode,
+      confirmationCode
     });
+    console.log('que es newUser', newUser)
     //CREO UN NUEVO CARRITO
     const carrito = new Cart({ propietario: newUser._id });
     const carritoGuardado = await carrito.save();
     newUser.carrito = carritoGuardado._id;
+
+   
+
+
+
+    // //CREO COLECCION DE FAVORITOS
+    // const carrito = new Cart({ propietario: newUser._id });
+    // const carritoGuardado = await carrito.save();
+    // newUser.carrito = carritoGuardado._id;
 
     /* const carritoCreado = carritoGuardado.id; */
     //! le metemos la imagen en caso de recibirla, sino la recibo le meto una estandar
@@ -224,7 +236,8 @@ const login = async (req, res, next) => {
             rol: user.rol,
             carrito: user.carrito,
             imagen: user.image,
-            name: user.name
+            name: user.name,
+            favoritos: user.favoritos
           },
           token,
         });
@@ -465,6 +478,66 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+//! ------------------------------------------------------------------------
+//? -------------------------------ADD TO FAVORITES ----------------------------------
+//! ------------------------------------------------------------------------
+
+const addToFavorites = async (req, res, next) => {
+
+  const favoritoItem = req.params.productId
+  try {
+    const usuario = await User.findOneAndUpdate(
+      { email: req.user.email },
+      { $addToSet: { favoritos: favoritoItem } },
+      { new: true }, 
+    );
+    const miRespuesta = {
+      mensaje: 'Producto agregado a favoritos',
+      favoritos: usuario.favoritos
+    }
+    res.status(200).json(miRespuesta)
+    
+  } catch (error) {
+    return next(error);
+  }
+};
+
+//! ------------------------------------------------------------------------
+//? -------------------------------REMOVE FROM FAVORITES ----------------------------------
+//! ------------------------------------------------------------------------
+
+const removeToFavorites = async (req, res, next) => {
+
+  const favoritoItem = req.params.productId
+  try {
+    const usuario = await User.findOneAndUpdate(
+      { email: req.user.email },
+      { $pull: { favoritos: favoritoItem } },
+      { new: true }, 
+    );
+    const miRespuesta = {
+      mensaje: 'Producto eliminado de favoritos',
+      favoritos: usuario.favoritos
+    }
+    res.status(200).json(miRespuesta)
+    
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const allUserInfo = async (req, res, next) => {
+  try {
+    const usuario = await User.find({email: req.user.email});
+
+    res.status(200).json(usuario);
+    
+  } catch (error) {
+    return next(error);
+  }
+  
+};
+
 const allUsers = async (req, res) => {
   const usuarios = await User.find().populate("carrito");
 
@@ -474,6 +547,8 @@ const allUsers = async (req, res) => {
 const autoLoginController = async (req, res) => {
   res.status(200).json("Necesitamos generar el autologin");
 };
+
+
 
 module.exports = {
   register,
@@ -487,4 +562,7 @@ module.exports = {
   deleteUser,
   allUsers,
   autoLoginController,
+  addToFavorites,
+  removeToFavorites,
+  allUserInfo
 };

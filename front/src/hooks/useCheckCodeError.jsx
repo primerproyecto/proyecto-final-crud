@@ -5,7 +5,8 @@ export const useCheckCodeError = (
   setOkCheck,
   setUser,
   setReloadPageError,
-  setRes
+  setRes,
+  setCorrecto
 ) => {
   //? si la respuesta es ok ---- > directamente esta el status en la primera clave es decir: res.status
   //? si la respuesta no esta ok--> res.response.status
@@ -26,12 +27,13 @@ export const useCheckCodeError = (
       localStorage.setItem("user", customUserString);
     }
     setOkCheck(() => true);
-    Swal.fire({
-      icon: "success",
-      title: "Ok correct code ✅",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    setCorrecto((prevState) => !prevState);
+    // Swal.fire({
+    //   icon: "success",
+    //   title: "Ok correct code ✅",
+    //   showConfirmButton: false,
+    //   timer: 1500,
+    // });
   }
   //! ------------------ 200 : todo ok ---> testCheckOk: false
   if (res?.data?.testCheckOk?.toString() == "false") {

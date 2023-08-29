@@ -61,6 +61,10 @@ const DetalleProducto = () => {
     <>
       <Box>
         <Container size="2">
+        {user?.rol && user.rol !== "admin" && (<Button size="4"  mt="5">
+                  Favoritos
+                </Button>
+              )}
           <Card>
             <Flex gap="3" direction="column">
               <AspectRatio ratio={16 / 9}>

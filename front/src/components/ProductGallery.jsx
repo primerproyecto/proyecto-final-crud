@@ -40,6 +40,8 @@ export const ProductGallery = ({ itemId, producto }) => {
   const [okAgregado, setOkAgregado] = useState(false);
   const [open, setOpen] = React.useState(false);
 
+  console.log('que es user ', user);
+
   const formSubmit = async (formData) => {
     const customFormData = {
       propietario: user._id,
@@ -70,6 +72,7 @@ export const ProductGallery = ({ itemId, producto }) => {
   //   console.log("que es res", res);
   // }
 
+
   return (
     <>
       <Card>
@@ -78,6 +81,10 @@ export const ProductGallery = ({ itemId, producto }) => {
             <img src={producto.image} alt={producto.title} />
           </Link>
         </Inset>
+        {user?.rol && user.rol !== "admin" && (<Button size="4"  mt="5">
+                  Favoritos
+                </Button>
+              )}
         <Text as="h1" size="7" mb="3">
           <Strong>{capitalizarPrimeraLetra(producto.title)}</Strong>
         </Text>
