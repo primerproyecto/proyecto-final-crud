@@ -124,8 +124,6 @@ export const ProductDashboard = ({ producto, setProducts, setEliminarProducto })
                     confirmButtonText: "YES",
                   }).then(async (result) => {
                     if (result.isConfirmed) {
-                      console.log("que es producto", producto);
-                      // await borraProducto(producto._id);
                       setIsDisabled(true);
                       setRes(await borraProducto(producto._id));
                       setOkEliminado(true);

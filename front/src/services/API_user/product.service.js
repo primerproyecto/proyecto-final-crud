@@ -46,7 +46,6 @@ export const editarProducto = async (carritoId) => {
 //! --------------------------- EDITAR PRODUCTO --------------------------------------------
 
 export const updateProducto = async (carritoId, formData) => {
-  console.log("que es formData desde el updateProcuto en el front", formData);
   return APIuser.patch(`/products/${carritoId}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

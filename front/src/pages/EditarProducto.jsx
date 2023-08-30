@@ -33,7 +33,6 @@ export const EditarProducto = () => {
   const [product, setProduct] = useState({});
   /* const { products, loading } = useProducts(); */
 
-  console.log("que son product", product);
 
   //! ------------------------------------------------------------------------------
   //? 1) funcion que se encarga del formulario - de la data del formulario
@@ -51,7 +50,6 @@ export const EditarProducto = () => {
       };
       const valor = await updateProducto(product._id, custonFormData);
 
-      console.log("que es custonFormData", custonFormData);
 
       setSend(true);
       setRes(await updateProducto(product._id, custonFormData));
@@ -73,7 +71,6 @@ export const EditarProducto = () => {
     const fetchData = async () => {
       try {
         const response = await editarProducto(id);
-        console.log("que es response", response);
         setProduct(response.data);
       } catch (error) {
         console.error(error);

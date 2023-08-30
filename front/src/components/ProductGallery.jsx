@@ -12,7 +12,12 @@ import { borraProducto } from "../services/API_user/product.service";
 import { useCartAddError } from "../hooks/useCartAddError";
 import styled from "styled-components";
 import { capitalizarPrimeraLetra } from "../utils/text";
-Share2Icon;
+import {
+  HeartFilledIcon,
+  HeartIcon,
+  HomeIcon,
+  Share2Icon,
+} from "@radix-ui/react-icons";
 
 import { createPortal } from "react-dom";
 
@@ -29,8 +34,12 @@ import {
   Inset,
 } from "@radix-ui/themes";
 import * as Toast from "@radix-ui/react-toast";
-import { Share2Icon } from "@radix-ui/react-icons";
 import { aEuros } from "../utils";
+import {
+  addToFavorites,
+  removeToFavorites,
+  allUserInfo,
+} from "../services/API_user/user.service";
 
 export const ProductGallery = ({ itemId, producto }) => {
   const { user, setCarrito } = useAuth();
@@ -40,7 +49,7 @@ export const ProductGallery = ({ itemId, producto }) => {
   const [okAgregado, setOkAgregado] = useState(false);
   const [open, setOpen] = React.useState(false);
 
-  console.log('que es user ', user);
+  const [favoritos, setFavoritos] = useState([]);
 
   const formSubmit = async (formData) => {
     const customFormData = {
@@ -72,19 +81,48 @@ export const ProductGallery = ({ itemId, producto }) => {
   //   console.log("que es res", res);
   // }
 
+  useEffect(() => {
+    realizarPeticionGet();
+  }, []);
+
+  const realizarPeticionGet = async () => {
+    try {
+      const response = await allUserInfo();
+      setFavoritos(response.data[0].favoritos); // Almacena los datos en el estado
+    } catch (error) {
+      console.error("Error al realizar la petición GET:", error);
+    }
+  };
+
+  const agregarAFavoritosFun = async (productId) => {
+    const aver = await addToFavorites(productId);
+    setFavoritos(aver.data.favoritos);
+  };
+
+  const quitarDeFavoritosFun = async (productId) => {
+    const aver = await removeToFavorites(productId);
+    setFavoritos(aver.data.favoritos);
+  };
 
   return (
     <>
       <Card>
         <Inset side="top" mb="5">
           <Link to={`/detalleProducto/${itemId}`}>
-            <img src={producto.image} alt={producto.title} />
+            <AspectRatio ratio={16 / 8}>
+              <img
+                src={producto.image}
+                alt={producto.title}
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "var(--radius-2)",
+                }}
+              />
+            </AspectRatio>
           </Link>
         </Inset>
-        {user?.rol && user.rol !== "admin" && (<Button size="4"  mt="5">
-                  Favoritos
-                </Button>
-              )}
         <Text as="h1" size="7" mb="3">
           <Strong>{capitalizarPrimeraLetra(producto.title)}</Strong>
         </Text>
@@ -94,19 +132,17 @@ export const ProductGallery = ({ itemId, producto }) => {
         </Text>
 
         <Flex gap="3" justify="around">
-        <Flex grow="1" align="center" gap="3">
+          <Flex grow="1" align="center" gap="3">
             <Text size="5">
-              <Strong>Size:</Strong> 
+              <Strong>Size:</Strong>
             </Text>
-            <Text size="5">{producto.size}
-            </Text>
+            <Text size="5">{producto.size}</Text>
           </Flex>
           <Flex grow="1" align="center" gap="3">
             <Text size="5">
-              <Strong>Color:</Strong> 
+              <Strong>Color:</Strong>
             </Text>
-            <Text size="5">{producto.color}
-            </Text>
+            <Text size="5">{producto.color}</Text>
           </Flex>
         </Flex>
         <Flex align="center" width="100%" mb="4" mt="4">
@@ -120,6 +156,33 @@ export const ProductGallery = ({ itemId, producto }) => {
         </Text>
         {user && (
           <>
+            {favoritos.includes(producto._id) ? (
+              <Button
+                size="4"
+                style={{ position: "absolute", right: "24px", top: "0" }}
+                mt="5"
+                variant="ghost"
+                color="pink"
+                onClick={() => {
+                  quitarDeFavoritosFun(producto._id);
+                }}
+              >
+                <HeartIcon height="40px" width="40px" />
+              </Button>
+            ) : (
+              <Button
+                style={{ position: "absolute", right: "24px", top: "0" }}
+                size="4"
+                mt="5"
+                variant="ghost"
+                color="pink"
+                onClick={() => {
+                  agregarAFavoritosFun(producto._id);
+                }}
+              >
+                <HeartFilledIcon height="40px" width="40px" />
+              </Button>
+            )}
             <form onSubmit={handleSubmit(formSubmit)}>
               <label>
                 <input
@@ -130,7 +193,8 @@ export const ProductGallery = ({ itemId, producto }) => {
                   {...register("productId")}
                 />
               </label>
-              {user.rol && user.rol !== "admin" && (<Button size="4" disabled={isDisabled} mt="5">
+              {user.rol && user.rol !== "admin" && (
+                <Button size="4" disabled={isDisabled} mt="5">
                   Agregar
                 </Button>
               )}
@@ -157,20 +221,3 @@ export const ProductGallery = ({ itemId, producto }) => {
     </>
   );
 };
-
-/* const Button = styled.button`
-  border: 1px solid red;
-  cursor: pointer;
-  display: inline-block;
-`; */
-
-const ButtonAlike = styled(Link)`
-  border: 1px solid red;
-  cursor: pointer;
-  display: inline-block;
-`;
-
-const FigureAdmin = styled.figure`
-  display: flex;
-  gap: 1rem;
-`;

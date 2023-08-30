@@ -81,8 +81,32 @@ export const deleteUser = async () => {
 //! --------------------- RESEND CODE --------------------------------
 
 export const resendCodeConfirmationUser = async (formData) => {
-  console.log(formData);
   return APIuser.post("/users/resend", formData)
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+
+//! --------------------- ADD TO FAVORITE --------------------------------
+
+export const addToFavorites = async (productId) => {
+  return APIuser.post(`/users/tofavorites/${productId}`, )
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+//! --------------------- REMOVE FROM FAVORITE --------------------------------
+
+export const removeToFavorites = async (productId) => {
+  return APIuser.post(`/users/removeFromfavorites/${productId}`, )
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+//! --------------------- ALL USER INFORMATION --------------------------------
+
+export const allUserInfo = async () => {
+  return APIuser.get('/users/info')
     .then((res) => res)
     .catch((error) => error);
 };

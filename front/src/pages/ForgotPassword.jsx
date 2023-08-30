@@ -34,7 +34,6 @@ export const ForgotPassword = () => {
   //! 1)-------------------- LA FUNCIOON QUE SE ENCARGA DE GESTIONAR LOS DATOS DEL FORMULARIO
 
   const formSubmit = async (formData) => {
-    console.log("que es formData", formData);
     setSend(true);
     setRes(await forgotPasswordUser(formData));
     setSend(false);
@@ -47,7 +46,6 @@ export const ForgotPassword = () => {
   //! 3) ---------------- ESTADOS DE NAVEGACION O QUE LA fiuncion ESTA ok
 
   if (forgotOk) {
-    console.log("envio de la contraseña correcto");
     setTimeout(() => {
       return <Navigate to="/login" />;
     }, 20000);

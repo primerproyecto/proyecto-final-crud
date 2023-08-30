@@ -32,7 +32,6 @@ export const useCartAddError = (res, setRes, setOkAgregado) => {
 
   //! --------------------500: INTERNAL SERVER ERROR
   if (res?.response?.status == 500) {
-    console.log(res.response);
     setRes(() => {});
     Swal.fire({
       icon: "error",
@@ -51,28 +50,6 @@ export const erroresCargaCarrito = (res, setRes, setOkCarrito) => {
 
   //! ------------------- 404: 'password dont match'
 
-  /*  if (res?.response?.data?.includes("invalid password")) {
-    setRes(() => {});
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Password dont match ❎",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  } */
-
-  //! ------------------- 404: 'User no register'
-  /* if (res?.response?.data?.includes("User no found")) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Unregistered user ❎",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    setRes(() => {});
-  } */
 
   //! --------------------500: INTERNAL SERVER ERROR
   if (res?.response?.status == 500) {

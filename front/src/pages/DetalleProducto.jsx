@@ -3,10 +3,16 @@ import { createPortal } from "react-dom";
 import { useId, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+
 import {
   getMyCarrito,
   postCarrito,
 } from "../services/API_user/carrito.service";
+import {
+  addToFavorites,
+  removeToFavorites,
+  allUserInfo,
+} from "../services/API_user/user.service";
 import {
   Button,
   Box,
@@ -19,12 +25,14 @@ import {
   Card,
   Text,
   Strong,
+  IconButton
 } from "@radix-ui/themes";
 import { useProducts } from "../context/productsContext";
 import { useAuth } from "../context/authContext";
 import { useCartAddError } from "../hooks/useCartAddError";
 import * as Toast from "@radix-ui/react-toast";
-import { Share2Icon } from "@radix-ui/react-icons";
+import { HeartFilledIcon, HeartIcon, HomeIcon, Share2Icon } from "@radix-ui/react-icons";
+import axios from "axios";
 
 const DetalleProducto = () => {
   const { id } = useParams();
@@ -34,6 +42,7 @@ const DetalleProducto = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [res, setRes] = useState({});
   const [okAgregado, setOkAgregado] = useState(false);
+  const [favoritos, setFavoritos] = useState([]);
 
   const formSubmit = async (formData) => {
     const customFormData = {
@@ -56,15 +65,39 @@ const DetalleProducto = () => {
 
   const objetoEncontrado = products?.data.find((objeto) => objeto._id === id);
 
-  console.log("que son objetoEncontrado", objetoEncontrado);
+  useEffect(() => {
+    realizarPeticionGet();
+  }, []);
+
+  const realizarPeticionGet = async () => {
+    try {
+      const response = await allUserInfo();
+      setFavoritos(response.data[0].favoritos); // Almacena los datos en el estado
+    } catch (error) {
+      console.error("Error al realizar la petición GET:", error);
+    }
+  };
+
+  const agregarAFavoritosFun = async (productId) => {
+    const aver = await addToFavorites(productId);
+
+    setFavoritos(aver.data.favoritos);
+  };
+
+  const quitarDeFavoritosFun = async (productId) => {
+    const aver = await removeToFavorites(productId);
+    setFavoritos(aver.data.favoritos);
+  };
+
   return (
     <>
       <Box>
         <Container size="2">
-        {user?.rol && user.rol !== "admin" && (<Button size="4"  mt="5">
-                  Favoritos
-                </Button>
-              )}
+          {user?.rol && user.rol !== "admin" && (
+            <Flex gap="3" align="center">
+              {" "}
+            </Flex>
+          )}
           <Card>
             <Flex gap="3" direction="column">
               <AspectRatio ratio={16 / 9}>
@@ -91,8 +124,35 @@ const DetalleProducto = () => {
                 <Flex direction="column" mt="4">
                   <Text as="p">{objetoEncontrado?.desc}</Text>
                 </Flex>
-                {user && (
-                  <>
+                {user?.rol && user.rol !== "admin" && (
+                  <Box position="relative">
+                    {favoritos.includes(objetoEncontrado?._id) ? (
+                      <IconButton
+                        size="4"
+                        style={{ position: "absolute", right: "12px", top: "0" }}
+                        mt="5"
+                        variant="ghost"
+                        color="pink"
+                        onClick={() => {
+                          quitarDeFavoritosFun(objetoEncontrado._id);
+                        }}
+                      >
+                        <HeartIcon  height="40px" width="40px" />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        style={{ position: "absolute", right: "12px", top: "0" }}
+                        size="4"
+                        mt="5"
+                        variant="ghost"
+                        color="pink"
+                        onClick={() => {
+                          agregarAFavoritosFun(objetoEncontrado._id);
+                        }}
+                      >
+                        <HeartFilledIcon height="40px" width="40px" />
+                      </IconButton>
+                    )}
                     <form onSubmit={handleSubmit(formSubmit)}>
                       <label>
                         <input
@@ -104,12 +164,16 @@ const DetalleProducto = () => {
                         />
                       </label>
                       {user.rol && user.rol !== "admin" && (
-                        <Button size="4" disabled={isDisabled} mt="5">
-                          Agregar
-                        </Button>
+                        <>
+                          <Flex justify="between" align="center">
+                            <Button size="4" disabled={isDisabled} mt="5">
+                              Comprar
+                            </Button>
+                          </Flex>
+                        </>
                       )}
                     </form>
-                  </>
+                  </Box>
                 )}
               </Box>
             </Flex>
@@ -125,7 +189,7 @@ const DetalleProducto = () => {
               onOpenChange={setOkAgregado}
             >
               <Toast.Title className="ToastTitle" color="pink">
-               Producto agregado al carrito
+                Producto agregado al carrito
               </Toast.Title>
             </Toast.Root>
             <Toast.Viewport className="ToastViewport" />

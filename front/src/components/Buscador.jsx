@@ -12,13 +12,10 @@ const Buscador = () => {
       (item) => item.title === palabraABuscar
     );
     if (coincidentes) {
-      console.log("coincidentes", coincidentes);
       setProducts(coincidentes);
     }
   };
 
-  /* setProducts(coincidentes); */
-  console.log("la palabra a buscar es", products);
   return (
     <div>
       {textInput.current?.value}
@@ -28,7 +25,6 @@ const Buscador = () => {
             type="text"
             value={palabraABuscar}
             onChange={(e) => {
-              console.log("que es input", e.target.value);
 
               setPalabraABuscar(e.target.value);
             }}

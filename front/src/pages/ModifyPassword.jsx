@@ -42,7 +42,6 @@ export const ModifyPassword = () => {
   //! ------------------2) GESTION DE LA RESPUESTA POR EL CUSTOMHOOK Y AYUDADO POR EL USEEFFECT
 
   useEffect(() => {
-    console.log(res);
     useChangePasswordError(res, setRes, setUser);
   }, [res]);
 

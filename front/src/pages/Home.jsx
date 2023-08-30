@@ -33,14 +33,13 @@ import * as Toggle from "@radix-ui/react-toggle";
 
 export const Home = () => {
   const { products, loading, setProducts, setLoading } = useProducts();
-  // console.log('que son products', products)
 
   const [filterProducts, setFilterProducts] = useState(() => products);
 
   const [palabraABuscar, setPalabraABuscar] = useState("");
   const [mostrarTodos, setMostrarTodos] = useState(false);
 
-  // función para manejar el envío de formulario.
+
   const handleFormSearch = (e) => {
     e.preventDefault();
     const coincidentes = products?.data.filter((item) => {
@@ -59,7 +58,6 @@ export const Home = () => {
   useEffect(() => {
     //Llamamos de primera a esta función para mostrar los productos.
     getAllProducts().then((res) => {
-      // setProducts(res);
       setFilterProducts(res);
       setLoading(() => false);
     });
@@ -68,7 +66,6 @@ export const Home = () => {
   useEffect(() => {
     //Llamamos de primera a esta función para mostrar los productos.
     getAllProducts().then((res) => {
-      // setProducts(res);
       setFilterProducts(res);
       setLoading(() => false);
     });

@@ -42,7 +42,6 @@ const register = async (req, res, next) => {
       /* carrito: carritoCreado, */
       confirmationCode
     });
-    console.log('que es newUser', newUser)
     //CREO UN NUEVO CARRITO
     const carrito = new Cart({ propietario: newUser._id });
     const carritoGuardado = await carrito.save();
@@ -527,9 +526,10 @@ const removeToFavorites = async (req, res, next) => {
 };
 
 const allUserInfo = async (req, res, next) => {
+  
   try {
     const usuario = await User.find({email: req.user.email});
-
+    
     res.status(200).json(usuario);
     
   } catch (error) {

@@ -16,7 +16,6 @@ export const useCartRemoveError = (
 
   //! --------------------500: INTERNAL SERVER ERROR
   if (res?.response?.status == 500) {
-    console.log(res.response);
     setRes(() => {});
     Swal.fire({
       icon: "error",

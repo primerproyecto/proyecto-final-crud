@@ -35,7 +35,6 @@ export const Login = () => {
 
   //! 1) ------------------ FUNCION QUE GESTIONA EL FORMULARIO----------
   const formSubmit = async (formData) => {
-    console.log("que es formdata", formData);
     setSend(true);
     setRes(await loginUser(formData));
     setSend(false);

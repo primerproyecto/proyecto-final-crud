@@ -9,7 +9,7 @@ import {
   quitarItemCarrito,
 } from "../services/API_user/carrito.service";
 import { Navigate } from "react-router-dom";
-import useSWR from 'swr';
+import useSWR from "swr";
 import {
   Box,
   Container,
@@ -25,12 +25,23 @@ import {
   AlertDialogDescription,
   AlertDialog,
   Separator,
+  Grid,
 } from "@radix-ui/themes";
 import * as Avatar from "@radix-ui/react-avatar";
 import "./stylesCarrito.css";
 import { capitalizarPrimeraLetra, aEuros, fetcher } from "../utils";
 import * as Toast from "@radix-ui/react-toast";
-
+import {
+  addToFavorites,
+  removeToFavorites,
+  allUserInfo,
+} from "../services/API_user/user.service";
+import {
+  HeartFilledIcon,
+  HeartIcon,
+  HomeIcon,
+  Share2Icon,
+} from "@radix-ui/react-icons";
 
 export const Carrito = () => {
   const { id } = useParams();
@@ -39,8 +50,6 @@ export const Carrito = () => {
 
   const { user } = useAuth();
   const idI11 = useId();
-
-  console.log("que es user", user);
 
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
@@ -51,16 +60,11 @@ export const Carrito = () => {
   const [itemProductId, setItemProductId] = useState("");
   const [toastRemoveOk, setToastRemoveOk] = useState(false);
 
+  const [favoritos, setFavoritos] = useState([]);
+
   const carritoId = user.carrito;
   const { register, handleSubmit } = useForm();
-
-  const { data, error, isLoading } = useSWR('https://api.github.com/repos/vercel/swr', fetcher)
-
-  console.log('que es DATA', data)
-
-
   const formSubmitQuitar = async (productId) => {
-    console.log("ques es productId", productId);
     const customFormData = {
       productId: productId,
     };
@@ -70,8 +74,6 @@ export const Carrito = () => {
   };
 
   useEffect(() => {
-    // Lógica para obtener los valores del endpoint
-
     const fetchData = async () => {
       try {
         const response = await getMyCarrito(carritoId);
@@ -84,9 +86,34 @@ export const Carrito = () => {
   }, [removeCarrito]);
 
   useEffect(() => {
-    /*  console.log("que es carrito", carrito); */
     useCartRemoveError(res, setORemoveCarrito, setRes, setCarrito);
   }, [res]);
+
+  useEffect(() => {
+    realizarPeticionGet();
+  }, []);
+
+  const realizarPeticionGet = async () => {
+    try {
+      const response = await allUserInfo();
+      console.log("desde aquí", response?.data[0].favoritos);
+      console.log("desde aquí", response);
+      setFavoritos(response?.data[0].favoritos); // Almacena los datos en el estado
+    } catch (error) {
+      console.error("Error al realizar la petición GET:", error);
+    }
+  };
+
+  const agregarAFavoritosFun = async (productId) => {
+    const aver = await addToFavorites(productId);
+    setFavoritos(aver.data.favoritos);
+  };
+
+  const quitarDeFavoritosFun = async (productId) => {
+    const aver = await removeToFavorites(productId);
+    setFavoritos(aver.data.favoritos);
+  };
+  console.log("que son favoritos", favoritos);
 
   return (
     <>
@@ -96,11 +123,10 @@ export const Carrito = () => {
           borderRadius: "var(--radius-3)",
         }}
       >
-     
         <Container size="2">
           <Box pt="6" pb="8">
             <Heading as="h1" size="7">
-            {data?.name}El carrito de {capitalizarPrimeraLetra(user.user)}
+              El carrito de {capitalizarPrimeraLetra(user.user)}
             </Heading>
           </Box>
           {carrito?.map((item, index) => {
@@ -152,11 +178,147 @@ export const Carrito = () => {
               </Card>
             );
           })}
-          <Box>
-            <Heading as="h1" size="7" mt="8">
+
+          <Box pt="9" pb="8">
+            <Heading as="h1" size="7">
               Los artículos favoritos de {capitalizarPrimeraLetra(user.user)}
             </Heading>
           </Box>
+          <Grid columns="4" gap="2">
+            {favoritos.map((item) => {
+              {/* console.log("id de favorito", item);
+              console.log("que es karrito", carrito); */}
+
+              {
+                /* const inventado */
+              }
+
+              const nodosFavoritos = carrito.filter((item2) => {
+                {/* console.log("DENTRO DE FUNCION1", item2.productId._id);
+                console.log("DENTRO DE FUNCION2", item); */}
+                return item2.productId._id == item;
+              });
+              {/* console.log("empezamos a pisparnos?", nodosFavoritos); */}
+              return (
+                <Card key={item}>
+                
+                  {/* <Flex direction="column" align="center">
+                    <Avatar.Root className="AvatarRoot">
+                      <Avatar.Image
+                        className="AvatarImage"
+                        src={item2.productId.image}
+                        alt={item2.productId.title}
+                      />
+                    </Avatar.Root>
+                    <Heading mt="4" align="center">
+                        {item.productId.title}
+                      </Heading>
+
+                    {favoritos.includes(carrito._id) ? (
+                      <Button
+                        size="4"
+                        style={{
+                          position: "absolute",
+                          right: "24px",
+                          top: "0",
+                        }}
+                        mt="5"
+                        variant="ghost"
+                        color="pink"
+                        onClick={() => {
+                          quitarDeFavoritosFun(carrito._id);
+                        }}
+                      >
+                        <HeartIcon height="40px" width="40px" />
+                      </Button>
+                    ) : (
+                      <Button
+                        style={{
+                          position: "absolute",
+                          right: "24px",
+                          top: "0",
+                        }}
+                        size="4"
+                        mt="5"
+                        variant="ghost"
+                        color="pink"
+                        onClick={() => {
+                          agregarAFavoritosFun(carrito._id);
+                        }}
+                      >
+                        <HeartFilledIcon height="40px" width="40px" />
+                      </Button>
+                    )}
+                  </Flex> */}
+
+                </Card>
+              );
+            })}
+            {/* {favoritos.map((itemId) => {
+              const info = carrito.filter((item) => {
+                return item.productId._id === itemId;
+              });
+              console.log('que es info', info)
+
+              return (
+                <Box
+                key={itemId}
+                  style={{ marginBottom: "1rem", boxShadow: "var(--shadow-4)" }}
+                >
+                  <Card>
+                    <Flex direction="column" align="center">
+                      <Avatar.Root className="AvatarRoot">
+                        <Avatar.Image
+                          className="AvatarImage"
+                          src={item.productId.image}
+                          alt={item.productId.title}
+                        />
+                      </Avatar.Root>
+                      <Heading mt="4" align="center">
+                        {item.productId.title}
+                      </Heading>
+
+                      {favoritos.includes(carrito._id) ? (
+                        <Button
+                          size="4"
+                          style={{
+                            position: "absolute",
+                            right: "24px",
+                            top: "0",
+                          }}
+                          mt="5"
+                          variant="ghost"
+                          color="pink"
+                          onClick={() => {
+                            quitarDeFavoritosFun(carrito._id);
+                          }}
+                        >
+                          <HeartIcon height="40px" width="40px" />
+                        </Button>
+                      ) : (
+                        <Button
+                          style={{
+                            position: "absolute",
+                            right: "24px",
+                            top: "0",
+                          }}
+                          size="4"
+                          mt="5"
+                          variant="ghost"
+                          color="pink"
+                          onClick={() => {
+                            agregarAFavoritosFun(carrito._id);
+                          }}
+                        >
+                          <HeartFilledIcon height="40px" width="40px" />
+                        </Button>
+                      )}
+                    </Flex>
+                  </Card>
+                </Box>
+              );
+            })} */}
+          </Grid>
         </Container>
       </Box>
 

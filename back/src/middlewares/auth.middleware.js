@@ -8,7 +8,7 @@ const isAuth = async (req, res, next) => {
   const token = req.headers.authorization?.replace("Bearer ", "");
 
   if (!token) {
-    return next(new Error("Unauthorized"));
+    return next(new Error("Unauthorized. No hay token"));
   }
   try {
     // ---> decodificamos el token y sacomos el id y email que es con lo que hemos creado el token
