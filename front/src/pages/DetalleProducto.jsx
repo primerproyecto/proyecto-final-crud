@@ -92,7 +92,11 @@ const DetalleProducto = () => {
   return (
     <>
       <Box>
-        <Container size="2">
+      <Container size={{
+        initial: '1',
+        sm: '2',
+        md: '3'
+      }} pl="2" pr="2">
           {user?.rol && user.rol !== "admin" && (
             <Flex gap="3" align="center">
               {" "}

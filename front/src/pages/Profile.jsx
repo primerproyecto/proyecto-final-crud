@@ -28,7 +28,10 @@ export const Profile = () => {
   const { user, setUser } = useAuth();
   return (
     <Box>
-      <Container size="2">
+      <Container size={{
+        initial: '2',
+        sm: '3',
+      }}  pl="2" pr="2">
         <Card style={{ boxShadow: "var(--shadow-6)" }}>
           <Tabs.Root className="TabsRoot" defaultValue="tab1">
             <Tabs.List className="TabsList" aria-label="Manage your account">

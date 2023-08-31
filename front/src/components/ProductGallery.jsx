@@ -61,7 +61,6 @@ export const ProductGallery = ({ itemId, producto }) => {
         },
       ],
     };
-    console.log("que es customFormData", customFormData);
     setIsDisabled(true);
     setRes(await postCarrito(user.carrito, customFormData));
     setIsDisabled(false);
@@ -71,18 +70,14 @@ export const ProductGallery = ({ itemId, producto }) => {
   //! ------------------------------------------------------------------------------
   useEffect(() => {
     useCartAddError(res, setRes, setOkAgregado);
-    /* if (res?.status == 200) bridgeData("ALLUSER"); */
   }, [res]);
 
-  //! ------------------------------------------------------------------------------
-  //? 3) Estados de navegacion ----> lo veremos en siguiente proyectos
-  //! ------------------------------------------------------------------------------
-  // if (okAgregado) {
-  //   console.log("que es res", res);
-  // }
+ 
 
   useEffect(() => {
-    realizarPeticionGet();
+    if(user.rol && user.rol !== "admin"){
+      realizarPeticionGet();
+    }
   }, []);
 
   const realizarPeticionGet = async () => {
@@ -109,7 +104,7 @@ export const ProductGallery = ({ itemId, producto }) => {
       <Card>
         <Inset side="top" mb="5">
           <Link to={`/detalleProducto/${itemId}`}>
-            <AspectRatio ratio={16 / 8}>
+            <AspectRatio ratio={12 / 8}>
               <img
                 src={producto.image}
                 alt={producto.title}
@@ -126,7 +121,6 @@ export const ProductGallery = ({ itemId, producto }) => {
         <Text as="h1" size="7" mb="3">
           <Strong>{capitalizarPrimeraLetra(producto.title)}</Strong>
         </Text>
-        {/* <Button>Agregar a favoritos</Button> */}
         <Text as="h2" size="5" mb="3" color="pink">
           <Strong>{aEuros.format(producto.price)}</Strong>
         </Text>
@@ -154,7 +148,7 @@ export const ProductGallery = ({ itemId, producto }) => {
           <Strong>Descripcion:</Strong>
           {producto.desc}
         </Text>
-        {user && (
+        {user.rol && user.rol !== "admin" && (
           <>
             {favoritos.includes(producto._id) ? (
               <Button

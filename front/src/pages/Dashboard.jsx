@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ProductDashboard, Spinner, AllCarritos } from "../components";
@@ -29,7 +28,11 @@ export const Dahsboard = () => {
   return (
     <>
     <Box>
-      <Container size="3">
+      <Container size={{
+        initial: '1',
+        sm: '2',
+        md: '3'
+      }} pl="2" pr="2">
         <div className="grilla-dashboard">
           <Heading as="h1" size="8">
             Dashboard

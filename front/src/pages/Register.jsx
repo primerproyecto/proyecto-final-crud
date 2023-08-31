@@ -177,7 +177,7 @@ export const Register = () => {
                 Rol
               </Form.Label>
             </Form.Field>
-            <RadioGroup.Root
+            {/* <RadioGroup.Root
               className="RadioGroupRoot"
               defaultValue="user"
               aria-label="View density"
@@ -208,7 +208,31 @@ export const Register = () => {
                   Administrador
                 </label>
               </div>
-            </RadioGroup.Root>
+            </RadioGroup.Root> */}
+            
+            <div className="sexo">
+              <label htmlFor="rol" className="label-radio hombre">
+                User
+              </label>
+              <input
+                type="radio"
+                name="rol"
+                id="rol"
+                value="user"
+                {...register("rol")}
+              />
+              <label htmlFor="rol1" className="label-radio mujer">
+                Admin
+              </label>
+
+              <input
+                type="radio"
+                name="rol"
+                id="rol1"
+                value="admin"
+                {...register("rol")}
+              />
+            </div>
 
             {/* <div className="">
               <label>Imagen</label>

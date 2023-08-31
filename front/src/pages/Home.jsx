@@ -27,6 +27,7 @@ import {
   Grid,
   Heading,
   Separator,
+  IconButton,
 } from "@radix-ui/themes";
 import { Link } from "react-router-dom";
 import * as Toggle from "@radix-ui/react-toggle";
@@ -38,7 +39,6 @@ export const Home = () => {
 
   const [palabraABuscar, setPalabraABuscar] = useState("");
   const [mostrarTodos, setMostrarTodos] = useState(false);
-
 
   const handleFormSearch = (e) => {
     e.preventDefault();
@@ -78,31 +78,45 @@ export const Home = () => {
       ) : (
         <>
           <Box>
-            <Container size="3" ml="2" mr="2">
-              <Flex gap="9" align="center" justify="between">
-                <form onSubmit={handleFormSearch}>
+            <Container
+              size={{
+                initial: "1",
+                sm: "2",
+                md: "3",
+              }}
+              ml="2"
+              mr="2"
+            >
+              <Flex gap="9" align="center" justify="between" wrap="wrap">
+                <form onSubmit={handleFormSearch} >
                   <Flex gap="3" align="center">
                     <input
                       type="text"
                       value={palabraABuscar}
                       className="Input"
+                      width="100%"
                       placeholder="buscar producto"
                       onChange={(e) => {
                         setPalabraABuscar(e.target.value);
                       }}
                     />
-                    <Button>
+                    <IconButton variant="outline" color="pink">
                       <MagnifyingGlassIcon />
-                    </Button>
-                    <Button onClick={() => setPalabraABuscar("")}>
+                    </IconButton>
+
+                    <IconButton
+                      variant="outline"
+                      onClick={() => setPalabraABuscar("")}
+                      color="pink"
+                    >
                       <Cross1Icon />
-                    </Button>
+                    </IconButton>
                   </Flex>
                 </form>
                 <Separator orientation="vertical" />
                 <Flex gap="3" align="center">
                   <Toggle.Root
-                  pressed
+                    pressed
                     className="Button"
                     aria-label="Mostrar todos los complementos"
                     onPressedChange={() => funcionFiltrar("Complementos")}
@@ -110,7 +124,7 @@ export const Home = () => {
                     Complementos
                   </Toggle.Root>
                   <Toggle.Root
-                  pressed
+                    pressed
                     className="Button"
                     aria-label="Mostrar todos los productos electrónicos"
                     onPressedChange={() => funcionFiltrar("Electrónico")}
