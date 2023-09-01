@@ -87,62 +87,64 @@ export const Home = () => {
               ml="2"
               mr="2"
             >
-              <Flex gap="9" align="center" justify="between" wrap="wrap">
-                <form onSubmit={handleFormSearch} >
-                  <Flex gap="3" align="center">
-                    <input
-                      type="text"
-                      value={palabraABuscar}
-                      className="Input"
-                      width="100%"
-                      placeholder="buscar producto"
-                      onChange={(e) => {
-                        setPalabraABuscar(e.target.value);
-                      }}
-                    />
-                    <IconButton variant="outline" color="pink">
-                      <MagnifyingGlassIcon />
-                    </IconButton>
+              {filterProducts?.data.length > 0 && (
+                <Flex gap="9" align="center" justify="between" wrap="wrap">
+                  <form onSubmit={handleFormSearch}>
+                    <Flex gap="3" align="center">
+                      <input
+                        type="text"
+                        value={palabraABuscar}
+                        className="Input"
+                        width="100%"
+                        placeholder="buscar producto"
+                        onChange={(e) => {
+                          setPalabraABuscar(e.target.value);
+                        }}
+                      />
+                      <IconButton variant="outline" color="pink">
+                        <MagnifyingGlassIcon />
+                      </IconButton>
 
-                    <IconButton
-                      variant="outline"
-                      onClick={() => setPalabraABuscar("")}
-                      color="pink"
+                      <IconButton
+                        variant="outline"
+                        onClick={() => setPalabraABuscar("")}
+                        color="pink"
+                      >
+                        <Cross1Icon />
+                      </IconButton>
+                    </Flex>
+                  </form>
+                  <Separator orientation="vertical" />
+                  <Flex gap="3" align="center">
+                    <Toggle.Root
+                      pressed
+                      className="Button"
+                      aria-label="Mostrar todos los complementos"
+                      onPressedChange={() => funcionFiltrar("Complementos")}
                     >
-                      <Cross1Icon />
-                    </IconButton>
+                      Complementos
+                    </Toggle.Root>
+                    <Toggle.Root
+                      pressed
+                      className="Button"
+                      aria-label="Mostrar todos los productos electrónicos"
+                      onPressedChange={() => funcionFiltrar("Electrónico")}
+                    >
+                      Electrónico
+                    </Toggle.Root>
+                    <Toggle.Root
+                      className="Button"
+                      aria-label="Mostrar todos"
+                      pressed
+                      onPressedChange={() =>
+                        setMostrarTodos((prevValue) => !prevValue)
+                      }
+                    >
+                      Todos
+                    </Toggle.Root>
                   </Flex>
-                </form>
-                <Separator orientation="vertical" />
-                <Flex gap="3" align="center">
-                  <Toggle.Root
-                    pressed
-                    className="Button"
-                    aria-label="Mostrar todos los complementos"
-                    onPressedChange={() => funcionFiltrar("Complementos")}
-                  >
-                    Complementos
-                  </Toggle.Root>
-                  <Toggle.Root
-                    pressed
-                    className="Button"
-                    aria-label="Mostrar todos los productos electrónicos"
-                    onPressedChange={() => funcionFiltrar("Electrónico")}
-                  >
-                    Electrónico
-                  </Toggle.Root>
-                  <Toggle.Root
-                    className="Button"
-                    aria-label="Mostrar todos"
-                    pressed
-                    onPressedChange={() =>
-                      setMostrarTodos((prevValue) => !prevValue)
-                    }
-                  >
-                    Todos
-                  </Toggle.Root>
                 </Flex>
-              </Flex>
+              )}
               <Grid
                 columns={{
                   initial: "1",
@@ -152,7 +154,7 @@ export const Home = () => {
                 gap="3"
                 mt="5"
               >
-                {filterProducts ? (
+                {filterProducts?.data.length > 0 ? (
                   filterProducts?.data?.map((item) => {
                     return (
                       <Box
@@ -164,8 +166,9 @@ export const Home = () => {
                     );
                   })
                 ) : (
-                  <Heading as="h1" size="6">
-                    No hay productos
+                  <Heading as="h1" size="8" color="pink" align="center">
+                    No hay productos en el catálogo. Contancta con el
+                    administrador.
                   </Heading>
                 )}
               </Grid>

@@ -33,7 +33,11 @@ export const AllCarritos = () => {
         allCarritos.map((item) => {
           if (item?.propietario?.rol && item.propietario.rol === "user") {
             return (
-              <Card key={item._id} mb="4" style={{boxShadow: 'var(--shadow-2)'}}>
+              <Card
+                key={item._id}
+                mb="4"
+                style={{ boxShadow: "var(--shadow-2)" }}
+              >
                 <Flex gap="3" align="center" width="100%">
                   <Flex shrink="0">
                     <Avatar.Root className="AvatarRoot">
@@ -53,10 +57,14 @@ export const AllCarritos = () => {
                       if (item.productId) {
                         return (
                           <Flex key={item.productId._id} ml="2">
-                          <Strong >{item.productId.title}</Strong> - cantidad {item.cantidad} -
-                            Total  
-                            <Box ml="3"><Strong>{aEuros.format(item.productId.price)}</Strong></Box>
-                            </Flex>
+                            <Strong>{item.productId.title}</Strong> - cantidad{" "}
+                            {item.cantidad} - Total
+                            <Box ml="3">
+                              <Strong>
+                                {aEuros.format(item.productId.price)}
+                              </Strong>
+                            </Box>
+                          </Flex>
                         );
                       }
                     })}

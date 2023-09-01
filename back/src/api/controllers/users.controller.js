@@ -34,22 +34,16 @@ const register = async (req, res, next) => {
       Math.random() * (999999 - 100000) + 100000
     );
 
-    
-
     //! HACER UNA NUEVA INSTANCIA DE USUARIO
     const newUser = new User({
       ...req.body,
       /* carrito: carritoCreado, */
-      confirmationCode
+      confirmationCode,
     });
     //CREO UN NUEVO CARRITO
     const carrito = new Cart({ propietario: newUser._id });
     const carritoGuardado = await carrito.save();
     newUser.carrito = carritoGuardado._id;
-
-   
-
-
 
     // //CREO COLECCION DE FAVORITOS
     // const carrito = new Cart({ propietario: newUser._id });
@@ -236,7 +230,7 @@ const login = async (req, res, next) => {
             carrito: user.carrito,
             imagen: user.image,
             name: user.name,
-            favoritos: user.favoritos
+            favoritos: user.favoritos,
           },
           token,
         });
@@ -482,20 +476,18 @@ const deleteUser = async (req, res, next) => {
 //! ------------------------------------------------------------------------
 
 const addToFavorites = async (req, res, next) => {
-
-  const favoritoItem = req.params.productId
+  const favoritoItem = req.params.productId;
   try {
     const usuario = await User.findOneAndUpdate(
       { email: req.user.email },
       { $addToSet: { favoritos: favoritoItem } },
-      { new: true }, 
+      { new: true }
     );
     const miRespuesta = {
-      mensaje: 'Producto agregado a favoritos',
-      favoritos: usuario.favoritos
-    }
-    res.status(200).json(miRespuesta)
-    
+      mensaje: "Producto agregado a favoritos",
+      favoritos: usuario.favoritos,
+    };
+    res.status(200).json(miRespuesta);
   } catch (error) {
     return next(error);
   }
@@ -506,36 +498,33 @@ const addToFavorites = async (req, res, next) => {
 //! ------------------------------------------------------------------------
 
 const removeToFavorites = async (req, res, next) => {
-
-  const favoritoItem = req.params.productId
+  const favoritoItem = req.params.productId;
   try {
     const usuario = await User.findOneAndUpdate(
       { email: req.user.email },
       { $pull: { favoritos: favoritoItem } },
-      { new: true }, 
+      { new: true }
     );
     const miRespuesta = {
-      mensaje: 'Producto eliminado de favoritos',
-      favoritos: usuario.favoritos
-    }
-    res.status(200).json(miRespuesta)
-    
+      mensaje: "Producto eliminado de favoritos",
+      favoritos: usuario.favoritos,
+    };
+    res.status(200).json(miRespuesta);
   } catch (error) {
     return next(error);
   }
 };
 
 const allUserInfo = async (req, res, next) => {
-  
   try {
-    const usuario = await User.find({email: req.user.email});
-    
+    const usuario = await User.find({ email: req.user.email }).populate(
+      "favoritos"
+    );
+
     res.status(200).json(usuario);
-    
   } catch (error) {
-    return next(error);
+    return next(error.message);
   }
-  
 };
 
 const allUsers = async (req, res) => {
@@ -547,8 +536,6 @@ const allUsers = async (req, res) => {
 const autoLoginController = async (req, res) => {
   res.status(200).json("Necesitamos generar el autologin");
 };
-
-
 
 module.exports = {
   register,
@@ -564,5 +551,5 @@ module.exports = {
   autoLoginController,
   addToFavorites,
   removeToFavorites,
-  allUserInfo
+  allUserInfo,
 };

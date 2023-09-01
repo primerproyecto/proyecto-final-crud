@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { ShoppingCart, Heart, Edit } from "react-feather";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2/dist/sweetalert2.all.js";
-import {
-  getMyCarrito,
-  postCarrito,
-} from "../services/API_user/carrito.service";
-import { borraProducto } from "../services/API_user/product.service";
+import { postCarrito } from "../services/API_user/carrito.service";
 import { useCartAddError } from "../hooks/useCartAddError";
-import styled from "styled-components";
 import { capitalizarPrimeraLetra } from "../utils/text";
-import {
-  HeartFilledIcon,
-  HeartIcon,
-  HomeIcon,
-  Share2Icon,
-} from "@radix-ui/react-icons";
+import { HeartFilledIcon, HeartIcon } from "@radix-ui/react-icons";
+import LinesEllipsis from "react-lines-ellipsis";
 
 import { createPortal } from "react-dom";
 
@@ -25,9 +14,7 @@ import {
   Flex,
   Text,
   Button,
-  Heading,
   Strong,
-  Box,
   Badge,
   Card,
   AspectRatio,
@@ -72,10 +59,8 @@ export const ProductGallery = ({ itemId, producto }) => {
     useCartAddError(res, setRes, setOkAgregado);
   }, [res]);
 
- 
-
   useEffect(() => {
-    if(user.rol && user.rol !== "admin"){
+    if (user?.rol && user.rol !== "admin") {
       realizarPeticionGet();
     }
   }, []);
@@ -140,15 +125,27 @@ export const ProductGallery = ({ itemId, producto }) => {
           </Flex>
         </Flex>
         <Flex align="center" width="100%" mb="4" mt="4">
-          <Badge color="pink" size="2" radius="full" mr="auto" ml="auto">
+          <Badge
+            color={producto.categories === "Complementos" ? "pink" : "blue"}
+            size="2"
+            radius="full"
+            mr="auto"
+            ml="auto"
+          >
             <Text size="5">{producto.categories}</Text>
           </Badge>
         </Flex>
         <Text size="5">
           <Strong>Descripcion:</Strong>
-          {producto.desc}
+          <LinesEllipsis
+            text={producto.desc}
+            maxLine="3"
+            ellipsis="..."
+            trimRight
+            basedOn="letters"
+          />
         </Text>
-        {user.rol && user.rol !== "admin" && (
+        {user?.rol && user?.rol !== "admin" && (
           <>
             {favoritos.includes(producto._id) ? (
               <Button
@@ -188,7 +185,7 @@ export const ProductGallery = ({ itemId, producto }) => {
                 />
               </label>
               {user.rol && user.rol !== "admin" && (
-                <Button size="4" disabled={isDisabled} mt="5">
+                <Button size="4" disabled={isDisabled} mt="5" color="pink">
                   Agregar
                 </Button>
               )}

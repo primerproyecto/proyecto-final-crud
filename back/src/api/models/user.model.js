@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcrypt");
 const { Schema } = mongoose;
 
 const UserSchema = new Schema(
@@ -9,26 +9,29 @@ const UserSchema = new Schema(
     email: {
       type: String,
       required: true,
-      validate: [validator.isEmail, 'Email not valid'],
+      validate: [validator.isEmail, "Email not valid"],
       unique: true,
     },
     password: {
       type: String,
       required: true,
       validate: [validator.isStrongPassword],
-      minlength: [8, 'Min 8 characters'],
+      minlength: [8, "Min 8 characters"],
     },
-    rol: { type: String, enum: ['admin', 'user'], required: true },
+    rol: { type: String, enum: ["admin", "user"], required: true },
     image: { type: String },
     confirmationCode: { type: Number, required: true },
     check: { type: Boolean, default: false },
     carrito: {
       type: Schema.Types.ObjectId,
-      ref: 'Cart',
+      ref: "Cart",
     },
-    favoritos: {
-      type: Schema.Types.Array
-    }
+    favoritos: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
   },
   {
     timestamps: true,
@@ -36,17 +39,17 @@ const UserSchema = new Schema(
 );
 
 /// Antes de guardar el modelo tenemos que hacer un presave para convertir la contraseña en encrictada
-UserSchema.pre('save', async function (next) {
+UserSchema.pre("save", async function (next) {
   try {
     // vamos a encryctar la contraseña  con 10 veces la encryctacion
     this.password = await bcrypt.hash(this.password, 10);
     // metemos el next vacio para que continue
     next();
   } catch (error) {
-    next('Error hashing password', error);
+    next("Error hashing password", error);
   }
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 module.exports = User;

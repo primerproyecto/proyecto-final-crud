@@ -64,46 +64,47 @@ export const FormProfile = () => {
   return (
     <>
       <Box>
-      <Container size="3">
-      <Heading as="h1" size="6" mb="4" mt="3">Cambiar nombre de usuario o avatar</Heading>
-        <Flex gap="3" align="center">
-        
-          <Avatar src={user.image} fallback="S" size="7" />
-          <Heading size="6">{user.user}</Heading>
-          <Text>{user.rol}</Text>
-        </Flex>
+        <Container size="3">
+          <Heading as="h1" size="6" mb="4" mt="3">
+            Cambiar nombre de usuario o avatar
+          </Heading>
+          <Flex gap="3" align="center">
+            <Avatar src={user.image} fallback="S" size="7" />
+            <Heading size="6">{user.user}</Heading>
+            <Text>{user.rol}</Text>
+          </Flex>
 
-        <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
-          <Form.Field className="FormField" name="name">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "space-between",
-              }}
-            >
-              <Form.Label className="FormLabel">
-                Nuevo nombre de usario
-              </Form.Label>
-            </div>
-            <Form.Control asChild>
-              <input
-                className="Input"
-                type="text"
-                required
-                name="name"
-                {...register("name")}
-              />
-            </Form.Control>
-          </Form.Field>
-          <Uploadfile />
+          <Form.Root className="FormRoot" onSubmit={handleSubmit(formSubmit)}>
+            <Form.Field className="FormField" name="name">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Form.Label className="FormLabel">
+                  Nuevo nombre de usario
+                </Form.Label>
+              </div>
+              <Form.Control asChild>
+                <input
+                  className="Input"
+                  type="text"
+                  required
+                  name="name"
+                  {...register("name")}
+                />
+              </Form.Control>
+            </Form.Field>
+            <Uploadfile />
 
-          <Form.Submit asChild>
-            <Button size="3" style={{ marginTop: 10 }}>
-              Cambiar
-            </Button>
-          </Form.Submit>
-        </Form.Root>
+            <Form.Submit asChild>
+              <Button size="3" style={{ marginTop: 10 }} color="pink">
+                Cambiar
+              </Button>
+            </Form.Submit>
+          </Form.Root>
         </Container>
       </Box>
     </>

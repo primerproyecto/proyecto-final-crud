@@ -20,32 +20,18 @@ import {
   Button,
   Card,
   Flex,
-  AlertDialogRoot,
-  AlertDialogTitle,
-  AlertDialogContent,
-  AlertDialogDescription,
   AlertDialog,
-  Separator,
-  Grid,
-  Link as Linka
+  Link as Linka,
 } from "@radix-ui/themes";
 import * as Avatar from "@radix-ui/react-avatar";
 import "./stylesCarrito.css";
-import { capitalizarPrimeraLetra, aEuros, fetcher, updateToken } from "../utils";
+import {
+  capitalizarPrimeraLetra,
+  aEuros,
+  updateToken,
+  fetcher,
+} from "../utils";
 import * as Toast from "@radix-ui/react-toast";
-import {
-  addToFavorites,
-  removeToFavorites,
-  allUserInfo,
-} from "../services/API_user/user.service";
-import {
-  HeartFilledIcon,
-  HeartIcon,
-  HomeIcon,
-  Share2Icon,
-} from "@radix-ui/react-icons";
-
-
 
 export const Carrito = () => {
   const { id } = useParams();
@@ -53,21 +39,15 @@ export const Carrito = () => {
   const [carrito, setCarrito] = useState([]);
 
   const { user } = useAuth();
-  const idI11 = useId();
 
   const [res, setRes] = useState({});
-  const [send, setSend] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [removeCarrito, setORemoveCarrito] = useState(false);
   const [mensajePrevio, setMensajePrevio] = useState(false);
 
   const [itemProductId, setItemProductId] = useState("");
-  const [toastRemoveOk, setToastRemoveOk] = useState(false);
-
-  const [favoritos, setFavoritos] = useState([]);
 
   const carritoId = user.carrito;
-  const { register, handleSubmit } = useForm();
   const formSubmitQuitar = async (productId) => {
     const customFormData = {
       productId: productId,
@@ -93,74 +73,114 @@ export const Carrito = () => {
     useCartRemoveError(res, setORemoveCarrito, setRes, setCarrito);
   }, [res]);
 
+  const { data: favoritos } = useSWR(
+    ["http://localhost:3000/api/v1/users/info", updateToken()],
+    fetcher
+  );
+
+  const { data, error } = useSWR(
+    "http://localhost:3000/api/v1/users/info",
+    async (url) => {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${updateToken()}`,
+        },
+      });
+      const data = await response.json();
+      return data;
+    }
+  );
+
+  console.log("que son favoritos", data);
+
   return (
     <>
       <Box
-      pb="7"
+        pb="7"
         style={{
           background: "var(--gray-a2)",
           borderRadius: "var(--radius-3)",
         }}
       >
-        <Container size={{
-        initial: '1',
-        sm: '2',
-        md: '3'
-      }} pl="2" pr="2">
+        <Container
+          size={{
+            initial: "1",
+            sm: "2",
+            md: "3",
+          }}
+          pl="2"
+          pr="2"
+        >
           <Box pt="6" pb="8">
             <Heading as="h1" size="7">
               El carrito de {capitalizarPrimeraLetra(user.user)}
             </Heading>
           </Box>
-          {carrito.length > 0 ? carrito?.map((item, index) => {
-            return (
-              <Card
-                key={item._id}
-                style={{ marginBottom: "1rem", boxShadow: "var(--shadow-4)" }}
-              >
-                <Flex align="center" gap="3">
-                  <Avatar.Root className="AvatarRoot">
-                    <Avatar.Image
-                      className="AvatarImage"
-                      width="40"
-                      src={item?.productId?.image}
-                      alt={item?.productId?.title}
-                    />
-                  </Avatar.Root>
-                  <Box shrink={0}>
-                    <Heading as="h2">
-                      {capitalizarPrimeraLetra(item?.productId?.title)}{" "}
-                    </Heading>
-                  </Box>
+          {carrito.length > 0 ? (
+            carrito?.map((item, index) => {
+              return (
+                <Card
+                  key={item._id}
+                  style={{ marginBottom: "1rem", boxShadow: "var(--shadow-4)" }}
+                >
+                  <Flex align="center" gap="3">
+                    <Avatar.Root className="AvatarRoot">
+                      <Avatar.Image
+                        className="AvatarImage"
+                        width="40"
+                        src={item?.productId?.image}
+                        alt={item?.productId?.title}
+                      />
+                    </Avatar.Root>
+                    <Box shrink={0}>
+                      <Heading as="h2">
+                        {capitalizarPrimeraLetra(item?.productId?.title)}{" "}
+                      </Heading>
+                    </Box>
 
-                  <Text>
-                    ( {item?.cantidad}{" "}
-                    {item?.cantidad > 1 ? "productos" : "producto"} )
-                  </Text>
-                  <Text>
-                    <Text size="4">
-                      <Strong>
-                        TOTAL :{" "}
-                        {aEuros.format(item?.cantidad * item?.productId.price)}
-                      </Strong>
+                    <Text>
+                      ( {item?.cantidad}{" "}
+                      {item?.cantidad > 1 ? "productos" : "producto"} )
                     </Text>
-                  </Text>
-                  <Flex direction="row-reverse" grow="1">
-                    <Button
-                      size="3"
-                      // onClick={() => formSubmitQuitar(item.productId._id)}
-                      onClick={() => {
-                        setItemProductId(item.productId._id);
-                        setMensajePrevio(true);
-                      }}
-                    >
-                      Eliminar
-                    </Button>
+                    <Text>
+                      <Text size="4">
+                        <Strong>
+                          TOTAL :{" "}
+                          {aEuros.format(
+                            item?.cantidad * item?.productId.price
+                          )}
+                        </Strong>
+                      </Text>
+                    </Text>
+                    <Flex direction="row-reverse" grow="1">
+                      <Button
+                        size="3"
+                        color="pink"
+                        // onClick={() => formSubmitQuitar(item.productId._id)}
+                        onClick={() => {
+                          setItemProductId(item.productId._id);
+                          setMensajePrevio(true);
+                        }}
+                      >
+                        Eliminar
+                      </Button>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Card>
-            );
-          }) : <><Heading as="h2">No tienes nada todavía</Heading> <Text>Ánimate a comprar alguno de nuestros productos ....empieza por visitar nuestra <Linka asChild color="pink"><Link  to="/">página inicial</Link></Linka></Text> </>}
+                </Card>
+              );
+            })
+          ) : (
+            <>
+              <Heading as="h2">No tienes nada todavía</Heading>{" "}
+              <Text>
+                Ánimate a comprar alguno de nuestros productos ....empieza por
+                visitar nuestra{" "}
+                <Linka asChild color="pink">
+                  <Link to="/">página inicial</Link>
+                </Linka>
+              </Text>{" "}
+            </>
+          )}
         </Container>
       </Box>
 
